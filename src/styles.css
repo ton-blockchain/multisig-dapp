@@ -1,0 +1,40 @@
+body {
+    background-color: #F7F9FB;
+    width: 100%;
+    margin: auto;
+    text-align: center;
+}
+
+* {
+    font-family: 'Mulish', sans-serif;
+}
+
+.search {
+    font-size: 16px;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 36px;
+    line-height: 36px;
+    transform: translate(-50%, -50%);
+}
+
+.search-input {
+    margin: 0;
+    width: 500px;
+    height: 30px;
+    border: 2px solid #232328;
+    border-radius: 2px;
+}
+
+.search-button {
+    background-color: #0088CC;
+    border-radius: 4px;
+    margin: 0;
+    width: 48px;
+    height: 36px;
+    display: inline-block;
+    color: white;
+    cursor: pointer;
+}
