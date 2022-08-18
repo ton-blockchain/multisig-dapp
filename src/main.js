@@ -1,5 +1,18 @@
+const openWallet = (address) => {
+    $('.search').hide()
+
+    console.log(address)
+    $('.wallet-address').text(address)
+
+    $('.wallet').show()
+}
+
 const doSearch = () => {
-    // search the wallet
+    let address = $('.search-input').val()
+    fetch('https://api.ton.cat/v2/explorer/getWalletInformation?address=' + address)
+    .then(r => r.json()).then(r => {
+        if (r.ok) openWallet(address)
+    })
 }
 
 $(window).on('load', () => {
