@@ -13,9 +13,16 @@ const goNew = () => {
 }
 
 $(window).on('load', () => {
+    //for index
     $('.search-input').on('keyup', e => {
         if (e.key === 'Enter' || e.keyCode === 13) doSearch()
     })
     $('.search-button').click(doSearch);
     $('#new').click(goNew);
+
+    //for wallet
+    console.log(window.location)
+    addr = window.location.href.split("?")
+    $('.wallet-address').text(addr[1])
+
 })

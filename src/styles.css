@@ -42,3 +42,57 @@ body {
 .wallet {
     margin-top: 100px;
 }
+.new {
+    margin-top: 100px;
+}
+
+.new-header{
+    margin: 0;
+    margin-bottom: 6vh;
+    font-size: 30px;
+    width: 400px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #0088CC;
+    display: inline-block;
+    color: white;
+
+}
+
+.new-input{
+    margin: 1vh 10vw 0 10vw;
+    width: 550px;
+    height: 40px;
+    border-radius: 20px;
+    border: solid 3.5px #0088CC;
+    display: inline-block;
+
+}
+
+.new-input:focus{
+    outline: none;
+    border: 3.5px solid #0060A4
+}
+
+.new-add-button{
+    margin: 1vh 30vw 0 30vw;
+    cursor:pointer;
+    height: 35px;
+    width: 50px;
+    display: inline-block;
+    border-radius: 20px;
+    border: 3.5px solid #0088CC;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.new-add-button > span{
+    position: relative;
+    top: 6px;
+}
+
+.new-add-button:active{
+    border: 3.5px solid #0060A4;
+}
