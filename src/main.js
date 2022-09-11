@@ -1,18 +1,15 @@
-const openWallet = (address) => {
-    $('.search').hide()
-
-    console.log(address)
-    $('.wallet-address').text(address)
-
-    $('.wallet').show()
-}
-
 const doSearch = () => {
     let address = $('.search-input').val()
     fetch('https://api.ton.cat/v2/explorer/getWalletInformation?address=' + address)
     .then(r => r.json()).then(r => {
-        if (r.ok) openWallet(address)
+        if (r.ok) {
+            window.location.href="wallet.html?" + address
+        }
     })
+}
+
+const goNew = () => {
+
 }
 
 $(window).on('load', () => {
@@ -20,4 +17,5 @@ $(window).on('load', () => {
         if (e.key === 'Enter' || e.keyCode === 13) doSearch()
     })
     $('.search-button').click(doSearch);
+    $('#new').click(goNew);
 })
