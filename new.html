@@ -9,6 +9,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Mulish&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="src/styles.css">
         <script src="src/main.js" charset="utf-8"></script>
+        <script src="https://kit.fontawesome.com/01d2caac83.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <div class="new">
@@ -16,9 +17,11 @@
                 <span>Create new multisig wallet</span>
             </div>
             <div class="new-main">
-                <input type="text" class="new-input" value="" placeholder="Input your address here" id="1">
-                <input type="text" class="new-input" value="" placeholder="Input your second address here" id="2">
-                <div class="new-add-button"><span>add</span></div>
+                <div class="new-main-wrapper">
+                    <input type="text" class="new-input" value="" placeholder="Public key 1" id="pubkey_1">
+                    <input type="text" class="new-input" value="" placeholder="Public key 2" id="pubkey_2">
+                </div>
+                <div class="new-add-button"><i class="fa-solid fa-plus"></i></div>
             </div>
 
         </div>

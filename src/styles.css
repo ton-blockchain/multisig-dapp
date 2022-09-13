@@ -18,6 +18,10 @@ body {
     height: 36px;
     line-height: 36px;
     transform: translate(-50%, -50%);
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .search-input {
@@ -25,12 +29,12 @@ body {
     width: 500px;
     height: 30px;
     border: 2px solid #232328;
-    border-radius: 2px;
+    border-radius: 6px;
 }
 
 .search-button {
     background-color: #0088CC;
-    border-radius: 4px;
+    border-radius: 6px;
     margin: 0;
     width: 48px;
     height: 36px;
@@ -48,14 +52,9 @@ body {
 
 .new-header{
     margin: 0;
-    margin-bottom: 6vh;
+    margin-bottom: 7vh;
     font-size: 30px;
-    width: 400px;
-    height: 40px;
-    border-radius: 20px;
-    background-color: #0088CC;
     display: inline-block;
-    color: white;
 
 }
 
@@ -63,7 +62,7 @@ body {
     margin: 1vh 10vw 0 10vw;
     width: 550px;
     height: 40px;
-    border-radius: 20px;
+    border-radius: 6px;
     border: solid 3.5px #0088CC;
     display: inline-block;
 
@@ -75,12 +74,12 @@ body {
 }
 
 .new-add-button{
-    margin: 1vh 30vw 0 30vw;
+    margin: 3vh 30vw 0 30vw;
     cursor:pointer;
     height: 35px;
     width: 50px;
     display: inline-block;
-    border-radius: 20px;
+    border-radius: 6px;
     border: 3.5px solid #0088CC;
     -moz-user-select: none;
     -khtml-user-select: none;
@@ -88,9 +87,10 @@ body {
     user-select: none;
 }
 
-.new-add-button > span{
+.new-add-button > i{
+    font-size: 25px;
     position: relative;
-    top: 6px;
+    top: 5px;
 }
 
 .new-add-button:active{
