@@ -59,7 +59,7 @@ body {
 }
 
 .new-input{
-    margin: 1vh 10vw 0 10vw;
+    margin: 1vh 1vw 0 10vw;
     width: 550px;
     height: 40px;
     border-radius: 6px;
@@ -74,10 +74,10 @@ body {
 }
 
 .new-add-button{
-    margin: 3vh 30vw 0 30vw;
+    margin: 3vh auto 0 auto;
     cursor:pointer;
-    height: 35px;
-    width: 50px;
+    height: 25px;
+    width: 25px;
     display: inline-block;
     border-radius: 6px;
     border: 3.5px solid #0088CC;
@@ -88,11 +88,21 @@ body {
 }
 
 .new-add-button > i{
-    font-size: 25px;
+    font-size: 18px;
     position: relative;
-    top: 5px;
+    top: 4px;
 }
 
 .new-add-button:active{
     border: 3.5px solid #0060A4;
+}
+
+.new-del-button{
+    margin: 0 10vw 0 0.5vw;
+    cursor:pointer;
+    display: inline-block;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
