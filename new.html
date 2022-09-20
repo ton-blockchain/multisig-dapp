@@ -19,14 +19,19 @@
                 <span>Create new multisig wallet</span>
             </div>
             <div class="new-main">
+                <input type="text" class="new-top-input" style="margin-right: 50px" placeholder="Workchain ID">
+                <input type="text" class="new-top-input" placeholder="Wallet ID">
+                <input type="text" class="new-top-input" style="margin-left: 50px" placeholder="K-value">
                 <div class="new-main-wrapper">
-                    <input type="text" class="new-input" value="" placeholder="Public key 1" id="pubkey_1">
+                    <input type="text" class="new-input" value="" placeholder="Public key 1" id="pubkey_1"> 
                     <div class="new-del-button" id="pubkey_del_1" onclick="delOld(1)"><i class="fa-solid fa-xmark"></i></div>
                     <input type="text" class="new-input" value="" placeholder="Public key 2" id="pubkey_2">
                     <div class="new-del-button" id="pubkey_del_2" onclick="delOld(2)"><i class="fa-solid fa-xmark"></i></div>
                 </div>
                 <div class="new-add-button"><i class="fa-solid fa-plus"></i></div>
+                <div class="new-submit-button" onclick="createWallet()"><span>Create!</span></div>
             </div>
+
 
         </div>
     </body>

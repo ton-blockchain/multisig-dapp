@@ -58,13 +58,20 @@ body {
 
 }
 
+.new-main-wrapper{
+    display: block;
+    width: 600px;
+    margin: auto;
+}
 .new-input{
-    margin: 1vh 1vw 0 10vw;
+    margin: 1vh auto 0 auto;
     width: 550px;
     height: 40px;
     border-radius: 6px;
-    border: solid 3.5px #0088CC;
+    border: solid 3px #0088CC;
     display: inline-block;
+    position: relative;
+    left: 12.5px;
 
 }
 
@@ -73,14 +80,24 @@ body {
     border: 3.5px solid #0060A4
 }
 
+.new-top-input{
+    margin: 0.5vh auto 2vh auto;
+    width: 125px;
+    height: 25px;
+    border-radius: 6px;
+    border: solid 3px #0088CC;
+    display: inline-block;
+
+}
+
 .new-add-button{
-    margin: 3vh auto 0 auto;
+    margin: 1vh auto 0 auto;
     cursor:pointer;
     height: 25px;
     width: 25px;
     display: inline-block;
     border-radius: 6px;
-    border: 3.5px solid #0088CC;
+    border: 3px solid #0088CC;
     -moz-user-select: none;
     -khtml-user-select: none;
     -webkit-user-select: none;
@@ -94,15 +111,41 @@ body {
 }
 
 .new-add-button:active{
-    border: 3.5px solid #0060A4;
+    border: 3px solid #0060A4;
 }
 
 .new-del-button{
-    margin: 0 10vw 0 0.5vw;
+    margin: 0 0 0 0.5vw;
+    width: 10px;
     cursor:pointer;
     display: inline-block;
+    position: relative;
+    left: 12.5px;
     -moz-user-select: none;
     -khtml-user-select: none;
     -webkit-user-select: none;
     user-select: none;
+}
+
+.new-submit-button{
+    margin: 3vh auto 0 auto;
+    cursor:pointer;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background-color: #0088CC;
+    height: 30px;
+    width: 75px;
+    display: block;
+    border-radius: 6px;
+    border: 3px solid #0088CC;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.new-submit-button:active{
+    background-color: #0060A4;
+    border: 3px solid #0060A4;
 }
