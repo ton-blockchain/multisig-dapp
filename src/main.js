@@ -20,20 +20,22 @@ const addNew = () => {
     let pkph = 'Public key ' + id
     let pkid = 'pubkey_' + id
     let delid = 'pubkey_del_' + id
+    let delfncallid = 'delOld(' + id + ')'
     $('.new-main-wrapper')[0].insertAdjacentHTML('beforeend', '<input type="text" class="new-input" value="">')
     $('.new-input')[id-1].setAttribute('placeholder', pkph)
     $('.new-input')[id-1].setAttribute('id', pkid)
     $('.new-main-wrapper')[0].insertAdjacentHTML('beforeend', '<div class="new-del-button"><i class="fa-solid fa-xmark"></i></div>')
     $('.new-del-button')[id-1].setAttribute('id', delid)
-    $('.new-del-button').click(delOld)
+    $('.new-del-button')[id-1].setAttribute('onclick', delfncallid)
+    //$('.new-del-button').click(delOld)
 }
 
 const delOld = (e) => {
-    //console.log(e)
+    console.log(e)
     
-    delid = e.currentTarget.id.slice(11)
-    pkid = '#pubkey_' + delid
-    deldiv = '#pubkey_del_' + delid
+    delid = e
+    pkid = '#pubkey_' + e
+    deldiv = '#pubkey_del_' + e
     $(deldiv)[0].remove()
     $(pkid)[0].remove()
     // console.log($('.new-input').length)
@@ -46,11 +48,13 @@ const delOld = (e) => {
         updidins = 'pubkey_' + (updid-1)
         upddelid = 'pubkey_del_' + (updid-1)
         updlblins = 'Public key ' + (updid-1)
+        delfncallid = 'delOld(' + (updid-1) + ')'
         //console.log(updidins)
         if (updid > delid){
             $('.new-input')[i].setAttribute('id', updidins)
             $('.new-input')[i].setAttribute('placeholder', updlblins)
             $('.new-del-button')[i].setAttribute('id', upddelid)
+            $('.new-del-button')[i].setAttribute('onclick', delfncallid)
         }
     }
     id -= 1
@@ -67,8 +71,7 @@ $(window).on('load', () => {
 
     //for new
     $('.new-add-button').click(addNew)
-    $('.new-del-button').click(delOld)
-    $('.new-del-button').click(delOld)
+    //$('.new-del-button').click(delOld)
 
     //for wallet
     console.log(window.location)
