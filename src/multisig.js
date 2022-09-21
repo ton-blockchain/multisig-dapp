@@ -15,7 +15,7 @@ class MultisigContract extends tonweb.Contract {
         cell.bits.writeUint(this.options.wallet_id, 32)
         cell.bits.writeUint(this.options.n, 8)
         cell.bits.writeUint(this.options.k, 8)
-        cell.bits.writeUint(this.options.last_cleaned, 64)
+        cell.bits.writeUint(0, 64)
         cell.bits.writeBit(1)
         cell.refs.push(this.options.owner_infos)
         cell.bits.writeBit(0)
@@ -70,7 +70,6 @@ const newMultisig = (pubkeys, wc, wallet_id, k) => {
         wallet_id: wallet_id,
         k: k,
         n: pubkeys.length,
-        last_cleaned: 0,
         owner_infos: owner_infos
     })
 
@@ -83,12 +82,16 @@ const createWallet = async  () => {
         pubkeys.push(inp.value)
     }
 
-    const wc = $('#workchain_id').value,
-          wallet_id = $('#wallet_id').value,
-          k = $('#k_value').value
+    const wc = $('#workchain_id')[0].value,
+          wallet_id = $('#wallet_id')[0].value,
+          k = $('#k_value')[0].value
+
+    console.log(wc, wallet_id, k)
 
     const contract = newMultisig(pubkeys, wc, wallet_id, k)
     await contract.getAddress()
+
+    console.log(contract.address.toString(true, true, false))
 
     const address = (await ton.send('ton_requestAccounts'))[0]
 
