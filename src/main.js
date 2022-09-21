@@ -1,5 +1,7 @@
 let id = 2
 
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
 const doSearch = () => {
     let address = $('.search-input').val()
     fetch('https://api.ton.cat/v2/explorer/getWalletInformation?address=' + address)
@@ -32,7 +34,7 @@ const addNew = () => {
 
 const delOld = (e) => {
     console.log(e)
-    
+
     delid = e
     pkid = '#pubkey_' + e
     deldiv = '#pubkey_del_' + e
@@ -43,7 +45,7 @@ const delOld = (e) => {
     l = $('.new-input').length
     for(let i = 0; i < l ; i++) {
         //console.log($('.new-input')[i].id.slice(7))
-        
+
         updid = $('.new-input')[i].id.slice(7)
         updidins = 'pubkey_' + (updid-1)
         upddelid = 'pubkey_del_' + (updid-1)
