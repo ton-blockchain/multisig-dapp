@@ -92,7 +92,7 @@ const createWallet = async  () => {
 
     const address = (await ton.send('ton_requestAccounts'))[0]
 
-    const lastTxHash = (await tonweb.getTransactions('EQBIhPuWmjT7fP-VomuTWseE8JNWv2q7QYfsVQ1IZwnMk8wL', 1))[0].transaction_id.hash
+    const lastTxHash = (await tonweb.getTransactions(address, 1))[0].transaction_id.hash
 
     await ton.send('ton_sendTransaction', [{
             to: contract.address.toString(true, true, false),
@@ -100,10 +100,10 @@ const createWallet = async  () => {
         }]
     )
 
-    var txHash = (await tonweb.getTransactions('EQBIhPuWmjT7fP-VomuTWseE8JNWv2q7QYfsVQ1IZwnMk8wL', 1))[0].transaction_id.hash
+    var txHash = (await tonweb.getTransactions(address, 1))[0].transaction_id.hash
     while (txHash == lastTxHash) {
         await sleep(1500)
-        txHash = (await tonweb.getTransactions('EQBIhPuWmjT7fP-VomuTWseE8JNWv2q7QYfsVQ1IZwnMk8wL', 1))[0].transaction_id.hash
+        txHash = (await tonweb.getTransactions(address, 1))[0].transaction_id.hash
     }
     await sleep(1500)
 
