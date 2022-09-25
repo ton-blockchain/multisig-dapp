@@ -116,3 +116,30 @@ const createWallet = async  () => {
     const multisigAddress = contract.address.toString(true, true, true)
     // todo: redirect to multisig wallet view page for that address
 }
+
+const signBoc = async (address, owner_id, bocString) => {
+    const order = tonweb.boc.Cell.oneFromBoc(bocString)
+
+    var cell = new tonweb.boc.Cell()
+    cell.bits.writeUint(owner_id, 8)
+    cell.writeCell(order)
+    const hash = await cell.hash()
+
+    const signature = await ton.send(
+        'ton_rawSign', [{ data: tonweb.utils.bytesToHex(hash) }]
+    )
+
+    var signedCell = new tonweb.boc.Cell()
+    signedCell.bits.writeBitArray(tonweb.utils.hexToBytes(signature))
+    signedCell.writeCell(cell)
+
+    return signedCell
+}
+
+const sendBoc = async (boc) => {
+
+}
+
+const createMsg = async () => {
+
+}
