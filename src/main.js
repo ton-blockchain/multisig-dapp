@@ -63,6 +63,47 @@ const delOld = (e) => {
     console.log(id)
 }
 
+const createWallet = async  () => {
+    var pubkeys = []
+    for (const inp of $('.new-input')) {
+        pubkeys.push(inp.value)
+    }
+
+    const wc = $('#workchain_id')[0].value,
+          wallet_id = $('#wallet_id')[0].value,
+          k = $('#k_value')[0].value
+
+    console.log(wc, wallet_id, k)
+
+    const contract = newMultisig(pubkeys, wc, wallet_id, k)
+    await contract.getAddress()
+
+    console.log(contract.address.toString(true, true, false))
+
+    const address = (await ton.send('ton_requestAccounts'))[0]
+
+    const lastTxHash = (await tonweb.getTransactions(address, 1))[0].transaction_id.hash
+
+    await ton.send('ton_sendTransaction', [{
+            to: contract.address.toString(true, true, false),
+            value: '50000000'
+        }]
+    )
+
+    var txHash = (await tonweb.getTransactions(address, 1))[0].transaction_id.hash
+    while (txHash == lastTxHash) {
+        await sleep(1500)
+        txHash = (await tonweb.getTransactions(address, 1))[0].transaction_id.hash
+    }
+    await sleep(1500)
+
+    const deployTx = contract.deploy()
+    console.log(await deployTx.send())
+
+    const multisigAddress = contract.address.toString(true, true, true)
+    // todo: redirect to multisig wallet view page for that address
+}
+
 $(window).on('load', () => {
     //for index
     $('.search-input').on('keyup', e => {
