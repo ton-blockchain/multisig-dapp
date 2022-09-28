@@ -11,13 +11,10 @@ body {
 
 .search {
     font-size: 16px;
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
+    margin: 45vh auto;
+    width: 650px;
     height: 36px;
     line-height: 36px;
-    transform: translate(-50%, -50%);
     -moz-user-select: none;
     -khtml-user-select: none;
     -webkit-user-select: none;
@@ -30,6 +27,12 @@ body {
     height: 30px;
     border: 2px solid #232328;
     border-radius: 6px;
+    transition: 0.5s;
+}
+
+.search-input:focus{
+    outline: none;
+    border: 2px solid #0060A4
 }
 
 .search-button {
@@ -121,6 +124,12 @@ body {
     -webkit-user-select: none;
     user-select: none;
     text-align: center;
+    transition: 0.3s;
+}
+
+.wallet-sign-send:hover {
+    background-color: #0060A4;
+    border: 3px solid #0060A4;
 }
 
 .wallet-create {
@@ -140,12 +149,13 @@ body {
     width: 250px;
     height: 24.8px;
     border-radius: 6px;
-    border: solid 3px #0088CC;
+    border: solid 2px #232328;
+    transition: 0.5s;
 }
 
 .wallet-create > input:focus {
     outline: none;
-    border: 3px solid #0060A4
+    border: 2px solid #0088CC
 }
 
 .wallet-create-create {
@@ -164,6 +174,12 @@ body {
     -webkit-user-select: none;
     user-select: none;
     text-align: center;
+    transition: 0.3s;
+}
+
+.wallet-create-create:hover {
+    background-color: #0060A4;
+    border: 3px solid #0060A4;
 }
 
 .new {
@@ -187,7 +203,7 @@ body {
     width: 550px;
     height: 40px;
     border-radius: 6px;
-    border: solid 3px #0088CC;
+    border: solid 2px #232328;
     display: inline-block;
     position: relative;
     left: 12.5px;
@@ -196,7 +212,7 @@ body {
 
 .new-input:focus {
     outline: none;
-    border: 3px solid #0060A4
+    border: 2px solid #0088CC;
 }
 
 .new-top-input {
@@ -204,14 +220,14 @@ body {
     width: 125px;
     height: 25px;
     border-radius: 6px;
-    border: solid 3px #0088CC;
+    border: solid 2px #232328;
     display: inline-block;
     transition: 0.5s;
 }
 
 .new-top-input:focus{
     outline: none;
-    border: 3px solid #0060A4
+    border: 2px solid #0088CC
 }
 
 .new-add-button {
@@ -221,11 +237,12 @@ body {
     width: 25px;
     display: inline-block;
     border-radius: 6px;
-    border: 3px solid #0088CC;
+    border: 2px solid #232328;
     -moz-user-select: none;
     -khtml-user-select: none;
     -webkit-user-select: none;
     user-select: none;
+    transition: 0.3s;
 }
 
 .new-add-button > i {
@@ -234,8 +251,8 @@ body {
     top: 4px;
 }
 
-.new-add-button:active {
-    border: 3px solid #0060A4;
+.new-add-button:hover {
+    border: 2px solid #0088CC;
 }
 
 .new-del-button {
@@ -268,10 +285,10 @@ body {
     -webkit-user-select: none;
     user-select: none;
     text-align: center;
-    transition: 0.2s;
+    transition: 0.3s;
 }
 
-.new-submit-button:active {
+.new-submit-button:hover {
     background-color: #0060A4;
     border: 3px solid #0060A4;
 }
