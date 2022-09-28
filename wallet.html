@@ -11,8 +11,27 @@
         <script src="src/main.js" charset="utf-8"></script>
     </head>
     <body>
-        <div class="wallet">
+        <div class="wallet-header">
             <span class="wallet-address"></span>
+        </div>
+        <div class="wallet-wrapper">
+            <div class="wallet-info">
+                    <span id="balance">Balance:</span>
+                    <span id="owners">Owners:</span>
+                    <span id="created">Created:</span>
+            </div>
+            <div class="wallet-sign">
+                <span style="margin-bottom: 20px">Sign and send a transaction</span>
+                <input type="file"> 
+                <div class="wallet-sign-send" id="wallet-send">Send sign</div>
+            </div>
+            <div class="wallet-create">
+                <span>Create new transaction</span>
+                <input type="text" id="recipient" placeholder="Recipient">
+                <input type="text" id="amount" placeholder="Amount">
+                <input type="text" id="body" placeholder="Body">
+                <div class="wallet-create-create">Create</div>
+            </div>
         </div>
     </body>
 </html>

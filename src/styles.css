@@ -43,27 +43,146 @@ body {
     cursor: pointer;
 }
 
-.wallet {
-    margin-top: 100px;
+.wallet-header {
+    margin-top: 5rem;
 }
+
+.wallet-address {
+    font-size: 20px;
+}
+
+.wallet-wrapper {
+    margin: 3rem auto;
+    width: 70rem;
+    font-size: 20px;
+}
+
+.wallet-info {
+    display: inline-block;
+    height: 30rem;
+    width: 300px;
+    vertical-align:bottom;
+}
+
+.wallet-info > * {
+    display: block;
+}
+
+.wallet-info > span {
+    margin: 0 0 20px 0;
+}
+
+.wallet-sign {
+    display: inline-block;
+    height: 30rem;
+    width: 300px;
+    vertical-align:bottom;
+}
+
+.wallet-sign > * {
+    display: block;
+}
+
+.wallet-sign > input {
+    margin: auto;
+    width: 150px;
+}
+
+.wallet-sign > input[type="file"]::file-selector-button {
+    border: none;
+    color: white;
+    width: 150px;
+    font-size: 16px;
+    height: 25px;
+    padding: 0.2em 0.4em;
+    display: block;
+    border-radius: 0.2em;
+    background-color: #0088CC;
+    transition: 0.5s;
+}
+
+.wallet-sign > input[type="file"]::file-selector-button:hover {
+    background-color: #0060A4;  
+  }
+
+.wallet-sign-send {
+    margin: 3vh auto 0 auto;
+    cursor:pointer;
+    font-size: 20px;
+    color: white;
+    background-color: #0088CC;
+    height: 30px;
+    width: 100px;
+    display: block;
+    border-radius: 6px;
+    border: 3px solid #0088CC;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    text-align: center;
+}
+
+.wallet-create {
+    display: inline-block;
+    height: 30rem;
+    width: 300px;
+    vertical-align:bottom;
+}
+
+.wallet-create > * {
+    display: block;
+    margin: auto;
+}
+
+.wallet-create > input {
+    margin: 1vh auto 0 auto;
+    width: 250px;
+    height: 24.8px;
+    border-radius: 6px;
+    border: solid 3px #0088CC;
+}
+
+.wallet-create > input:focus {
+    outline: none;
+    border: 3px solid #0060A4
+}
+
+.wallet-create-create {
+    margin: 3vh auto 0 auto;
+    cursor:pointer;
+    font-size: 20px;
+    color: white;
+    background-color: #0088CC;
+    height: 30px;
+    width: 100px;
+    display: block;
+    border-radius: 6px;
+    border: 3px solid #0088CC;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    text-align: center;
+}
+
 .new {
     margin-top: 100px;
 }
 
-.new-header{
+.new-header {
     margin: 0;
     margin-bottom: 7vh;
     font-size: 30px;
     display: inline-block;
-
 }
 
-.new-main-wrapper{
+.new-main-wrapper {
     display: block;
     width: 600px;
     margin: auto;
 }
-.new-input{
+.new-input {
     margin: 1vh auto 0 auto;
     width: 550px;
     height: 40px;
@@ -72,25 +191,30 @@ body {
     display: inline-block;
     position: relative;
     left: 12.5px;
-
+    transition: 0.5s;
 }
 
-.new-input:focus{
+.new-input:focus {
     outline: none;
-    border: 3.5px solid #0060A4
+    border: 3px solid #0060A4
 }
 
-.new-top-input{
+.new-top-input {
     margin: 0.5vh auto 2vh auto;
     width: 125px;
     height: 25px;
     border-radius: 6px;
     border: solid 3px #0088CC;
     display: inline-block;
-
+    transition: 0.5s;
 }
 
-.new-add-button{
+.new-top-input:focus{
+    outline: none;
+    border: 3px solid #0060A4
+}
+
+.new-add-button {
     margin: 1vh auto 0 auto;
     cursor:pointer;
     height: 25px;
@@ -104,17 +228,17 @@ body {
     user-select: none;
 }
 
-.new-add-button > i{
+.new-add-button > i {
     font-size: 18px;
     position: relative;
     top: 4px;
 }
 
-.new-add-button:active{
+.new-add-button:active {
     border: 3px solid #0060A4;
 }
 
-.new-del-button{
+.new-del-button {
     margin: 0 0 0 0.5vw;
     width: 10px;
     cursor:pointer;
@@ -127,7 +251,7 @@ body {
     user-select: none;
 }
 
-.new-submit-button{
+.new-submit-button {
     margin: 3vh auto 0 auto;
     cursor:pointer;
     font-size: 20px;
@@ -144,9 +268,10 @@ body {
     -webkit-user-select: none;
     user-select: none;
     text-align: center;
+    transition: 0.2s;
 }
 
-.new-submit-button:active{
+.new-submit-button:active {
     background-color: #0060A4;
     border: 3px solid #0060A4;
 }
