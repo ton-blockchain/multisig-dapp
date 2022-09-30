@@ -96,7 +96,7 @@ const signBoc = async (address, owner_id, bocString) => {
 }
 
 const sendBoc = async (boc) => {
-
+    
 }
 
 const createMsg = async () => {

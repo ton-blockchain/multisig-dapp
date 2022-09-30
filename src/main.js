@@ -104,20 +104,26 @@ const createWallet = async  () => {
     // todo: redirect to multisig wallet view page for that address
 }
 
-$(window).on('load', () => {
-    //for index
+const loadIndex = () => {
     $('.search-input').on('keyup', e => {
         if (e.key === 'Enter' || e.keyCode === 13) doSearch()
     })
     $('#search_go').click(doSearch)
     $('#search_new').click(goNew)
+    $('.new-main-wrapper')[0].insertAdjacentHTML('beforeend', '<input type="text" class="new-input" value="" placeholder="Public key 1" id="pubkey_1">')
+    $('.new-main-wrapper')[0].insertAdjacentHTML('beforeend', '<div class="new-del-button" id="pubkey_del_1" onclick="delOld(1)"><i class="fa-solid fa-xmark"></i></div>')
+    $('.new-main-wrapper')[0].insertAdjacentHTML('beforeend', '<input type="text" class="new-input" value="" placeholder="Public key 2" id="pubkey_2">')
+    $('.new-main-wrapper')[0].insertAdjacentHTML('beforeend', '<div class="new-del-button" id="pubkey_del_2" onclick="delOld(2)"><i class="fa-solid fa-xmark"></i></div>')
+}
 
-    //for new
+const loadNew = () => {
     $('.new-add-button').click(addNew)
-    //$('.new-del-button').click(delOld)
+}
 
-    //for wallet
+const loadWallet = () => {
     console.log(window.location)
-    addr = window.location.href.split("?")
-    $('.wallet-address').text(addr[1])
-})
+    addr = window.location.href.split("?")[1]
+    $('.wallet-address').text(addr)
+    const r = fetch('https://api.ton.cat/v2/explorer/getWalletInformation?address=' + addr)
+    console.log(r)
+}
