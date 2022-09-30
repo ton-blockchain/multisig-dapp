@@ -1,3 +1,6 @@
+const tonweb = new TonWeb()
+const nacl = TonWeb.utils.nacl
+
 let id = 2
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -104,7 +107,26 @@ const createWallet = async  () => {
     // todo: redirect to multisig wallet view page for that address
 }
 
-const loadIndex = () => {
+const roundNumber = (n, r) => {
+    if (r == 0) return Math.floor(n)
+    return (Math.floor((n + Number.EPSILON) * (10 ** r)) / (10 ** r))
+}
+
+const formatTime = (t) => {
+    if (t < 60) return roundNumber(t, 0) + ' second' + (t >= 2 ? 's' : '')
+    t /= 60
+    if (t < 60) return roundNumber(t, 0) + ' minute' + (t >= 2 ? 's' : '')
+    t /= 60
+    if (t < 24) return roundNumber(t, 0) + ' hour' + (t >= 2 ? 's' : '')
+    t /= 24
+    if (t < 30) return roundNumber(t, 0) + ' day' + (t >= 2 ? 's' : '')
+    t /= 30
+    if (t < 12) return roundNumber(t, 0) + ' month' + (t >= 2 ? 's' : '')
+    t /= 12
+    return roundNumber(t, 0) + ' year' + (t >= 2 ? 's' : '')
+}
+
+const loadIndex = async () => {
     $('.search-input').on('keyup', e => {
         if (e.key === 'Enter' || e.keyCode === 13) doSearch()
     })
@@ -116,14 +138,40 @@ const loadIndex = () => {
     $('.new-main-wrapper')[0].insertAdjacentHTML('beforeend', '<div class="new-del-button" id="pubkey_del_2" onclick="delOld(2)"><i class="fa-solid fa-xmark"></i></div>')
 }
 
-const loadNew = () => {
+const loadNew = async () => {
     $('.new-add-button').click(addNew)
 }
 
-const loadWallet = () => {
+const loadWallet = async () => {
     console.log(window.location)
     addr = window.location.href.split("?")[1]
     $('.wallet-address').text(addr)
-    const r = fetch('https://api.ton.cat/v2/explorer/getWalletInformation?address=' + addr)
-    console.log(r)
+    const r = (await (await fetch('https://api.ton.cat/v2/explorer/getWalletInformation?address=' + addr)).json()).result
+    console.log(r.balance, roundNumber(Number(r.balance) / 1e9, 2))
+    let balance = roundNumber(Number(r.balance) / 1e9, 2).toString()
+    let lastTxHash = r.last_transaction_id.hash
+
+    const s = (await (await fetch('https://toncenter.com/api/v2/runGetMethod', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            address: addr,
+            method: 'get_n_k',
+            stack: []
+        })
+    })).json()).result.stack
+    const n = Number(s[0][1])
+    const k = Number(s[1][1])
+
+    await sleep(1100)
+
+    const t = (await (await fetch('https://toncenter.com/api/index/getTransactionByHash?include_msg_body=false&tx_hash=' + lastTxHash)).json())[0].utime
+    const d = (new Date()) / 1000 - t
+
+    $('#balance').text('Balance: ' + balance + ' TON')
+    $('#owners').text('Owners: ' + n + ' / ' + k)
+    $('#last_active').text('Last active: ' + formatTime(d))
 }
