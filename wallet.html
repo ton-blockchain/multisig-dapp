@@ -11,6 +11,7 @@
         <script src="src/tonweb.js" charset="utf-8"></script>
         <script src="src/main.js" charset="utf-8"></script>
         <script src="src/wallet.js" charset="utf-8"></script>
+        <script src="https://kit.fontawesome.com/01d2caac83.js" crossorigin="anonymous"></script>
         <script>
             $(window).on('load', () => {
                 loadWallet()
@@ -30,13 +31,14 @@
             <div class="wallet-sign">
                 <span style="margin-bottom: 20px">Sign and send a transaction</span>
                 <input type="file"> 
-                <div class="wallet-sign-send" id="wallet-send">Send sign</div>
+                <div class="wallet-sign-send" id="wallet-send">Sign & send</div>
             </div>
             <div class="wallet-create">
                 <span>Create new transaction</span>
                 <input type="text" id="recipient" placeholder="Recipient">
                 <input type="text" id="summ" placeholder="Amount">
                 <input type="text" id="body" placeholder="Body">
+                <div class="wallet-create-save">Save</div>
                 <div class="wallet-create-create">Create</div>
             </div>
         </div>
