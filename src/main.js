@@ -1,5 +1,5 @@
 const tonweb = new TonWeb()
-const nacl = TonWeb.utils.nacl
+const nacl = tonweb.utils.nacl
 
 let id = 2
 
@@ -173,5 +173,5 @@ const loadWallet = async () => {
 
     $('#balance').text('Balance: ' + balance + ' TON')
     $('#owners').text('Owners: ' + n + ' / ' + k)
-    $('#last_active').text('Last active: ' + formatTime(d))
+    $('#last_active').text('Last active: ' + formatTime(d) + ' ago')
 }
