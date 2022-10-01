@@ -41,7 +41,7 @@ class MultisigContract extends tonweb.Contract {
     }
 }
 
-const newMultisig = (pubkeys, wc, wallet_id, k) => {
+const newMultisig = async (pubkeys, wc, wallet_id, k) => {
     x = new tonweb.boc.HashMap(8)
 
     for (let i = 0; i < pubkeys.length; i++) {
@@ -135,5 +135,9 @@ const signAndSend = async (boc) => {
 }
 
 const createInternalMessage = async () => {
+    
+}
 
+const createOrder = async () => {
+    
 }
