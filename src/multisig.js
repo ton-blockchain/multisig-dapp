@@ -139,10 +139,27 @@ const signAndSend = async (owner_id, boc) => {
     return await tonweb.sendBoc(await message.toBoc(false))
 }
 
-const createInternalMessage = async () => {
-    
+const createInternalMessage = async (destAddr, amount, bounce, comment) => {
+    var msg = new tonweb.boc.Cell()
+    msg.bits.writeBit(0) // int_msg_info
+    msg.bits.writeBit(1) // ihr_disabled
+    msg.bits.writeBit(bounce) // bounce
+    msg.bits.writeBit(0) // bounced
+    msg.bits.writeAddress(undefined) // src
+    msg.bits.writeAddress(new tonweb.Address(destAddr)) // dest
+    msg.bits.writeCoins(amount) // value
+    msg.bits.writeUint(0, 1 + 4 + 4 + 64 + 32 + 1 + 1)
+    msg.bits.writeString(comment)
+    return msg
 }
 
-const createOrder = async () => {
-    
+const createOrder = async (messages) => {
+    var order = new tonweb.boc.Cell()
+
+    for (const msg of messages) {
+        order.bits.writeUint8(64)
+        order.writeRef(msg)
+    }
+
+    return order
 }
