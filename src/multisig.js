@@ -73,7 +73,7 @@ const newMultisig = async (pubkeys, wc, wallet_id, k) => {
     return contract
 }
 
-const signExternalMessage = async (owner_id, order) => {
+const rootSignOrder = async (owner_id, order) => {
     var cell = new tonweb.boc.Cell()
     cell.bits.writeUint(owner_id, 8)
     cell.writeCell(order)
@@ -104,15 +104,15 @@ const createExternalMessage = async (address, boc) => {
 
 const addSignature = async (owner_id, cell) => {
     var signatures = new tonweb.boc.HashMap(8)
-    await signatures.loadHashMapX2Y(boc, s => tonweb.boc.CellParser.loadUint(s, 8), s => tonweb.boc.CellParser.loadBits(s, 512))
+    await signatures.loadHashMapX2Y(cell, s => tonweb.boc.CellParser.loadUint(s, 8), s => tonweb.boc.CellParser.loadBits(s, 512))
 
-    const hash = await boc.bits.readBits(256)
+    const hash = await cell.bits.readBits(256)
     const signature = await ton.send(
         'ton_rawSign', [{ data: tonweb.utils.bytesToHex(hash) }]
     )
     signatures.elements[owner_id] = signature
 
-    const signedCell = await signatures.serialize(
+    const signaturesCell = await signatures.serialize(
         k => {
             let key = new tonweb.boc.Cell()
             key.bits.writeUint(k, 8)
@@ -125,11 +125,16 @@ const addSignature = async (owner_id, cell) => {
         }
     )
 
+    var signedCell = new tonweb.boc.Cell()
+    signedCell.writeCell(signaturesCell)
+    signedCell.bits.writeBits(hash)
+    signedCell.writeCell(cell)
+
     return signedCell
 }
 
-const signAndSend = async (boc) => {
-    var signedOrder = await signExternalMessage(owner_id, await addSignature(owner_id, boc))
+const signAndSend = async (owner_id, boc) => {
+    var signedOrder = await rootSignOrder(owner_id, await addSignature(owner_id, boc))
     var message = await createExternalMessage(signedOrder)
     return await tonweb.sendBoc(await message.toBoc(false))
 }
