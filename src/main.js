@@ -2,6 +2,11 @@ const tonweb = new TonWeb()
 const nacl = tonweb.utils.nacl
 
 let id = 2
+let orders = 0
+
+let reciv = []
+let summv = []
+let bodyv = []
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -11,7 +16,7 @@ const doSearch = () => {
     .then(r => r.json()).then(r => {
         if (r.ok) {
             window.location.href="wallet.html?" + address
-        }
+        }   
     })
 }
 
@@ -66,11 +71,64 @@ const delOld = (e) => {
     console.log(id)
 }
 
-const createWallet = async  () => {
-    var pubkeys = []
-    for (const inp of $('.new-input')) {
-        pubkeys.push(inp.value)
+const order = (task) => {
+    if(orders < 4){
+        let reci = $('#recipient')[0].value
+        let summ = $('#summ')[0].value
+        let body = $('#body')[0].value
+        
+        if(task == 2){
+            if (reci == '' || summ == '' || body == ''){
+                orderSend()
+                
+                
+            }
+        }
+        orders += 1
+        reciv.push(reci)
+        summv.push(summ)
+        bodyv.push(body)
+
+        if(summ >= 1e9){
+            summ = Math.floor(summ / 1e7) / 100
+            summ = summ.toString() + 'B'
+        }
+        else if(summ >= 1e6){
+            summ = Math.floor(summ / 1e4) / 100
+            summ = summ.toString() + 'M'
+        }
+
+        let divins = '<div><span class="wallet-create-show-spadd">' + reci.slice(0,3) + '..' + reci.slice(-3) + '</span><span class="wallet-create-show-spamm">' + summ + '</span><i class="fa-solid fa-xmark" onclick="orderDelete(' + orders + ')"></i></div>'
+
+        $('.wallet-create-show')[0].insertAdjacentHTML('beforeend', divins)
     }
+}
+
+const orderDelete = (id) => {
+    reciv.splice(id-1)
+    summv.splice(id-1)
+    bodyv.splice(id-1)
+    $('.wallet-create-show > div')[id-1].remove()
+    orders -= 1
+    for (let i = id-1 ; i < orders; i++){
+        idred = 'orderDelete(' + (i+1) + ')'
+        $('.wallet-create-show > div > i')[i].setAttribute('onclick', idred)
+    }
+}
+
+const orderSend = () =>  {
+    //тут взять из reciv summv и bodyv, запаковать в файлик и скинуть юзеру
+
+    for (let i = orders; i > 0; i--){
+        orderDelete(i);
+    }
+}
+
+const createWallet = async  () => {
+        var pubkeys = []
+        for (const inp of $('.new-input')) {
+            pubkeys.push(inp.value)
+        }
 
     const wc = $('#workchain_id')[0].value,
           wallet_id = $('#wallet_id')[0].value,

@@ -62,7 +62,7 @@ body {
 
 .wallet-info {
     display: inline-block;
-    height: 30rem;
+    height: 20rem;
     width: 300px;
     vertical-align:bottom;
 }
@@ -77,7 +77,7 @@ body {
 
 .wallet-sign {
     display: inline-block;
-    height: 30rem;
+    height: 20rem;
     width: 300px;
     vertical-align:bottom;
 }
@@ -134,7 +134,7 @@ body {
 
 .wallet-create {
     display: inline-block;
-    height: 30rem;
+    height: 20rem;
     width: 300px;
     vertical-align:bottom;
 }
@@ -203,6 +203,52 @@ body {
 
 .wallet-create-save:hover {
     border: 2px solid #0088CC;
+}
+
+.wallet-create-show {
+    margin: 1.5rem auto;
+    width: 300px;
+}
+
+.wallet-create-show > div {
+    margin: 5px auto 0 auto;
+    height: 30px;
+    width: 250px;
+    border: 2px solid black;
+    border-radius: 6px;
+}
+
+.wallet-create-show > div > span {
+    font-size: 17px;
+    display: inline-block;
+    position: relative;
+    top: 1px;
+}
+
+.wallet-create-show-spadd {
+    width: 80px;
+    text-align: left;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.wallet-create-show-spamm {
+    width: 110px;
+    text-align: right;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.wallet-create-show > div > i {
+    display: inline-block;
+    position: relative;
+    top: 2.5px;
+    left: 5px;
+    width: 40px;
 }
 
 .new {
