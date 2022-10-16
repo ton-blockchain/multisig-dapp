@@ -74,33 +74,52 @@ const delOld = (e) => {
 const order = (task) => {
     if(orders < 4){
         let reci = $('#recipient')[0].value
+        /*
+        if reci не адрес
+            alert("Pleas, input correct address")
+            return
+        */
         let summ = $('#summ')[0].value
+        if(isNaN(summ)){
+            alert("Please, input correct amount")
+            return
+        }
         let body = $('#body')[0].value
+
+        $('#recipient')[0].value = ''
+        $('#summ')[0].value = ''
+        $('#body')[0].value = ''
         
-        if(task == 2){
-            if (reci == '' || summ == '' || body == ''){
+        if(reci == '' || summ == '' || body == ''){
+            if(task == 2 && orders != 0){
                 orderSend()
-                
-                
             }
         }
-        orders += 1
-        reciv.push(reci)
-        summv.push(summ)
-        bodyv.push(body)
-
-        if(summ >= 1e9){
-            summ = Math.floor(summ / 1e7) / 100
-            summ = summ.toString() + 'B'
+        else{
+            orders += 1
+            reciv.push(reci)
+            summv.push(summ)
+            bodyv.push(body)
+            
+            if(summ >= 1e9){
+                summ = Math.floor(summ / 1e7) / 100
+                summ = summ.toString() + 'B'
+            }
+            else if(summ >= 1e6){
+                summ = Math.floor(summ / 1e4) / 100
+                summ = summ.toString() + 'M'
+            }
+            
+            let divins = '<div onclick="orderInsert(' + orders + ')"><span class="wallet-create-show-spadd">' + reci.slice(0,3) + '..' + reci.slice(-3) + '</span><span class="wallet-create-show-spamm">' + summ + '</span><i class="fa-solid fa-xmark" onclick="orderDelete(' + orders + ')"></i></div>'
+            
+            $('.wallet-create-show')[0].insertAdjacentHTML('beforeend', divins)
+            if(task == 2){
+                orderSend()                
+            }
         }
-        else if(summ >= 1e6){
-            summ = Math.floor(summ / 1e4) / 100
-            summ = summ.toString() + 'M'
-        }
-
-        let divins = '<div><span class="wallet-create-show-spadd">' + reci.slice(0,3) + '..' + reci.slice(-3) + '</span><span class="wallet-create-show-spamm">' + summ + '</span><i class="fa-solid fa-xmark" onclick="orderDelete(' + orders + ')"></i></div>'
-
-        $('.wallet-create-show')[0].insertAdjacentHTML('beforeend', divins)
+    }
+    else{
+        alert("You can't save more than 4 orders")
     }
 }
 
@@ -113,14 +132,41 @@ const orderDelete = (id) => {
     for (let i = id-1 ; i < orders; i++){
         idred = 'orderDelete(' + (i+1) + ')'
         $('.wallet-create-show > div > i')[i].setAttribute('onclick', idred)
+        idred = 'orderInsert(' + (i+1) + ')'
+        $('.wallet-create-show > div')[i].setAttribute('onclick', idred)
     }
 }
 
 const orderSend = () =>  {
+    let reci = $('#recipient')[0].value
+    let summ = $('#summ')[0].value
+    let body = $('#body')[0].value
+    $('#recipient')[0].value = ''
+    $('#summ')[0].value = ''
+    $('#body')[0].value = ''
+
     //тут взять из reciv summv и bodyv, запаковать в файлик и скинуть юзеру
 
     for (let i = orders; i > 0; i--){
         orderDelete(i);
+    }
+}
+
+const orderInsert = (id) => {
+    if(id < orders){
+        $('#recipient')[0].value = reciv[id-1]
+        $('#summ')[0].value = summv[id-1]
+        $('#body')[0].value = bodyv[id-1]
+        for(let i = 0; i < orders; i++){
+            $('.wallet-create-show > div')[i].setAttribute('style', '')
+        }
+        $('.wallet-create-show > div')[id-1].setAttribute('style', 'border: 2px solid #0088CC;')
+    }
+}
+
+const styleClear = () => {
+    for(let i = 0; i < orders; i++){
+        $('.wallet-create-show > div')[i].setAttribute('style', '')
     }
 }
 

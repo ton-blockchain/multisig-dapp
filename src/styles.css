@@ -249,6 +249,7 @@ body {
     top: 2.5px;
     left: 5px;
     width: 40px;
+    z-index: 1;
 }
 
 .new {
