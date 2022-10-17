@@ -32,11 +32,11 @@ const addNew = () => {
     let delid = 'pubkey_del_' + id
     let delfncallid = 'delOld(' + id + ')'
     $('.new-main-wrapper')[0].insertAdjacentHTML('beforeend', '<input type="text" class="new-input" value="">')
-    $('.new-input')[id-1].setAttribute('placeholder', pkph)
-    $('.new-input')[id-1].setAttribute('id', pkid)
+    $('.new-input')[id - 1].setAttribute('placeholder', pkph)
+    $('.new-input')[id - 1].setAttribute('id', pkid)
     $('.new-main-wrapper')[0].insertAdjacentHTML('beforeend', '<div class="new-del-button"><i class="fa-solid fa-xmark"></i></div>')
-    $('.new-del-button')[id-1].setAttribute('id', delid)
-    $('.new-del-button')[id-1].setAttribute('onclick', delfncallid)
+    $('.new-del-button')[id - 1].setAttribute('id', delid)
+    $('.new-del-button')[id - 1].setAttribute('onclick', delfncallid)
     //$('.new-del-button').click(delOld)
 }
 
@@ -51,16 +51,16 @@ const delOld = (e) => {
     // console.log($('.new-input').length)
     // console.log(delid + ' ' + (id+1))
     l = $('.new-input').length
-    for(let i = 0; i < l ; i++) {
+    for (let i = 0; i < l; i++) {
         //console.log($('.new-input')[i].id.slice(7))
 
         updid = $('.new-input')[i].id.slice(7)
-        updidins = 'pubkey_' + (updid-1)
-        upddelid = 'pubkey_del_' + (updid-1)
-        updlblins = 'Public key ' + (updid-1)
-        delfncallid = 'delOld(' + (updid-1) + ')'
+        updidins = 'pubkey_' + (updid - 1)
+        upddelid = 'pubkey_del_' + (updid - 1)
+        updlblins = 'Public key ' + (updid - 1)
+        delfncallid = 'delOld(' + (updid - 1) + ')'
         //console.log(updidins)
-        if (updid > delid){
+        if (updid > delid) {
             $('.new-input')[i].setAttribute('id', updidins)
             $('.new-input')[i].setAttribute('placeholder', updlblins)
             $('.new-del-button')[i].setAttribute('id', upddelid)
@@ -72,7 +72,7 @@ const delOld = (e) => {
 }
 
 const order = (task) => {
-    if(orders < 4){
+    if (orders < 4) {
         let reci = $('#recipient')[0].value
         /*
         if reci не адрес
@@ -80,7 +80,7 @@ const order = (task) => {
             return
         */
         let summ = $('#summ')[0].value
-        if(isNaN(summ)){
+        if (isNaN(summ)) {
             alert("Please, input correct amount")
             return
         }
@@ -90,8 +90,8 @@ const order = (task) => {
         $('#summ')[0].value = ''
         $('#body')[0].value = ''
         
-        if(reci == '' || summ == '' || body == ''){
-            if(task == 2 && orders != 0){
+        if (reci == '' || summ == '' || body == '') {
+            if (task == 2 && orders != 0) {
                 orderSend()
             }
         }
@@ -101,11 +101,11 @@ const order = (task) => {
             summv.push(summ)
             bodyv.push(body)
             
-            if(summ >= 1e9){
+            if (summ >= 1e9) {
                 summ = Math.floor(summ / 1e7) / 100
                 summ = summ.toString() + 'B'
             }
-            else if(summ >= 1e6){
+            else if (summ >= 1e6) {
                 summ = Math.floor(summ / 1e4) / 100
                 summ = summ.toString() + 'M'
             }
@@ -113,7 +113,7 @@ const order = (task) => {
             let divins = '<div onclick="orderInsert(' + orders + ')"><span class="wallet-create-show-spadd">' + reci.slice(0,3) + '..' + reci.slice(-3) + '</span><span class="wallet-create-show-spamm">' + summ + '</span><i class="fa-solid fa-xmark" onclick="orderDelete(' + orders + ')"></i></div>'
             
             $('.wallet-create-show')[0].insertAdjacentHTML('beforeend', divins)
-            if(task == 2){
+            if (task == 2) {
                 orderSend()                
             }
         }
@@ -124,15 +124,15 @@ const order = (task) => {
 }
 
 const orderDelete = (id) => {
-    reciv.splice(id-1)
-    summv.splice(id-1)
-    bodyv.splice(id-1)
-    $('.wallet-create-show > div')[id-1].remove()
+    reciv.splice(id - 1, 1)
+    summv.splice(id - 1, 1)
+    bodyv.splice(id - 1, 1)
+    $('.wallet-create-show > div')[id - 1].remove()
     orders -= 1
-    for (let i = id-1 ; i < orders; i++){
-        idred = 'orderDelete(' + (i+1) + ')'
+    for (let i = id-1 ; i < orders; i++) {
+        idred = 'orderDelete(' + (i + 1) + ')'
         $('.wallet-create-show > div > i')[i].setAttribute('onclick', idred)
-        idred = 'orderInsert(' + (i+1) + ')'
+        idred = 'orderInsert(' + (i + 1) + ')'
         $('.wallet-create-show > div')[i].setAttribute('onclick', idred)
     }
 }
@@ -147,25 +147,26 @@ const orderSend = () =>  {
 
     //тут взять из reciv summv и bodyv, запаковать в файлик и скинуть юзеру
 
-    for (let i = orders; i > 0; i--){
+    for (let i = orders; i > 0; i--) {
         orderDelete(i);
     }
 }
 
 const orderInsert = (id) => {
-    if(id <= orders){
-        $('#recipient')[0].value = reciv[id-1]
-        $('#summ')[0].value = summv[id-1]
-        $('#body')[0].value = bodyv[id-1]
-        for(let i = 0; i < orders; i++){
+    if (id <= orders) {
+        console.log(reciv, summv, bodyv)
+        $('#recipient')[0].value = reciv[id - 1]
+        $('#summ')[0].value = summv[id - 1]
+        $('#body')[0].value = bodyv[id - 1]
+        for (let i = 0; i < orders; i++) {
             $('.wallet-create-show > div')[i].setAttribute('style', '')
         }
-        $('.wallet-create-show > div')[id-1].setAttribute('style', 'border: 2px solid #0088CC;')
+        $('.wallet-create-show > div')[id - 1].setAttribute('style', 'border: 2px solid #0088CC;')
     }
 }
 
 const styleClear = () => {
-    for(let i = 0; i < orders; i++){
+    for (let i = 0; i < orders; i++) {
         $('.wallet-create-show > div')[i].setAttribute('style', '')
     }
 }
