@@ -1,4 +1,3 @@
-const tonweb = new TonWeb()
 const nacl = tonweb.utils.nacl
 
 let id = 2
@@ -26,7 +25,6 @@ const goNew = () => {
 
 const addNew = () => {
     id += 1
-    console.log(id)
     let pkph = 'Public key ' + id
     let pkid = 'pubkey_' + id
     let delid = 'pubkey_del_' + id
@@ -37,7 +35,6 @@ const addNew = () => {
     $('.new-main-wrapper')[0].insertAdjacentHTML('beforeend', '<div class="new-del-button"><i class="fa-solid fa-xmark"></i></div>')
     $('.new-del-button')[id - 1].setAttribute('id', delid)
     $('.new-del-button')[id - 1].setAttribute('onclick', delfncallid)
-    //$('.new-del-button').click(delOld)
 }
 
 const delOld = (e) => {
@@ -48,18 +45,15 @@ const delOld = (e) => {
     deldiv = '#pubkey_del_' + e
     $(deldiv)[0].remove()
     $(pkid)[0].remove()
-    // console.log($('.new-input').length)
-    // console.log(delid + ' ' + (id+1))
     l = $('.new-input').length
-    for (let i = 0; i < l; i++) {
-        //console.log($('.new-input')[i].id.slice(7))
 
+    for (let i = 0; i < l; i++) {
         updid = $('.new-input')[i].id.slice(7)
         updidins = 'pubkey_' + (updid - 1)
         upddelid = 'pubkey_del_' + (updid - 1)
         updlblins = 'Public key ' + (updid - 1)
         delfncallid = 'delOld(' + (updid - 1) + ')'
-        //console.log(updidins)
+        
         if (updid > delid) {
             $('.new-input')[i].setAttribute('id', updidins)
             $('.new-input')[i].setAttribute('placeholder', updlblins)
@@ -71,31 +65,43 @@ const delOld = (e) => {
     console.log(id)
 }
 
-const order = (task) => {
+const order = async (task) => {
+    if (task == 2) {
+        if (orders > 0) {
+            await orderSend()
+        }
+        else {
+            alert('You did not save any transactions yet')
+        }
+        return
+    }
+
     if (orders < 4) {
         let reci = $('#recipient')[0].value
-        /*
-        if reci не адрес
-            alert("Pleas, input correct address")
-            return
-        */
         let summ = $('#summ')[0].value
-        if (isNaN(summ)) {
-            alert("Please, input correct amount")
-            return
-        }
         let body = $('#body')[0].value
 
         $('#recipient')[0].value = ''
         $('#summ')[0].value = ''
         $('#body')[0].value = ''
         
-        if (reci == '' || summ == '' || body == '') {
-            if (task == 2 && orders != 0) {
-                orderSend()
-            }
+        if (reci == '') {
+            alert('Address can not be empty')
         }
-        else{
+        else {
+            try {
+                new tonweb.Address(reci)
+            }
+            catch {
+                alert("Please, input correct address")
+                return
+            }
+
+            if (isNaN(summ)) {
+                alert("Please, input correct amount")
+                return
+            }
+
             orders += 1
             reciv.push(reci)
             summv.push(summ)
@@ -113,12 +119,9 @@ const order = (task) => {
             let divins = '<div onclick="orderInsert(' + orders + ')"><span class="wallet-create-show-spadd">' + reci.slice(0,3) + '..' + reci.slice(-3) + '</span><span class="wallet-create-show-spamm">' + summ + '</span><i class="fa-solid fa-xmark" onclick="orderDelete(' + orders + ')"></i></div>'
             
             $('.wallet-create-show')[0].insertAdjacentHTML('beforeend', divins)
-            if (task == 2) {
-                orderSend()                
-            }
         }
     }
-    else{
+    else {
         alert("You can't save more than 4 orders")
     }
 }
@@ -137,7 +140,7 @@ const orderDelete = (id) => {
     }
 }
 
-const orderSend = () =>  {
+const orderSend = async () =>  {
     let reci = $('#recipient')[0].value
     let summ = $('#summ')[0].value
     let body = $('#body')[0].value
@@ -145,11 +148,18 @@ const orderSend = () =>  {
     $('#summ')[0].value = ''
     $('#body')[0].value = ''
 
-    //тут взять из reciv summv и bodyv, запаковать в файлик и скинуть юзеру
+    messages = []
 
-    for (let i = orders; i > 0; i--) {
-        orderDelete(i);
+    while (orders > 0) {
+        messages.push(await createInternalMessage(reciv[0], summv[0], false, bodyv[0]))
+        orderDelete(1)
     }
+
+    console.log(messages)
+
+    let order = await createOrder(messages)
+
+    console.log(order)
 }
 
 const orderInsert = (id) => {
