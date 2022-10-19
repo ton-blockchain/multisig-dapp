@@ -68,7 +68,7 @@ const delOld = (e) => {
 const order = async (task) => {
     if (task == 2) {
         if (orders > 0) {
-            await orderSend()
+            await orderSaveToFile()
         }
         else {
             alert('You did not save any transactions yet')
@@ -140,7 +140,7 @@ const orderDelete = (id) => {
     }
 }
 
-const orderSend = async () =>  {
+const orderSaveToFile = async () =>  {
     let reci = $('#recipient')[0].value
     let summ = $('#summ')[0].value
     let body = $('#body')[0].value
@@ -155,11 +155,12 @@ const orderSend = async () =>  {
         orderDelete(1)
     }
 
-    console.log(messages)
-
     let order = await createOrder(messages)
 
-    console.log(order)
+    const boc = await order.toBoc(false)
+    const blob = new Blob([boc])
+    
+    saveAs(blob, 'order.boc')
 }
 
 const orderInsert = (id) => {
