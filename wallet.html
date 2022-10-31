@@ -16,6 +16,11 @@
         <script>
             $(window).on('load', () => {
                 loadWallet()
+                const fileSelector = document.getElementById('file-selector');
+                fileSelector.addEventListener('change', (event) => {
+                    const fileList = event.target.files;
+                    showInfo(fileList[0])
+                });
             })
         </script>
     </head>
@@ -31,7 +36,7 @@
             </div>
             <div class="wallet-sign">
                 <span style="margin-bottom: 20px">Sign and send an order</span>
-                <input type="file"> 
+                <input type="file" id="file-selector" accept=".boc"> 
                 <div class="wallet-sign-send" id="wallet-send">Sign & send</div>
             </div>
             <div class="wallet-create">
@@ -44,6 +49,8 @@
                 <div class="wallet-create-show">
                 </div>
             </div>
+        </div>
+        <div class="wallet-ordinfo😁">
         </div>
     </body>
 </html>

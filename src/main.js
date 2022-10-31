@@ -176,6 +176,45 @@ const orderInsert = (id) => {
     }
 }
 
+const showInfo = (File) => {
+    let file = ''
+    const reader = new FileReader();
+    reader.addEventListener('load', event => {
+        file = event.target.result;
+    });
+    reader.readAsText(File);
+
+    console.log(file)
+
+    //Магия, я хз чё за формат и как читать
+    //Временно забью статичными значениями просто для демонстрации и теста
+
+    $('.wallet-ordinfo😁')[0].value = ''
+    $('.wallet-ordinfo😁')[0].insertAdjacentHTML('beforeend', '<span>Order info:</span>')
+
+    unt = 4
+    rec = ["EQDkg2DOrvUu5Q9ZlExsONueX-TzRXf-9HLzLu7AEJgjh8ki", "EQBIhPuWmjT7fP-VomuTWseE8JNWv2q7QYfsVQ1IZwnMk8wL", "EQDkg2DOrvUu5Q9ZlExsONueX-TzRXf-9HLzLu7AEJgjh8ki", "EQBIhPuWmjT7fP-VomuTWseE8JNWv2q7QYfsVQ1IZwnMk8wL"]
+    amo = ["10", "15", "0.2", "35"]
+    bod = ["Best wishes", "Thanks for that night", "Aboba", "burnosov dead inside"]
+    sem = ["44", "44", "1337", "44"]
+    exc = ["empty", "MetaWar", "empty", "empty"]
+
+    while (unt != 0) {
+        unt -= 1
+        ins = '<div class="wallet-ordinfo-ord🤠"><span class="wallet-ordinf-ord-posname">Recipient:</span><span class="poscontent-block wallet-ordinf-ord-poscontent">' + rec[unt] + '</span><span class="wallet-ordinf-ord-posname">Amount:</span><span class="wallet-ordinf-ord-poscontent">' + amo[unt] + '</span><span class="wallet-ordinf-ord-posname">Body:</span><span class="poscontent-block wallet-ordinf-ord-poscontent">' + bod[unt] + '</span><span class="wallet-ordinf-ord-posname">Send mode:</span>'
+        if(sem[unt] == "1337"){
+            ins += '<span class="wallet-ordinf-ord-poscontent" style="color:red;">' + sem[unt] + '</span><span class="wallet-ordinf-ord-posname">Extra currencies:</span>'
+        }
+        else ins += '<span class="wallet-ordinf-ord-poscontent">' + sem[unt] + '</span><span class="wallet-ordinf-ord-posname">Extra currencies:</span>'
+        if(exc[unt] != "empty"){
+            ins += '<span class="wallet-ordinf-ord-poscontent" style="color:red;">' + exc[unt] + '</span></div>'
+        }
+        else ins += '<span class="wallet-ordinf-ord-poscontent">' + exc[unt] + '</span></div>'
+        $('.wallet-ordinfo😁')[0].insertAdjacentHTML('beforeend', ins)
+        
+    }
+}
+
 const styleClear = () => {
     for (let i = 0; i < orders; i++) {
         $('.wallet-create-show > div')[i].setAttribute('style', '')

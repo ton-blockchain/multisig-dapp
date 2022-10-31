@@ -252,6 +252,48 @@ body {
     z-index: 1;
 }
 
+.wallet-ordinfo😁{
+    width: 90%;
+    height: 20rem;
+    margin: 10px auto;
+    text-align: left;
+}
+
+.wallet-ordinfo😁 > span{
+    display: block;
+    position: relative;
+    bottom: 3.5rem;
+    font-size: 30px;
+}
+
+.wallet-ordinfo-ord🤠{
+    display: inline-block;
+    width: 24%;
+    height: 19rem;
+    vertical-align:bottom;
+}
+
+.poscontent-block{
+    display: block!important;
+    width: 100%!important;
+}
+
+.wallet-ordinfo-ord🤠 > span {
+    display: inline-block;
+    width: 49%;
+    word-wrap: break-word;
+}
+
+.wallet-ordinf-ord-posname{
+    font-size: 25px;
+    margin: 6px 0;
+}
+
+.wallet-ordinf-ord-poscontent{
+    font-size: 18px;
+    font-style: oblique;
+}
+
 .new {
     margin-top: 100px;
 }
