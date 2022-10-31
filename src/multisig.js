@@ -75,9 +75,12 @@ const newMultisig = async (pubkeys, wc, wallet_id, k) => {
     return contract
 }
 
-const rootSignOrder = async (owner_id, order) => {
+const rootSignOrder = async (owner_id, order, wallet_id, query_id) => {
     var cell = new tonweb.boc.Cell()
     cell.bits.writeUint(owner_id, 8)
+    cell.bits.writeBit(0)
+    cell.bits.writeUint32(wallet_id)
+    cell.bits.writeUint64(query_id)
     cell.writeCell(order)
     const hash = await cell.hash()
 
@@ -144,9 +147,9 @@ const addSignature = async (owner_id, cell) => {
     return signedCell
 }
 
-const signAndSend = async (owner_id, boc) => {
+const signAndSend = async (owner_id, boc, wallet_id, query_id) => {
     console.log(boc)
-    var signedOrder = await rootSignOrder(owner_id, await addSignature(owner_id, boc))
+    var signedOrder = await rootSignOrder(owner_id, boc, wallet_id, query_id)
     var message = await createExternalMessage(signedOrder)
     return await tonweb.sendBoc(await message.toBoc(false))
 }
@@ -169,16 +172,9 @@ const createOrder = async (messages) => {
     var order = new tonweb.boc.Cell()
 
     for (const msg of messages) {
-        order.bits.writeUint8(64)
+        order.bits.writeUint8(64) // message mode
         order.refs.push(msg)
     }
 
-    const hash = await order.hash()
-
-    var cell = new tonweb.boc.Cell()
-    //cell.bits.writeUint(0, 1)
-    cell.bits.writeBytes(hash)
-    cell.writeCell(order)
-
-    return cell.clone()
+    return order
 }
