@@ -200,7 +200,13 @@ const showInfo = (File) => {
             const valueBytes = msg.bits.readUint(4)
             const value = msg.bits.readUint(valueBytes * 8).toNumber()
 
-            msg.bits.readBits(1 + 4 + 4 + 64 + 32 + 1 + 1)
+            const extraCurrenciesBool = msg.bits.readBit()
+            var extraCurrencies = 'empty'
+            if (extraCurrenciesBool) {
+                extraCurrencies = 'not empty'
+            }
+
+            msg.bits.readBits(4 + 4 + 64 + 32 + 1 + 1)
 
             const commentBytes = msg.bits.readBits(msg.bits.length - msg.bits.readCursor)
             const comment = new TextDecoder().decode(commentBytes.array)
