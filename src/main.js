@@ -211,8 +211,14 @@ const showInfo = (File) => {
             }
 
             msg.bits.readBits(4 + 4 + 64 + 32 + 1 + 1)
+            var body = msg.refs[0]
+            const opcode = body.bits.readUint(32)
 
-            const commentBytes = msg.bits.readBits(msg.bits.length - msg.bits.readCursor)
+            console.log(body)
+            console.log(body.bits.length, body.bits.readCursor)
+            console.log(body.bits.length - body.bits.readCursor)
+
+            const commentBytes = body.bits.readBits(body.bits.length - body.bits.readCursor)
             const comment = new TextDecoder().decode(commentBytes.array)
             
             console.log(mode, destAddress, value, comment)
