@@ -353,4 +353,10 @@ const loadWallet = async () => {
     $('#balance').text('Balance: ' + balance + ' TON')
     $('#owners').text('Owners: ' + n + ' / ' + k)
     $('#last_active').text('Last active: ' + formatTime(d) + ' ago')
+
+    await sleep(1100)
+
+    const data = (await tonweb.provider.getAddressInfo(addr)).data
+    const dataBoc = tonweb.boc.Cell.oneFromBoc(tonweb.utils.base64ToBytes(data))
+    window.multisig_wallet_id = dataBoc.bits.readUint(32).toNumber()
 }

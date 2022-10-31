@@ -75,12 +75,16 @@ const newMultisig = async (pubkeys, wc, wallet_id, k) => {
     return contract
 }
 
-const rootSignOrder = async (owner_id, order, wallet_id, query_id) => {
+const getQueryId = () => {
+    return Math.floor(Date.now() / 1000 + 7200) << 32
+}
+
+const rootSignOrder = async (owner_id, order) => {
     var cell = new tonweb.boc.Cell()
     cell.bits.writeUint(owner_id, 8)
     cell.bits.writeBit(0)
-    cell.bits.writeUint32(wallet_id)
-    cell.bits.writeUint64(query_id)
+    cell.bits.writeUint32(window.multisig_wallet_id)
+    cell.bits.writeUint64(getQueryId())
     cell.writeCell(order)
     const hash = await cell.hash()
 
@@ -147,9 +151,9 @@ const addSignature = async (owner_id, cell) => {
     return signedCell
 }
 
-const signAndSend = async (owner_id, boc, wallet_id, query_id) => {
+const signAndSend = async (owner_id, boc) => {
     console.log(boc)
-    var signedOrder = await rootSignOrder(owner_id, boc, wallet_id, query_id)
+    var signedOrder = await rootSignOrder(owner_id, boc)
     var message = await createExternalMessage(signedOrder)
     return await tonweb.sendBoc(await message.toBoc(false))
 }
