@@ -184,6 +184,8 @@ const showInfo = (File) => {
 
         window.multisig_order_boc = boc
 
+        const query_id = boc.bits.readUint(64)
+
         unt = boc.refs.length
         rec = []
         amo = []

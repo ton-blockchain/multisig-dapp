@@ -87,7 +87,6 @@ const rootSignOrder = async (owner_id, order) => {
     cell.bits.writeUint(owner_id, 8)
     cell.bits.writeBit(0)
     cell.bits.writeUint(window.multisig_wallet_id, 32)
-    cell.bits.writeUint(getQueryId(), 64)
     cell.writeCell(order)
     const hash = await cell.hash()
 
@@ -178,8 +177,10 @@ const createInternalMessage = async (destAddr, amount, bounce, comment) => {
 const createOrder = async (messages) => {
     var order = new tonweb.boc.Cell()
 
+    order.bits.writeUint(getQueryId(), 64)
+
     for (const msg of messages) {
-        order.bits.writeUint8(64) // message mode
+        order.bits.writeUint8(2) // message mode
         order.refs.push(msg)
     }
 
