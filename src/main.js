@@ -182,6 +182,8 @@ const showInfo = (File) => {
         const bocString = event.target.result
         const boc = tonweb.boc.Cell.oneFromBoc(new Uint8Array(bocString))
 
+        window.multisig_order_boc = boc
+
         unt = boc.refs.length
         rec = []
         amo = []
@@ -324,11 +326,15 @@ const loadNew = async () => {
 const loadWallet = async () => {
     console.log(window.location)
     addr = window.location.href.split("?")[1]
+    window.multisig_address = addr
     $('.wallet-address').text(addr)
     const r = (await (await fetch('https://api.ton.cat/v2/explorer/getWalletInformation?address=' + addr)).json()).result
     console.log(r.balance, roundNumber(Number(r.balance) / 1e9, 2))
     let balance = roundNumber(Number(r.balance) / 1e9, 2).toString()
     let lastTxHash = r.last_transaction_id.hash
+    let lastTxHashBytes = tonweb.utils.base64ToBytes(lastTxHash)
+    let lastTxHashHex = tonweb.utils.bytesToHex(lastTxHashBytes)
+    console.log(lastTxHash)
 
     const s = (await (await fetch('https://toncenter.com/api/v2/runGetMethod', {
         method: 'POST',
@@ -347,7 +353,7 @@ const loadWallet = async () => {
 
     await sleep(1100)
 
-    const t = (await (await fetch('https://toncenter.com/api/index/getTransactionByHash?include_msg_body=false&tx_hash=' + lastTxHash)).json())[0].utime
+    const t = (await (await fetch('https://toncenter.com/api/v2/getTransactions?address=' + addr + '&limit=1&to_lt=0&archival=true&hash=' + lastTxHashHex)).json()).result[0].utime
     const d = (new Date()) / 1000 - t
 
     $('#balance').text('Balance: ' + balance + ' TON')
@@ -356,7 +362,34 @@ const loadWallet = async () => {
 
     await sleep(1100)
 
-    const data = (await tonweb.provider.getAddressInfo(addr)).data
-    const dataBoc = tonweb.boc.Cell.oneFromBoc(tonweb.utils.base64ToBytes(data))
+    var data = (await tonweb.provider.getAddressInfo(addr)).data
+    var dataBoc = tonweb.boc.Cell.oneFromBoc(tonweb.utils.base64ToBytes(data))
     window.multisig_wallet_id = dataBoc.bits.readUint(32).toNumber()
+    dataBoc.bits.readBits(8 + 8 + 64)
+    var owners = new TonWeb.boc.HashMap(8)
+    owners.loadHashMapX2Y(dataBoc.refs[0], s => TonWeb.boc.CellParser.loadUint(s, 8), (s) => {
+        const pubkey = TonWeb.boc.CellParser.loadUint(s, 256)
+        const flood = TonWeb.boc.CellParser.loadUint(s, 8)
+        return pubkey.words
+    })
+    owners = owners.elements
+    console.log(owners)
+
+    const address = (await ton.send('ton_requestAccounts'))[0]
+
+    await sleep(1100)
+
+    data = (await tonweb.provider.getAddressInfo(address)).data
+    dataBoc = tonweb.boc.Cell.oneFromBoc(tonweb.utils.base64ToBytes(data))
+    dataBoc.bits.readBits(64)
+    const pubkey = dataBoc.bits.readUint(256).words
+    
+    for (const o_i in owners) {
+        if (JSON.stringify(owners[o_i]) == JSON.stringify(pubkey)) {
+            window.multisig_owner_id = o_i
+            break
+        }
+    }
+
+    console.log(window.multisig_owner_id)
 }
