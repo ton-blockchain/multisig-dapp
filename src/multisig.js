@@ -46,10 +46,15 @@ class MultisigContract extends tonweb.Contract {
 }
 
 const newMultisig = async (pubkeys, wc, wallet_id, k) => {
+    if (pubkeys.length < 2) {
+        alert('Add at least 2 owners!')
+        return
+    }
+
     x = new tonweb.boc.HashMap(8)
 
     for (let i = 0; i < pubkeys.length; i++) {
-        x.elements[i] = [tonweb.utils.hexToBytes(pubkeys[i]), 0]
+        x.elements[i] = [tonweb.utils.hexToBytes(pubkeys[i]), i]
     }
 
     owner_infos = await x.serialize(

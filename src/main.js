@@ -256,10 +256,10 @@ const styleClear = () => {
 }
 
 const createWallet = async  () => {
-        var pubkeys = []
-        for (const inp of $('.new-input')) {
-            pubkeys.push(inp.value)
-        }
+    var pubkeys = []
+    for (const inp of $('.new-input')) {
+        pubkeys.push(inp.value)
+    }
 
     const wc = $('#workchain_id')[0].value,
           wallet_id = $('#wallet_id')[0].value,
@@ -267,7 +267,7 @@ const createWallet = async  () => {
 
     console.log(wc, wallet_id, k)
 
-    const contract = newMultisig(pubkeys, wc, wallet_id, k)
+    const contract = await newMultisig(pubkeys, wc, wallet_id, k)
     await contract.getAddress()
 
     console.log(contract.address.toString(true, true, false))
@@ -293,7 +293,8 @@ const createWallet = async  () => {
     console.log(await deployTx.send())
 
     const multisigAddress = contract.address.toString(true, true, true)
-    // todo: redirect to multisig wallet view page for that address
+    
+    window.location.href = "wallet.html?" + multisigAddress
 }
 
 const roundNumber = (n, r) => {
