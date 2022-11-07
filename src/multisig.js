@@ -189,7 +189,7 @@ const createOrder = async (messages) => {
     order.bits.writeUint(getQueryId(), 64)
 
     for (const msg of messages) {
-        order.bits.writeUint8(2) // message mode
+        order.bits.writeUint8(3) // message mode
         order.refs.push(msg)
     }
 
