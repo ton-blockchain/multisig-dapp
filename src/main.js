@@ -200,23 +200,20 @@ const showInfo = (File) => {
             
             const destAddressRaw = msg.bits.readInt(8) + ':' + msg.bits.readBits(256)
             const destAddress = new tonweb.utils.Address(destAddressRaw).toString(true, true, true, false)
-            
+
             const valueBytes = msg.bits.readUint(4)
             const value = msg.bits.readUint(valueBytes * 8).toNumber()
 
             const extraCurrenciesBool = msg.bits.readBit()
-            var extraCurrencies = 'empty'
+            let extraCurrencies = 'empty'
             if (extraCurrenciesBool) {
                 extraCurrencies = 'not empty'
             }
 
             msg.bits.readBits(4 + 4 + 64 + 32 + 1 + 1)
-            var body = msg.refs[0]
+            let body = msg.refs[0]
+            body.bits.readCursor = 0
             const opcode = body.bits.readUint(32)
-
-            console.log(body)
-            console.log(body.bits.length, body.bits.readCursor)
-            console.log(body.bits.length - body.bits.readCursor)
 
             const commentBytes = body.bits.readBits(body.bits.length - body.bits.readCursor)
             const comment = new TextDecoder().decode(commentBytes.array)
@@ -256,7 +253,7 @@ const styleClear = () => {
 }
 
 const createWallet = async  () => {
-    var pubkeys = []
+    let pubkeys = []
     for (const inp of $('.new-input')) {
         pubkeys.push(inp.value)
     }
@@ -282,7 +279,7 @@ const createWallet = async  () => {
         }]
     )
 
-    var txHash = (await tonweb.getTransactions(address, 1))[0].transaction_id.hash
+    let txHash = (await tonweb.getTransactions(address, 1))[0].transaction_id.hash
     while (txHash == lastTxHash) {
         await sleep(1500)
         txHash = (await tonweb.getTransactions(address, 1))[0].transaction_id.hash
@@ -333,6 +330,7 @@ const loadNew = async () => {
 }
 
 const loadWallet = async () => {
+    console.log('loadwallet!!!')
     console.log(window.location)
     addr = window.location.href.split("?")[1]
     window.multisig_address = addr
@@ -365,17 +363,19 @@ const loadWallet = async () => {
     const t = (await (await fetch('https://toncenter.com/api/v2/getTransactions?address=' + addr + '&limit=1&to_lt=0&archival=true&hash=' + lastTxHashHex)).json()).result[0].utime
     const d = (new Date()) / 1000 - t
 
+    console.log(d, '!!!')
+
     $('#balance').text('Balance: ' + balance + ' TON')
     $('#owners').text('Owners: ' + n + ' / ' + k)
     $('#last_active').text('Last active: ' + formatTime(d) + ' ago')
 
     await sleep(1100)
 
-    var data = (await tonweb.provider.getAddressInfo(addr)).data
-    var dataBoc = tonweb.boc.Cell.oneFromBoc(tonweb.utils.base64ToBytes(data))
+    let data = (await tonweb.provider.getAddressInfo(addr)).data
+    let dataBoc = tonweb.boc.Cell.oneFromBoc(tonweb.utils.base64ToBytes(data))
     window.multisig_wallet_id = dataBoc.bits.readUint(32).toNumber()
     dataBoc.bits.readBits(8 + 8 + 64)
-    var owners = new TonWeb.boc.HashMap(8)
+    let owners = new TonWeb.boc.HashMap(8)
     owners.loadHashMapX2Y(dataBoc.refs[0], s => TonWeb.boc.CellParser.loadUint(s, 8), (s) => {
         const pubkey = TonWeb.boc.CellParser.loadUint(s, 256)
         const flood = TonWeb.boc.CellParser.loadUint(s, 8)
@@ -401,4 +401,11 @@ const loadWallet = async () => {
     }
 
     console.log(window.multisig_owner_id)
+}
+
+const signAndSendReload = async () => {
+    await signAndSend(window.multisig_order_boc)
+    $('.wallet-ordinfo😁')[0].value = ''
+    await sleep(6100)
+    await loadWallet()
 }
