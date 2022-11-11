@@ -327,6 +327,8 @@ const loadIndex = async () => {
 
 const loadNew = async () => {
     $('.new-add-button').click(addNew)
+    addNew()
+    addNew()
 }
 
 const loadWallet = async () => {
