@@ -259,6 +259,9 @@ const createWallet = async  () => {
             new tonweb.Address(inp.value)
             await sleep(1100)
             const pkey = (await tonweb.call(inp.value, 'get_public_key')).stack[0][1].substr(2)
+            if (tonweb.utils.hexToBytes(pkey).length != 32) {
+                throw false
+            }
             pubkeys.push(pkey)
         }
         catch (e) {
@@ -282,6 +285,8 @@ const createWallet = async  () => {
 
     const address = (await ton.send('ton_requestAccounts'))[0]
 
+    await sleep(1100)
+
     const lastTxHash = (await tonweb.getTransactions(address, 1))[0].transaction_id.hash
 
     await ton.send('ton_sendTransaction', [{
@@ -289,6 +294,8 @@ const createWallet = async  () => {
             value: '50000000'
         }]
     )
+
+    await sleep(1100)
 
     let txHash = (await tonweb.getTransactions(address, 1))[0].transaction_id.hash
     while (txHash == lastTxHash) {
@@ -299,6 +306,8 @@ const createWallet = async  () => {
 
     const deployTx = contract.deploy()
     console.log(await deployTx.send())
+
+    await sleep(1100)
 
     const multisigAddress = contract.address.toString(true, true, true)
     
