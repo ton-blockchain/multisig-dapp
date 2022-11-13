@@ -25,7 +25,7 @@ const goNew = () => {
 
 const addNew = () => {
     id += 1
-    let pkph = 'Public key ' + id
+    let pkph = 'Public key or address ' + id
     let pkid = 'pubkey_' + id
     let delid = 'pubkey_del_' + id
     let delfncallid = 'delOld(' + id + ')'
@@ -51,7 +51,7 @@ const delOld = (e) => {
         updid = $('.new-input')[i].id.slice(7)
         updidins = 'pubkey_' + (updid - 1)
         upddelid = 'pubkey_del_' + (updid - 1)
-        updlblins = 'Public key ' + (updid - 1)
+        updlblins = 'Public key or address ' + (updid - 1)
         delfncallid = 'delOld(' + (updid - 1) + ')'
         
         if (updid > delid) {
@@ -255,8 +255,19 @@ const styleClear = () => {
 const createWallet = async  () => {
     let pubkeys = []
     for (const inp of $('.new-input')) {
-        pubkeys.push(inp.value)
+        try {
+            new tonweb.Address(inp.value)
+            await sleep(1100)
+            const pkey = (await tonweb.call(inp.value, 'get_public_key')).stack[0][1].substr(2)
+            pubkeys.push(pkey)
+        }
+        catch (e) {
+            console.log(e)
+            pubkeys.push(inp.value)
+        }
     }
+
+    console.log(pubkeys)
 
     const wc = $('#workchain_id')[0].value,
           wallet_id = $('#wallet_id')[0].value,
@@ -319,9 +330,9 @@ const loadIndex = async () => {
     })
     $('#search_go').click(doSearch)
     $('#search_new').click(goNew)
-    $('.new-main-wrapper')[0].insertAdjacentHTML('beforeend', '<input type="text" class="new-input" value="" placeholder="Public key 1" id="pubkey_1">')
+    $('.new-main-wrapper')[0].insertAdjacentHTML('beforeend', '<input type="text" class="new-input" value="" placeholder="Public key or address 1" id="pubkey_1">')
     $('.new-main-wrapper')[0].insertAdjacentHTML('beforeend', '<div class="new-del-button" id="pubkey_del_1" onclick="delOld(1)"><i class="fa-solid fa-xmark"></i></div>')
-    $('.new-main-wrapper')[0].insertAdjacentHTML('beforeend', '<input type="text" class="new-input" value="" placeholder="Public key 2" id="pubkey_2">')
+    $('.new-main-wrapper')[0].insertAdjacentHTML('beforeend', '<input type="text" class="new-input" value="" placeholder="Public key or address 2" id="pubkey_2">')
     $('.new-main-wrapper')[0].insertAdjacentHTML('beforeend', '<div class="new-del-button" id="pubkey_del_2" onclick="delOld(2)"><i class="fa-solid fa-xmark"></i></div>')
 }
 
