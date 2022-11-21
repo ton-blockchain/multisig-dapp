@@ -7,8 +7,6 @@ let reciv = []
 let summv = []
 let bodyv = []
 
-const sleep = ms => new Promise(r => setTimeout(r, ms));
-
 const doSearch = async () => {
     let address = $('.search-input').val()
     try {
@@ -261,7 +259,6 @@ const createWallet = async  () => {
     for (const inp of $('.new-input')) {
         try {
             new tonweb.Address(inp.value)
-            await sleep(1100)
             const pkey = (await tonweb.call(inp.value, 'get_public_key')).stack[0][1].substr(2)
             if (tonweb.utils.hexToBytes(pkey).length != 32) {
                 throw false
@@ -289,8 +286,6 @@ const createWallet = async  () => {
 
     const address = (await ton.send('ton_requestAccounts'))[0]
 
-    await sleep(1100)
-
     const lastTxHash = (await tonweb.getTransactions(address, 1))[0].transaction_id.hash
 
     await ton.send('ton_sendTransaction', [{
@@ -299,19 +294,13 @@ const createWallet = async  () => {
         }]
     )
 
-    await sleep(1100)
-
     let txHash = (await tonweb.getTransactions(address, 1))[0].transaction_id.hash
     while (txHash == lastTxHash) {
-        await sleep(1500)
         txHash = (await tonweb.getTransactions(address, 1))[0].transaction_id.hash
     }
-    await sleep(1500)
 
     const deployTx = contract.deploy()
     console.log(await deployTx.send())
-
-    await sleep(1100)
 
     const multisigAddress = contract.address.toString(true, true, true)
     
@@ -373,8 +362,6 @@ const loadWallet = async () => {
     const n = Number(s[0][1])
     const k = Number(s[1][1])
 
-    await sleep(1100)
-
     const t = (await tonweb.provider.getTransactions(addr, 1, undefined, lastTxHash, undefined, true))[0].utime
     const d = (new Date()) / 1000 - t
 
@@ -383,8 +370,6 @@ const loadWallet = async () => {
     $('#balance').text('Balance: ' + balance + ' TON')
     $('#owners').text('Owners: ' + n + ' / ' + k)
     $('#last_active').text('Last active: ' + formatTime(d) + ' ago')
-
-    await sleep(1100)
 
     let data = (await tonweb.provider.getAddressInfo(addr)).data
     let dataBoc = tonweb.boc.Cell.oneFromBoc(tonweb.utils.base64ToBytes(data))
@@ -400,8 +385,6 @@ const loadWallet = async () => {
     console.log(owners)
 
     const address = (await ton.send('ton_requestAccounts'))[0]
-
-    await sleep(1100)
 
     data = (await tonweb.provider.getAddressInfo(address)).data
     dataBoc = tonweb.boc.Cell.oneFromBoc(tonweb.utils.base64ToBytes(data))
