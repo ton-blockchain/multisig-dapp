@@ -361,7 +361,7 @@ const loadWallet = async () => {
     addr = window.location.href.split("?")[1]
     window.multisig_address = addr
     $('.wallet-address').text(addr)
-    const r = (await (await fetch('https://api.ton.cat/v2/explorer/getWalletInformation?address=' + addr)).json()).result
+    const r = await tonweb.provider.getExtendedAddressInfo(addr)
     console.log(r.balance, roundNumber(Number(r.balance) / 1e9, 2))
     let balance = roundNumber(Number(r.balance) / 1e9, 2).toString()
     let lastTxHash = r.last_transaction_id.hash
@@ -369,24 +369,13 @@ const loadWallet = async () => {
     let lastTxHashHex = tonweb.utils.bytesToHex(lastTxHashBytes)
     console.log(lastTxHash)
 
-    const s = (await (await fetch('https://toncenter.com/api/v2/runGetMethod', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            address: addr,
-            method: 'get_n_k',
-            stack: []
-        })
-    })).json()).result.stack
+    const s = (await tonweb.call(addr, 'get_n_k')).stack
     const n = Number(s[0][1])
     const k = Number(s[1][1])
 
     await sleep(1100)
 
-    const t = (await (await fetch('https://toncenter.com/api/v2/getTransactions?address=' + addr + '&limit=1&to_lt=0&archival=true&hash=' + lastTxHashHex)).json()).result[0].utime
+    const t = (await tonweb.provider.getTransactions(addr, 1, undefined, lastTxHash, undefined, true))[0].utime
     const d = (new Date()) / 1000 - t
 
     console.log(d, '!!!')
