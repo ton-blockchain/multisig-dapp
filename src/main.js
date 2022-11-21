@@ -9,14 +9,18 @@ let bodyv = []
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-const doSearch = () => {
+const doSearch = async () => {
     let address = $('.search-input').val()
-    fetch('https://api.ton.cat/v2/explorer/getWalletInformation?address=' + address)
-    .then(r => r.json()).then(r => {
-        if (r.ok) {
-            window.location.href="wallet.html?" + address
-        }   
-    })
+    try {
+        const code = (await tonweb.provider.getExtendedAddressInfo(address)).account_state.code
+        if (code != "te6cckECKwEABBoAART/APSkE/S88sgLAQIBIAIDAgFIBAUE2vIgxwCOgzDbPOCDCNcYIPkBAdMH2zwiwAAToVNxePQOb6Hyn9s8VBq6+RDyoAb0BCD5AQHTH1EYuvKq0z9wUwHwCgHCCAGDCryx8mhTFYBA9A5voSCYDqQgwgryZw7f+COqH1NAufJhVCOjU04gIyEiAgLMBgcCASAMDQIBIAgJAgFmCgsAA9GEAiPymAvHoHN9CYbZ5S7Z4BPHohwhJQAtAKkItdJEqCTItdKlwLUAdAT8ArobBKAATwhbpEx4CBukTDgAdAg10rDAJrUAvALyFjPFszJ4HHXI8gBzxb0AMmACASAODwIBIBQVARW77ZbVA0cFUg2zyCoCAUgQEQIBIBITAXOxHXQgwjXGCD5AQHTB4IB1MTtQ9hTIHj0Dm+h8p/XC/9eMfkQ8qCuAfQEIW6TW3Ey4PkBWNs8AaQBgJwA9rtqA6ADoAPoCAXoCEfyAgPyA3XlP+AXkegAA54tkwAAZrhlXOFnBANVmdqHsQAIBIBYXAgEgGBkBUbclW2eGJkZqRhAIHoHN9DHCTYRaQAAzGmHmLgBa4CYcC2/uHAt3dG4QIwGJtVmbZ4ar4G/tscbKInAIHo+N9KQRxKBaQAAxw4QQAhrkJLrgZPZFFhOZADniyoQAkAgeiGBSJhxSJhxSJlxANmJczYowIwIBIBobABe1BrXOEEA1WZ2oexACASAcHQIDmTgeHwERrBptni+BtglAIwAVrflBAMyVdqHsGEABDak2zwVXwWAjABet3CzcIIBqsztQ9iACINs8AvJl+ABQQ3FDE9s87VQjKgAK0//TBzAEoNs8L65TILDyYhKxAqQls1McubAlgQDhqiOgKLyw8mmCAYag+AEFlwIREAI+PjCOjREQH9s8QNd49EMQvQXiVBZbVHPnVhBT3Ns8VHEKVHq8JCUoJgAg7UTQ0x/TB9MH0z/0BPQE0QBeAY4aMNIAAfKj0wfTB1AD1wEg+QEF+QEVuvKkUAPgbCEh10qqAiLXSbryq3BUIBMADAHIy//LBwTW2zztVPgPcCVuU4m+sZgQbhAtUMdfB48bMFQkA1BN2zxQVaBGUBBJEDpLCVO52zxQVBZ/4vgAB4MloY4sJoBA9JZvpSCUMFMDud4gjhY4OTkI0gABl9MHMBbwBwWRMOJ/CAcFkmwx4rPmMAYqJygpAGBwjikD0IMI1xjTB/QEMFMWePQOb6HypdcL/1RFRPkQ8qauUiCxUgO9FKEjbuZsIjIAflIwvo4gXwP4AJMi10qYAtMH1AL7AALoMnDIygBAFIBA9EMC8AeOF3HIywAUywcSywdYzwFYzxZAE4BA9EMB4gEgjooQRRA0QwDbPO1Ukl8G4ioAHMjLH8sHywfLP/QA9ADJhLWsTA==") {
+            throw true;
+        }
+        window.location.href = "wallet.html?" + address
+    }
+    catch {
+        alert('not a multisig') 
+    }
 }
 
 const goNew = () => {
