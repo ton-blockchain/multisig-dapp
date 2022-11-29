@@ -7,6 +7,10 @@ let reciv = []
 let summv = []
 let bodyv = []
 
+const sleep = async (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms))
+}
+
 const doSearch = async () => {
     let address = $('.search-input').val()
     try {
@@ -273,16 +277,52 @@ const createWallet = async  () => {
 
     console.log(pubkeys)
 
+    //if pubckeys elements are empty - alert and return
+    if (pubkeys.length == 0) {
+        alert('Please, enter at least one public key')
+        return
+    }
+
+    //if elements in pubkeys are empty strings - alert and return
+    for (let i = 0; i < pubkeys.length; i++) {
+        if (pubkeys[i] == '') {
+            alert('Please, fill all public keys')
+            return
+        }
+    }
+
+    //check if there is no same public keys
+    for (let i = 0; i < pubkeys.length; i++) {
+        for (let j = i + 1; j < pubkeys.length; j++) {
+            if (pubkeys[i] == pubkeys[j]) {
+                alert('Please, enter different public keys')
+                return
+            }
+        }
+    }
+
     const wc = $('#workchain_id')[0].value,
           wallet_id = $('#wallet_id')[0].value,
           k = $('#k_value')[0].value
 
     console.log(wc, wallet_id, k)
 
+    //if wc, wallet_id, k are empty - return
+    if (!wc || !wallet_id || !k) {
+        alert('Fill all fields')
+        return
+    }
+
     const contract = await newMultisig(pubkeys, wc, wallet_id, k)
     await contract.getAddress()
 
     console.log(contract.address.toString(true, true, false))
+
+    //check is ton is defined
+    if (typeof ton === 'undefined') {
+        alert('Install any TON wallet extension')
+        return
+    }
 
     const address = (await ton.send('ton_requestAccounts'))[0]
 
@@ -295,8 +335,12 @@ const createWallet = async  () => {
     )
 
     let txHash = (await tonweb.getTransactions(address, 1))[0].transaction_id.hash
+    
+    startLoading()
+
     while (txHash == lastTxHash) {
         txHash = (await tonweb.getTransactions(address, 1))[0].transaction_id.hash
+        await sleep(1000)
     }
 
     const deployTx = contract.deploy()
@@ -304,6 +348,8 @@ const createWallet = async  () => {
 
     const multisigAddress = contract.address.toString(true, true, true)
     
+    endLoading();
+
     window.location.href = "wallet.html?" + multisigAddress
 }
 
@@ -324,6 +370,14 @@ const formatTime = (t) => {
     if (t < 12) return roundNumber(t, 0) + ' month' + (t >= 2 ? 's' : '')
     t /= 12
     return roundNumber(t, 0) + ' year' + (t >= 2 ? 's' : '')
+}
+
+const startLoading = () => {
+    $('.loading')[0].setAttribute('style', '')
+}
+
+const endLoading = () => {
+    $('.loading')[0].setAttribute('style', 'display: none;')
 }
 
 const loadIndex = async () => {
