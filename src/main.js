@@ -7,6 +7,8 @@ let reciv = []
 let summv = []
 let bodyv = []
 
+if (localStorage.getItem('network') === null) localStorage.setItem('network', 'main');
+
 const sleep = async (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms))
 }
@@ -381,6 +383,11 @@ const endLoading = () => {
 }
 
 const loadIndex = async () => {
+    if(localStorage.getItem('network') == 'test'){
+        $('#1337')[0].setAttribute('checked', 'true')
+        $('#1337')[0].setAttribute('onclick', 'changeNetwork(true)')
+    }
+
     $('.search-input').on('keyup', e => {
         if (e.key === 'Enter' || e.keyCode === 13) doSearch()
     })
@@ -396,9 +403,17 @@ const loadNew = async () => {
     $('.new-add-button').click(addNew)
     addNew()
     addNew()
+    if(localStorage.getItem('network') == 'test'){
+        $('#1337')[0].setAttribute('checked', 'true')
+        $('#1337')[0].setAttribute('onclick', 'changeNetwork(true)')
+    }
 }
 
 const loadWallet = async () => {
+    if(localStorage.getItem('network') == 'test'){
+        $('#1337')[0].setAttribute('checked', 'true')
+        $('#1337')[0].setAttribute('onclick', 'changeNetwork(true)')
+    }
     console.log('loadwallet!!!')
     console.log(window.location)
     addr = window.location.href.split("?")[1]
@@ -460,4 +475,23 @@ const signAndSendReload = async () => {
     $('.wallet-ordinfo😁')[0].value = ''
     await sleep(6100)
     await loadWallet()
+}
+
+const changeNetwork = (old) => {
+    //console.log(old)
+    if (old) {
+        localStorage.setItem('network', 'main')
+        $('#1337')[0].setAttribute('onclick', 'changeNetwork(false)')
+        //Тут надо поменять сеть на mainnet
+
+
+        console.log('network: ' + localStorage.getItem('network'))
+    } else {
+        localStorage.setItem('network', 'test')
+        $('#1337')[0].setAttribute('onclick', 'changeNetwork(true)')
+        //Ну тут соответственно на тестнет 
+
+        
+        console.log('network: ' + localStorage.getItem('network'))
+    }
 }
