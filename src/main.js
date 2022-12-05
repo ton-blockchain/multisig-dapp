@@ -1,4 +1,4 @@
-const nacl = tonweb.utils.nacl
+const nacl = tonweb[localStorage.getItem('network')].utils.nacl
 
 let id = 0
 let orders = 0
@@ -16,7 +16,7 @@ const sleep = async (ms) => {
 const doSearch = async () => {
     let address = $('.search-input').val()
     try {
-        const code = (await tonweb.provider.getExtendedAddressInfo(address)).account_state.code
+        const code = (await tonweb[localStorage.getItem('network')].provider.getExtendedAddressInfo(address)).account_state.code
         if (code != "te6cckECKwEABBoAART/APSkE/S88sgLAQIBIAIDAgFIBAUE2vIgxwCOgzDbPOCDCNcYIPkBAdMH2zwiwAAToVNxePQOb6Hyn9s8VBq6+RDyoAb0BCD5AQHTH1EYuvKq0z9wUwHwCgHCCAGDCryx8mhTFYBA9A5voSCYDqQgwgryZw7f+COqH1NAufJhVCOjU04gIyEiAgLMBgcCASAMDQIBIAgJAgFmCgsAA9GEAiPymAvHoHN9CYbZ5S7Z4BPHohwhJQAtAKkItdJEqCTItdKlwLUAdAT8ArobBKAATwhbpEx4CBukTDgAdAg10rDAJrUAvALyFjPFszJ4HHXI8gBzxb0AMmACASAODwIBIBQVARW77ZbVA0cFUg2zyCoCAUgQEQIBIBITAXOxHXQgwjXGCD5AQHTB4IB1MTtQ9hTIHj0Dm+h8p/XC/9eMfkQ8qCuAfQEIW6TW3Ey4PkBWNs8AaQBgJwA9rtqA6ADoAPoCAXoCEfyAgPyA3XlP+AXkegAA54tkwAAZrhlXOFnBANVmdqHsQAIBIBYXAgEgGBkBUbclW2eGJkZqRhAIHoHN9DHCTYRaQAAzGmHmLgBa4CYcC2/uHAt3dG4QIwGJtVmbZ4ar4G/tscbKInAIHo+N9KQRxKBaQAAxw4QQAhrkJLrgZPZFFhOZADniyoQAkAgeiGBSJhxSJhxSJlxANmJczYowIwIBIBobABe1BrXOEEA1WZ2oexACASAcHQIDmTgeHwERrBptni+BtglAIwAVrflBAMyVdqHsGEABDak2zwVXwWAjABet3CzcIIBqsztQ9iACINs8AvJl+ABQQ3FDE9s87VQjKgAK0//TBzAEoNs8L65TILDyYhKxAqQls1McubAlgQDhqiOgKLyw8mmCAYag+AEFlwIREAI+PjCOjREQH9s8QNd49EMQvQXiVBZbVHPnVhBT3Ns8VHEKVHq8JCUoJgAg7UTQ0x/TB9MH0z/0BPQE0QBeAY4aMNIAAfKj0wfTB1AD1wEg+QEF+QEVuvKkUAPgbCEh10qqAiLXSbryq3BUIBMADAHIy//LBwTW2zztVPgPcCVuU4m+sZgQbhAtUMdfB48bMFQkA1BN2zxQVaBGUBBJEDpLCVO52zxQVBZ/4vgAB4MloY4sJoBA9JZvpSCUMFMDud4gjhY4OTkI0gABl9MHMBbwBwWRMOJ/CAcFkmwx4rPmMAYqJygpAGBwjikD0IMI1xjTB/QEMFMWePQOb6HypdcL/1RFRPkQ8qauUiCxUgO9FKEjbuZsIjIAflIwvo4gXwP4AJMi10qYAtMH1AL7AALoMnDIygBAFIBA9EMC8AeOF3HIywAUywcSywdYzwFYzxZAE4BA9EMB4gEgjooQRRA0QwDbPO1Ukl8G4ioAHMjLH8sHywfLP/QA9ADJhLWsTA==") {
             throw true;
         }
@@ -98,7 +98,7 @@ const order = async (task) => {
         }
         else {
             try {
-                new tonweb.Address(reci)
+                new tonweb[localStorage.getItem('network')].Address(reci)
             }
             catch {
                 alert("Please, input correct address")
@@ -159,7 +159,7 @@ const orderSaveToFile = async () =>  {
     messages = []
 
     while (orders > 0) {
-        messages.push(await createInternalMessage(reciv[0], tonweb.utils.toNano(summv[0]), false, bodyv[0]))
+        messages.push(await createInternalMessage(reciv[0], tonweb[localStorage.getItem('network')].utils.toNano(summv[0]), false, bodyv[0]))
         orderDelete(1)
     }
 
@@ -188,7 +188,7 @@ const showInfo = (File) => {
     const reader = new FileReader()
     reader.addEventListener('load', event => {
         const bocString = event.target.result
-        const boc = tonweb.boc.Cell.oneFromBoc(new Uint8Array(bocString))
+        const boc = tonweb[localStorage.getItem('network')].boc.Cell.oneFromBoc(new Uint8Array(bocString))
 
         window.multisig_order_boc = boc
 
@@ -207,7 +207,7 @@ const showInfo = (File) => {
             msg.bits.readBits(6 + 3)
             
             const destAddressRaw = msg.bits.readInt(8) + ':' + msg.bits.readBits(256)
-            const destAddress = new tonweb.utils.Address(destAddressRaw).toString(true, true, true, false)
+            const destAddress = new tonweb[localStorage.getItem('network')].utils.Address(destAddressRaw).toString(true, true, true, false)
 
             const valueBytes = msg.bits.readUint(4)
             const value = msg.bits.readUint(valueBytes * 8).toNumber()
@@ -228,7 +228,7 @@ const showInfo = (File) => {
             
             console.log(mode, destAddress, value, comment)
             rec.push(destAddress)
-            amo.push(tonweb.utils.fromNano(value.toString()))
+            amo.push(tonweb[localStorage.getItem('network')].utils.fromNano(value.toString()))
             bod.push(comment)
             sem.push(mode)
             exc.push('empty')
@@ -264,9 +264,9 @@ const createWallet = async  () => {
     let pubkeys = []
     for (const inp of $('.new-input')) {
         try {
-            new tonweb.Address(inp.value)
-            const pkey = (await tonweb.call(inp.value, 'get_public_key')).stack[0][1].substr(2)
-            if (tonweb.utils.hexToBytes(pkey).length != 32) {
+            new tonweb[localStorage.getItem('network')].Address(inp.value)
+            const pkey = (await tonweb[localStorage.getItem('network')].call(inp.value, 'get_public_key')).stack[0][1].substr(2)
+            if (tonweb[localStorage.getItem('network')].utils.hexToBytes(pkey).length != 32) {
                 throw false
             }
             pubkeys.push(pkey)
@@ -328,7 +328,9 @@ const createWallet = async  () => {
 
     const address = (await ton.send('ton_requestAccounts'))[0]
 
-    const lastTxHash = (await tonweb.getTransactions(address, 1))[0].transaction_id.hash
+    const lastTxHash = (await tonweb[localStorage.getItem('network')].getTransactions(address, 1))[0].transaction_id.hash
+
+    startLoading()
 
     await ton.send('ton_sendTransaction', [{
             to: contract.address.toString(true, true, false),
@@ -336,12 +338,10 @@ const createWallet = async  () => {
         }]
     )
 
-    let txHash = (await tonweb.getTransactions(address, 1))[0].transaction_id.hash
-    
-    startLoading()
+    let txHash = (await tonweb[localStorage.getItem('network')].getTransactions(address, 1))[0].transaction_id.hash
 
     while (txHash == lastTxHash) {
-        txHash = (await tonweb.getTransactions(address, 1))[0].transaction_id.hash
+        txHash = (await tonweb[localStorage.getItem('network')].getTransactions(address, 1))[0].transaction_id.hash
         await sleep(1000)
     }
 
@@ -419,19 +419,19 @@ const loadWallet = async () => {
     addr = window.location.href.split("?")[1]
     window.multisig_address = addr
     $('.wallet-address').text(addr)
-    const r = await tonweb.provider.getExtendedAddressInfo(addr)
+    const r = await tonweb[localStorage.getItem('network')].provider.getExtendedAddressInfo(addr)
     console.log(r.balance, roundNumber(Number(r.balance) / 1e9, 2))
     let balance = roundNumber(Number(r.balance) / 1e9, 2).toString()
     let lastTxHash = r.last_transaction_id.hash
-    let lastTxHashBytes = tonweb.utils.base64ToBytes(lastTxHash)
-    let lastTxHashHex = tonweb.utils.bytesToHex(lastTxHashBytes)
+    let lastTxHashBytes = tonweb[localStorage.getItem('network')].utils.base64ToBytes(lastTxHash)
+    let lastTxHashHex = tonweb[localStorage.getItem('network')].utils.bytesToHex(lastTxHashBytes)
     console.log(lastTxHash)
 
-    const s = (await tonweb.call(addr, 'get_n_k')).stack
+    const s = (await tonweb[localStorage.getItem('network')].call(addr, 'get_n_k')).stack
     const n = Number(s[0][1])
     const k = Number(s[1][1])
 
-    const t = (await tonweb.provider.getTransactions(addr, 1, undefined, lastTxHash, undefined, true))[0].utime
+    const t = (await tonweb[localStorage.getItem('network')].provider.getTransactions(addr, 1, undefined, lastTxHash, undefined, true))[0].utime
     const d = (new Date()) / 1000 - t
 
     console.log(d, '!!!')
@@ -440,14 +440,14 @@ const loadWallet = async () => {
     $('#owners').text('Owners: ' + n + ' / ' + k)
     $('#last_active').text('Last active: ' + formatTime(d) + ' ago')
 
-    let data = (await tonweb.provider.getAddressInfo(addr)).data
-    let dataBoc = tonweb.boc.Cell.oneFromBoc(tonweb.utils.base64ToBytes(data))
+    let data = (await tonweb[localStorage.getItem('network')].provider.getAddressInfo(addr)).data
+    let dataBoc = tonweb[localStorage.getItem('network')].boc.Cell.oneFromBoc(tonweb[localStorage.getItem('network')].utils.base64ToBytes(data))
     window.multisig_wallet_id = dataBoc.bits.readUint(32).toNumber()
     dataBoc.bits.readBits(8 + 8 + 64)
-    let owners = new TonWeb.boc.HashMap(8)
-    owners.loadHashMapX2Y(dataBoc.refs[0], s => TonWeb.boc.CellParser.loadUint(s, 8), (s) => {
-        const pubkey = TonWeb.boc.CellParser.loadUint(s, 256)
-        const flood = TonWeb.boc.CellParser.loadUint(s, 8)
+    let owners = new tonweb[localStorage.getItem('network')].boc.HashMap(8)
+    owners.loadHashMapX2Y(dataBoc.refs[0], s => tonweb[localStorage.getItem('network')].boc.CellParser.loadUint(s, 8), (s) => {
+        const pubkey = tonweb[localStorage.getItem('network')].boc.CellParser.loadUint(s, 256)
+        const flood = tonweb[localStorage.getItem('network')].boc.CellParser.loadUint(s, 8)
         return pubkey.words
     })
     owners = owners.elements
@@ -455,8 +455,8 @@ const loadWallet = async () => {
 
     const address = (await ton.send('ton_requestAccounts'))[0]
 
-    data = (await tonweb.provider.getAddressInfo(address)).data
-    dataBoc = tonweb.boc.Cell.oneFromBoc(tonweb.utils.base64ToBytes(data))
+    data = (await tonweb[localStorage.getItem('network')].provider.getAddressInfo(address)).data
+    dataBoc = tonweb[localStorage.getItem('network')].boc.Cell.oneFromBoc(tonweb[localStorage.getItem('network')].utils.base64ToBytes(data))
     dataBoc.bits.readBits(64)
     const pubkey = dataBoc.bits.readUint(256).words
     
