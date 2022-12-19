@@ -9,6 +9,13 @@ let bodyv = []
 
 if (localStorage.getItem('network') === null) localStorage.setItem('network', 'main');
 
+if (localStorage.getItem('network') == 'main') {
+    window.tonweb = tonwebMainnet
+}
+else {
+    window.tonweb = tonwebTestnet
+}
+
 const sleep = async (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms))
 }
@@ -330,6 +337,8 @@ const createWallet = async  () => {
 
     const lastTxHash = (await tonweb.getTransactions(address, 1))[0].transaction_id.hash
 
+    startLoading()
+
     await ton.send('ton_sendTransaction', [{
             to: contract.address.toString(true, true, false),
             value: '50000000'
@@ -337,8 +346,6 @@ const createWallet = async  () => {
     )
 
     let txHash = (await tonweb.getTransactions(address, 1))[0].transaction_id.hash
-    
-    startLoading()
 
     while (txHash == lastTxHash) {
         txHash = (await tonweb.getTransactions(address, 1))[0].transaction_id.hash
@@ -445,10 +452,10 @@ const loadWallet = async () => {
     let dataBoc = tonweb.boc.Cell.oneFromBoc(tonweb.utils.base64ToBytes(data))
     window.multisig_wallet_id = dataBoc.bits.readUint(32).toNumber()
     dataBoc.bits.readBits(8 + 8 + 64)
-    let owners = new TonWeb.boc.HashMap(8)
-    owners.loadHashMapX2Y(dataBoc.refs[0], s => TonWeb.boc.CellParser.loadUint(s, 8), (s) => {
-        const pubkey = TonWeb.boc.CellParser.loadUint(s, 256)
-        const flood = TonWeb.boc.CellParser.loadUint(s, 8)
+    let owners = new tonweb.boc.HashMap(8)
+    owners.loadHashMapX2Y(dataBoc.refs[0], s => tonweb.boc.CellParser.loadUint(s, 8), (s) => {
+        const pubkey = tonweb.boc.CellParser.loadUint(s, 256)
+        const flood = tonweb.boc.CellParser.loadUint(s, 8)
         return pubkey.words
     })
     owners = owners.elements
@@ -489,6 +496,7 @@ const changeNetwork = (old) => {
     //console.log(old)
     if (old) {
         localStorage.setItem('network', 'main')
+        window.tonweb = tonwebMainnet
         $('#1337')[0].setAttribute('onclick', 'changeNetwork(false)')
         //Тут надо поменять сеть на mainnet
 
@@ -496,6 +504,7 @@ const changeNetwork = (old) => {
         console.log('network: ' + localStorage.getItem('network'))
     } else {
         localStorage.setItem('network', 'test')
+        window.tonweb = tonwebTestnet
         $('#1337')[0].setAttribute('onclick', 'changeNetwork(true)')
         //Ну тут соответственно на тестнет 
 
