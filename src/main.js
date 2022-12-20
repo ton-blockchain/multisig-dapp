@@ -53,8 +53,6 @@ const addNew = () => {
 }
 
 const delOld = (e) => {
-    console.log(e)
-
     delid = e
     pkid = '#pubkey_' + e
     deldiv = '#pubkey_del_' + e
@@ -77,7 +75,6 @@ const delOld = (e) => {
         }
     }
     id -= 1
-    console.log(id)
 }
 
 const order = async (task) => {
@@ -180,7 +177,6 @@ const orderSaveToFile = async () =>  {
 
 const orderInsert = (id) => {
     if (id <= orders) {
-        console.log(reciv, summv, bodyv)
         $('#recipient')[0].value = reciv[id - 1]
         $('#summ')[0].value = summv[id - 1]
         $('#body')[0].value = bodyv[id - 1]
@@ -192,7 +188,6 @@ const orderInsert = (id) => {
 }
 
 const isOrderSignedAlready = async (query_id) => {
-    console.log('inp:', query_id)
     const id = window.multisig_owner_id
     const queriesBoc = (await tonweb.call(window.multisig_address, 'get_messages_signed_by_id', [['num', id]])).stack[0][1].bytes
     const queries = tonweb.boc.Cell.oneFromBoc(tonweb.utils.bytesToHex(tonweb.utils.base64ToBytes(queriesBoc)))
@@ -200,12 +195,10 @@ const isOrderSignedAlready = async (query_id) => {
     var queriesDict = new tonweb.boc.HashMap(64)
     await queriesDict.loadHashMapX2Y(queries, s => tonweb.boc.CellParser.loadUint(s, 64), s => s)
 
-    console.log(queriesDict)
-
     for (const query of queriesDict.raw_elements) {
         console.log(query.key.bits.array, query_id)
         if (query.key.bits.array.every((val, i) => val === query_id[i])) {
-            console.log('GG')
+            console.log('order is signed already')
             return true
         }
     }
@@ -217,17 +210,11 @@ const showInfo = (File) => {
     reader.addEventListener('load', async (event) => {
         const bocBytes = new Uint8Array(event.target.result)
         const boc = tonweb.boc.Cell.oneFromBoc(bocBytes)
-
-        console.log(boc.clone())
         
         boc.bits.readCursor = 0
         const query_id = boc.bits.readBits(64).array
-        
-        console.log(query_id)
 
         if (await isOrderSignedAlready(query_id)) {
-            // order is signed
-            console.log('order is already signed')
             alert('order is already signed by you. you do not need to send it again')
         }
 
@@ -267,7 +254,6 @@ const showInfo = (File) => {
             const commentBytes = body.bits.readBits(body.bits.length - body.bits.readCursor)
             const comment = new TextDecoder().decode(commentBytes.array)
             
-            console.log(mode, destAddress, value, comment)
             rec.push(destAddress)
             amo.push(tonweb.utils.fromNano(value))
             bod.push(comment)
@@ -360,8 +346,6 @@ const createWallet = async  () => {
     const wc = $('#workchain_id')[0].value,
           wallet_id = $('#wallet_id')[0].value,
           k = $('#k_value')[0].value
-
-    console.log(wc, wallet_id, k)
 
     //if wc, wallet_id, k are empty - return
     if (!wc || !wallet_id || !k) {
@@ -469,18 +453,15 @@ const loadWallet = async () => {
         $('#1337')[0].setAttribute('onclick', 'changeNetwork(true)')
     }
     
-    console.log('loadwallet!!!')
-    console.log(window.location)
     addr = window.location.href.split("?")[1]
     window.multisig_address = addr
     $('.wallet-address').text(addr)
     const r = await tonweb.provider.getExtendedAddressInfo(addr)
-    console.log(r.balance, roundNumber(Number(r.balance) / 1e9, 2))
+    
     let balance = roundNumber(Number(r.balance) / 1e9, 2).toString()
     let lastTxHash = r.last_transaction_id.hash
     let lastTxHashBytes = tonweb.utils.base64ToBytes(lastTxHash)
     let lastTxHashHex = tonweb.utils.bytesToHex(lastTxHashBytes)
-    console.log(lastTxHash)
     
     const s = (await tonweb.call(addr, 'get_n_k')).stack
     const n = Number(s[0][1])
@@ -490,8 +471,6 @@ const loadWallet = async () => {
     
     const t = (await tonweb.provider.getTransactions(addr, 1, undefined, lastTxHash, undefined, true))[0].utime
     const d = (new Date()) / 1000 - t
-    
-    console.log(d, '!!!')
     
     $('#balance').text('Balance: ' + balance + ' TON')
     $('#owners').text('Owners: ' + n + ' / ' + k)
@@ -527,9 +506,6 @@ const loadWallet = async () => {
         console.log(e)
     }
     
-    console.log('ХУЙ')
-    console.log(window.multisig_owner_id)
-    
     if(window.multisig_owner_id === undefined) $('.wallet-utype').text('Viewer')
     else $('.wallet-utype').text('Owner')
 
@@ -560,22 +536,13 @@ const signAndSendReload = async () => {
 }
 
 const changeNetwork = (old) => {
-    //console.log(old)
     if (old) {
         localStorage.setItem('network', 'main')
         window.tonweb = tonwebMainnet
         $('#1337')[0].setAttribute('onclick', 'changeNetwork(false)')
-        //Тут надо поменять сеть на mainnet
-
-
-        console.log('network: ' + localStorage.getItem('network'))
     } else {
         localStorage.setItem('network', 'test')
         window.tonweb = tonwebTestnet
         $('#1337')[0].setAttribute('onclick', 'changeNetwork(true)')
-        //Ну тут соответственно на тестнет 
-
-        
-        console.log('network: ' + localStorage.getItem('network'))
     }
 }
