@@ -453,6 +453,7 @@ const loadWallet = async () => {
         $('#1337')[0].setAttribute('checked', 'true')
         $('#1337')[0].setAttribute('onclick', 'changeNetwork(true)')
     }
+    
     console.log('loadwallet!!!')
     console.log(window.location)
     addr = window.location.href.split("?")[1]
@@ -465,22 +466,22 @@ const loadWallet = async () => {
     let lastTxHashBytes = tonweb.utils.base64ToBytes(lastTxHash)
     let lastTxHashHex = tonweb.utils.bytesToHex(lastTxHashBytes)
     console.log(lastTxHash)
-
+    
     const s = (await tonweb.call(addr, 'get_n_k')).stack
     const n = Number(s[0][1])
     const k = Number(s[1][1])
 
     window.multisig_n = n
-
+    
     const t = (await tonweb.provider.getTransactions(addr, 1, undefined, lastTxHash, undefined, true))[0].utime
     const d = (new Date()) / 1000 - t
-
+    
     console.log(d, '!!!')
-
+    
     $('#balance').text('Balance: ' + balance + ' TON')
     $('#owners').text('Owners: ' + n + ' / ' + k)
     $('#last_active').text('Last active: ' + formatTime(d) + ' ago')
-
+    
     let data = (await tonweb.provider.getAddressInfo(addr)).data
     let dataBoc = tonweb.boc.Cell.oneFromBoc(tonweb.utils.base64ToBytes(data))
     window.multisig_wallet_id = dataBoc.bits.readUint(32).toNumber()
@@ -493,22 +494,29 @@ const loadWallet = async () => {
     })
     owners = owners.elements
     console.log(owners)
-
-    const address = (await ton.send('ton_requestAccounts'))[0]
-
-    data = (await tonweb.provider.getAddressInfo(address)).data
-    dataBoc = tonweb.boc.Cell.oneFromBoc(tonweb.utils.base64ToBytes(data))
-    dataBoc.bits.readBits(64)
-    const pubkey = dataBoc.bits.readUint(256).words
     
-    for (const o_i in owners) {
-        if (JSON.stringify(owners[o_i]) == JSON.stringify(pubkey)) {
-            window.multisig_owner_id = o_i
-            break
+    try {
+        const address = (await ton.send('ton_requestAccounts'))[0]
+        data = (await tonweb.provider.getAddressInfo(address)).data
+        dataBoc = tonweb.boc.Cell.oneFromBoc(tonweb.utils.base64ToBytes(data))
+        dataBoc.bits.readBits(64)
+        const pubkey = dataBoc.bits.readUint(256).words
+        
+        for (const o_i in owners) {
+            if (JSON.stringify(owners[o_i]) == JSON.stringify(pubkey)) {
+                window.multisig_owner_id = o_i
+                break
+            }
         }
+    } catch (e) {
+        console.log(e)
     }
-
+    
+    console.log('ХУЙ')
     console.log(window.multisig_owner_id)
+    
+    if(window.multisig_owner_id === undefined) $('.wallet-utype').text('Viewer')
+    else $('.wallet-utype').text('Owner')
 }
 
 const signAndSendReload = async () => {
