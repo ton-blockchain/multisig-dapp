@@ -190,6 +190,10 @@ const orderInsert = (id) => {
 const isOrderSignedAlready = async (query_id) => {
     const id = window.multisig_owner_id
     const queriesBoc = (await tonweb.call(window.multisig_address, 'get_messages_signed_by_id', [['num', id]])).stack[0][1].bytes
+    if (queriesBoc === undefined) {
+        return false
+    }
+    console.log(queriesBoc)
     const queries = tonweb.boc.Cell.oneFromBoc(tonweb.utils.bytesToHex(tonweb.utils.base64ToBytes(queriesBoc)))
 
     var queriesDict = new tonweb.boc.HashMap(64)
@@ -209,7 +213,12 @@ const showInfo = (File) => {
     const reader = new FileReader()
     reader.addEventListener('load', async (event) => {
         const bocBytes = new Uint8Array(event.target.result)
+
+        console.log(bocBytes)
+
         const boc = tonweb.boc.Cell.oneFromBoc(bocBytes)
+
+        console.log(boc)
         
         boc.bits.readCursor = 0
         const query_id = boc.bits.readBits(64).array
