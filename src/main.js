@@ -239,6 +239,7 @@ const showInfo = (File) => {
         bod = []
         sem = []
         exc = []
+        $('.wallet-ordinfo😁')[0].innerHTML = ''
 
         for (let i = 0; i < boc.refs.length; i += 1) {
             let mode = boc.bits.readUint(8).toNumber()
