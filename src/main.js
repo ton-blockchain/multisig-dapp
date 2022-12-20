@@ -232,6 +232,7 @@ const showInfo = (File) => {
         }
 
         window.multisig_order_boc = boc
+        window.multisig_query_id = query_id
 
         unt = boc.refs.length
         rec = []
@@ -531,15 +532,26 @@ const loadWallet = async () => {
     
     if(window.multisig_owner_id === undefined) $('.wallet-utype').text('Viewer')
     else $('.wallet-utype').text('Owner')
+
+    $('.wallet-ordinfo😁')[0].innerHTML = ''
+    endLoading()
 }
 
 const signAndSendReload = async () => {
     startLoading()
     try {
         await signAndSend(window.multisig_order_boc)
-        $('.wallet-ordinfo😁')[0].value = ''
-        await sleep(6100)
-        await loadWallet()
+
+        for (let i = 0; i < 10; i += 1) {
+            await sleep(3000)
+            if (await isOrderSignedAlready(window.multisig_query_id)) {
+                $('.wallet-ordinfo😁')[0].value = ''
+                await loadWallet()
+                return
+            }
+        }
+
+        throw false
     } catch (e) {
         console.log(e)
         endLoading()
