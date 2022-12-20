@@ -307,13 +307,26 @@ const createWallet = async  () => {
             new tonweb.Address(inp.value)
             const pkey = (await tonweb.call(inp.value, 'get_public_key')).stack[0][1].substr(2)
             if (tonweb.utils.hexToBytes(pkey).length != 32) {
-                throw false
+                alert('cannot fetch public key from wallet')
+                return
             }
             pubkeys.push(pkey)
+            continue
         }
         catch (e) {
             console.log(e)
+        }
+        try {
+            if (tonweb.utils.hexToBytes(inp.value).length != 32) {
+                alert('hex public key is incorrect')
+                return
+            }
             pubkeys.push(inp.value)
+        }
+        catch (e) {
+            console.log(e)
+            alert('public key is not hex')
+            return
         }
     }
 
