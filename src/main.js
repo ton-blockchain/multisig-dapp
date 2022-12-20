@@ -191,15 +191,47 @@ const orderInsert = (id) => {
     }
 }
 
+const isOrderSignedAlready = async (query_id) => {
+    console.log('inp:', query_id)
+    const id = window.multisig_owner_id
+    const queriesBoc = (await tonweb.call(window.multisig_address, 'get_messages_signed_by_id', [['num', id]])).stack[0][1].bytes
+    const queries = tonweb.boc.Cell.oneFromBoc(tonweb.utils.bytesToHex(tonweb.utils.base64ToBytes(queriesBoc)))
+
+    var queriesDict = new tonweb.boc.HashMap(64)
+    await queriesDict.loadHashMapX2Y(queries, s => tonweb.boc.CellParser.loadUint(s, 64), s => s)
+
+    console.log(queriesDict)
+
+    for (const query of queriesDict.raw_elements) {
+        console.log(query.key.bits.array, query_id)
+        if (query.key.bits.array.every((val, i) => val === query_id[i])) {
+            console.log('GG')
+            return true
+        }
+    }
+    return false
+}
+
 const showInfo = (File) => {
     const reader = new FileReader()
-    reader.addEventListener('load', event => {
-        const bocString = event.target.result
-        const boc = tonweb.boc.Cell.oneFromBoc(new Uint8Array(bocString))
+    reader.addEventListener('load', async (event) => {
+        const bocBytes = new Uint8Array(event.target.result)
+        const boc = tonweb.boc.Cell.oneFromBoc(bocBytes)
+
+        console.log(boc.clone())
+        
+        boc.bits.readCursor = 0
+        const query_id = boc.bits.readBits(64).array
+        
+        console.log(query_id)
+
+        if (await isOrderSignedAlready(query_id)) {
+            // order is signed
+            console.log('order is already signed')
+            alert('order is already signed by you. you do not need to send it again')
+        }
 
         window.multisig_order_boc = boc
-
-        const query_id = boc.bits.readUint(64)
 
         unt = boc.refs.length
         rec = []
@@ -217,7 +249,7 @@ const showInfo = (File) => {
             const destAddress = new tonweb.utils.Address(destAddressRaw).toString(true, true, true, false)
 
             const valueBytes = msg.bits.readUint(4)
-            const value = msg.bits.readUint(valueBytes * 8).toNumber()
+            const value = msg.bits.readUint(valueBytes * 8).toString()
 
             const extraCurrenciesBool = msg.bits.readBit()
             let extraCurrencies = 'empty'
@@ -235,7 +267,7 @@ const showInfo = (File) => {
             
             console.log(mode, destAddress, value, comment)
             rec.push(destAddress)
-            amo.push(tonweb.utils.fromNano(value.toString()))
+            amo.push(tonweb.utils.fromNano(value))
             bod.push(comment)
             sem.push(mode)
             exc.push('empty')
@@ -438,6 +470,8 @@ const loadWallet = async () => {
     const n = Number(s[0][1])
     const k = Number(s[1][1])
 
+    window.multisig_n = n
+
     const t = (await tonweb.provider.getTransactions(addr, 1, undefined, lastTxHash, undefined, true))[0].utime
     const d = (new Date()) / 1000 - t
 
@@ -478,10 +512,17 @@ const loadWallet = async () => {
 }
 
 const signAndSendReload = async () => {
-    await signAndSend(window.multisig_order_boc)
-    $('.wallet-ordinfo😁')[0].value = ''
-    await sleep(6100)
-    await loadWallet()
+    startLoading()
+    try {
+        await signAndSend(window.multisig_order_boc)
+        $('.wallet-ordinfo😁')[0].value = ''
+        await sleep(6100)
+        await loadWallet()
+    } catch (e) {
+        console.log(e)
+        endLoading()
+        alert('Error!')
+    }
 }
 
 const changeNetwork = (old) => {

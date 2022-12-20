@@ -96,7 +96,7 @@ const rootSignOrder = async (owner_id, order) => {
     cell.bits.writeUint(window.multisig_wallet_id, 32)
     cell.writeCell(order)
     const hash = await cell.hash()
-
+    
     const signature = await ton.send(
         'ton_rawSign', [{ data: tonweb.utils.bytesToHex(hash) }]
     )
@@ -164,7 +164,7 @@ const signAndSend = async (boc) => {
     console.log(boc)
     var signedOrder = await rootSignOrder(window.multisig_owner_id, boc)
     var message = await createExternalMessage(signedOrder)
-    return await tonweb.sendBoc(await message.toBoc(false))
+    await tonweb.sendBoc(await message.toBoc(false))
 }
 
 const createInternalMessage = async (destAddr, amount, bounce, comment) => {
