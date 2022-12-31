@@ -36,17 +36,14 @@
         <div class="wallet-header">
             <span class="wallet-address"></span>
             <span class="wallet-utype"></span>
+            <span class="wallet-htext">You can either create new order or sign existing from disk</span>
         </div>
+
         <div class="wallet-wrapper">
             <div class="wallet-info">
                     <span id="balance">Balance: </span>
                     <span id="owners">Owners: </span>
                     <span id="last_active">Last active: </span>
-            </div>
-            <div class="wallet-sign">
-                <span style="margin-bottom: 20px">Sign and send an order</span>
-                <input type="file" id="file-selector" accept=".boc"> 
-                <div class="wallet-sign-send" id="wallet-send" onclick="signAndSendReload(window.multisig_order_boc)">Sign & send</div>
             </div>
             <div class="wallet-create">
                 <span>Create new order</span>
@@ -55,8 +52,14 @@
                 <input type="text" id="body" placeholder="Body" onclick="styleClear()">
                 <div class="wallet-create-save" onclick="order(1)">Add</div>
                 <div class="wallet-create-create" onclick="order(2)">Save to disk</div>
+                <div class="wallet-sign-send" id="wallet-send-instant" onclick="signAndSendWithoutFile()">Sign & send</div>
                 <div class="wallet-create-show">
                 </div>
+            </div>
+            <div class="wallet-sign">
+                <span style="margin-bottom: 20px">Sign and send an order</span>
+                <input type="file" id="file-selector" accept=".boc"> 
+                <div class="wallet-sign-send" id="wallet-send" onclick="signAndSendReload(window.multisig_order_boc)">Sign & send</div>
             </div>
         </div>
         <div class="wallet-ordinfo😁">

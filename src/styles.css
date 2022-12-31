@@ -115,7 +115,12 @@ body {
     background-color: #0060A4;  
   }
 
-.wallet-sign-send {
+  #wallet-send-instant {
+      margin-left: 151px;
+      margin-top: 5px;
+  }
+  
+  .wallet-sign-send {
     margin: 3vh auto 0 auto;
     cursor:pointer;
     font-size: 20px;
