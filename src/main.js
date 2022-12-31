@@ -152,7 +152,7 @@ const orderDelete = (id) => {
     }
 }
 
-const orderSaveToFile = async () =>  {
+const orderToBoc = async () => {
     let reci = $('#recipient')[0].value
     let summ = $('#summ')[0].value
     let body = $('#body')[0].value
@@ -169,9 +169,11 @@ const orderSaveToFile = async () =>  {
 
     let order = await createOrder(messages)
 
-    const boc = await order.toBoc(false)
-    const blob = new Blob([boc])
-    
+    return await order.toBoc(false)
+}
+
+const orderSaveToFile = async () => {
+    const blob = new Blob([orderToBoc()])
     saveAs(blob, 'order.boc')
 }
 
