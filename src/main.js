@@ -173,7 +173,7 @@ const orderToBoc = async () => {
 }
 
 const orderSaveToFile = async () => {
-    const blob = new Blob([orderToBoc()])
+    const blob = new Blob([await orderToBoc()])
     saveAs(blob, 'order.boc')
 }
 
@@ -547,7 +547,10 @@ const signAndSendReload = async () => {
 }
 
 const signAndSendWithoutFile = async () => {
-    window.multisig_order_boc = orderToBoc()
+    const boc = tonweb.boc.Cell.oneFromBoc(await orderToBoc())
+    boc.bits.readCursor = 0
+    window.multisig_query_id = boc.bits.readBits(64).array
+    window.multisig_order_boc = tonweb.boc.Cell.oneFromBoc(await orderToBoc())
     await signAndSendReload()
 }
 
