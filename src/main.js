@@ -546,6 +546,11 @@ const signAndSendReload = async () => {
     }
 }
 
+const signAndSendWithoutFile = async () => {
+    window.multisig_order_boc = orderToBoc()
+    await signAndSendReload()
+}
+
 const changeNetwork = (old) => {
     if (old) {
         localStorage.setItem('network', 'main')
