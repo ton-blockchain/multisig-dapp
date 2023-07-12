@@ -579,7 +579,8 @@ const signAndSendWithoutFile = async () => {
     const boc = tonweb.boc.Cell.oneFromBoc(await orderToBoc())
     boc.bits.readCursor = 0
     window.multisig_query_id = boc.bits.readBits(64).array
-    window.multisig_order_boc = tonweb.boc.Cell.oneFromBoc(await orderToBoc())
+    boc.bits.readCursor = 0
+    window.multisig_order_boc = boc
     await signAndSendReload()
 }
 
