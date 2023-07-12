@@ -178,10 +178,14 @@ const createInternalMessage = async (destAddr, amount, bounce, comment) => {
     msg.bits.writeCoins(amount) // value
     msg.bits.writeUint(0, 1 + 4 + 4 + 64 + 32 + 1)
     msg.bits.writeBit(1)
-    var body = new tonweb.boc.Cell()
-    body.bits.writeUint(0, 32)
-    body.bits.writeString(comment)
-    msg.refs.push(body)
+    if (typeof comment == 'string') {
+        var body = new tonweb.boc.Cell()
+        body.bits.writeUint(0, 32)
+        body.bits.writeString(comment)
+        msg.refs.push(body)
+    } else {
+        msg.refs.push(comment)
+    }
     return msg
 }
 

@@ -49,7 +49,10 @@
                 <span>Create new order</span>
                 <input type="text" id="recipient" placeholder="Recipient" onclick="styleClear()">
                 <input type="text" id="summ" placeholder="Amount" onclick="styleClear()">
+                <br>
                 <input type="text" id="body" placeholder="Body" onclick="styleClear()">
+                or
+                <input type="text" id="base64body" placeholder="Base64 BOC" onclick="styleClear()">
                 <div class="wallet-create-save" onclick="order(1)">Add</div>
                 <div class="wallet-create-create" onclick="order(2)">Save to disk</div>
                 <div class="wallet-sign-send" id="wallet-send-instant" onclick="signAndSendWithoutFile()">Sign & send</div>

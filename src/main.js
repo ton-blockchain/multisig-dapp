@@ -92,10 +92,12 @@ const order = async (task) => {
         let reci = $('#recipient')[0].value
         let summ = $('#summ')[0].value
         let body = $('#body')[0].value
+        let base64body = $('#base64body')[0].value
 
         $('#recipient')[0].value = ''
         $('#summ')[0].value = ''
         $('#body')[0].value = ''
+        $('#base64body')[0].value = ''
         
         if (reci == '') {
             alert('Address can not be empty')
@@ -114,10 +116,27 @@ const order = async (task) => {
                 return
             }
 
+            if (base64body && body) {
+                alert("Please, enter either body or base64 body")
+                return
+            }
+
             orders += 1
             reciv.push(reci)
             summv.push(summ)
-            bodyv.push(body)
+            
+            if (base64body) {
+                try {
+                    bodyv.push(tonweb.boc.Cell.oneFromBoc(tonweb.utils.base64ToBytes(base64body)))
+                }
+                catch (e) {
+                    console.log(e)
+                    alert("Please, enter correct base64 body")
+                    return
+                }
+            } else {
+                bodyv.push(body);
+            }
             
             if (summ >= 1e9) {
                 summ = Math.floor(summ / 1e7) / 100
@@ -181,7 +200,13 @@ const orderInsert = (id) => {
     if (id <= orders) {
         $('#recipient')[0].value = reciv[id - 1]
         $('#summ')[0].value = summv[id - 1]
-        $('#body')[0].value = bodyv[id - 1]
+        if (typeof bodyv[id - 1] == 'string') {
+            $('#body')[0].value = bodyv[id - 1]
+        } else {
+            bodyv[id - 1].toBoc().then((b) => {
+                $('#base64body')[0].value = tonweb.utils.bytesToBase64(b)
+            })
+        }
         for (let i = 0; i < orders; i++) {
             $('.wallet-create-show > div')[i].setAttribute('style', '')
         }
@@ -258,13 +283,17 @@ const showInfo = (File) => {
             }
 
             msg.bits.readBits(4 + 4 + 64 + 32 + 1 + 1)
-            let body = msg.refs[0]
+            let body = msg.refs[0].clone()
             body.bits.readCursor = 0
             const opcode = body.bits.readUint(32)
+            let comment
+            if (opcode == 0) {
+                const commentBytes = body.bits.readBits(body.bits.length - body.bits.readCursor)
+                comment = new TextDecoder().decode(commentBytes.array)
+            } else {
+                comment = tonweb.utils.bytesToBase64(await msg.refs[0].toBoc())
+            }
 
-            const commentBytes = body.bits.readBits(body.bits.length - body.bits.readCursor)
-            const comment = new TextDecoder().decode(commentBytes.array)
-            
             rec.push(destAddress)
             amo.push(tonweb.utils.fromNano(value))
             bod.push(comment)
