@@ -56,7 +56,7 @@ const newMultisig = async (pubkeys, wc, wallet_id, k) => {
     x = new tonweb.boc.HashMap(8)
 
     for (let i = 0; i < pubkeys.length; i++) {
-        x.elements[i] = [tonweb.utils.hexToBytes(pubkeys[i]), i]
+        x.elements[i] = [tonweb.utils.hexToBytes(pubkeys[i].padStart(64, '0')), i]
     }
 
     owner_infos = await x.serialize(

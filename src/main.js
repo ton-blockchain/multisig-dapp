@@ -344,7 +344,7 @@ const createWallet = async  () => {
             console.log(e)
         }
         try {
-            if (tonweb.utils.hexToBytes(inp.value).length != 32) {
+            if (tonweb.utils.hexToBytes(inp.value.padStart(64, '0')).length != 32) {
                 alert('hex public key is incorrect')
                 return
             }
