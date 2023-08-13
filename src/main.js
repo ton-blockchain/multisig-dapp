@@ -332,7 +332,7 @@ const createWallet = async  () => {
     for (const inp of $('.new-input')) {
         try {
             new tonweb.Address(inp.value)
-            const pkey = (await tonweb.call(inp.value, 'get_public_key')).stack[0][1].substr(2)
+            const pkey = (await tonweb.call(inp.value, 'get_public_key')).stack[0][1].substr(2).padStart(64, '0')
             if (tonweb.utils.hexToBytes(pkey).length != 32) {
                 alert('cannot fetch public key from wallet')
                 return
