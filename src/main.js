@@ -121,10 +121,6 @@ const order = async (task) => {
                 return
             }
 
-            orders += 1
-            reciv.push(reci)
-            summv.push(summ)
-            
             if (base64body) {
                 try {
                     bodyv.push(tonweb.boc.Cell.oneFromBoc(tonweb.utils.base64ToBytes(base64body)))
@@ -137,6 +133,10 @@ const order = async (task) => {
             } else {
                 bodyv.push(body);
             }
+
+            orders += 1
+            reciv.push(reci)
+            summv.push(summ)
             
             if (summ >= 1e9) {
                 summ = Math.floor(summ / 1e7) / 100
@@ -298,7 +298,7 @@ const showInfo = (File) => {
             amo.push(tonweb.utils.fromNano(value))
             bod.push(comment)
             sem.push(mode)
-            exc.push('empty')
+            exc.push(extraCurrencies)
         }
 
         $('.wallet-ordinfo😁')[0].value = ''
