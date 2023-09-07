@@ -7,6 +7,7 @@ import download from "./download.svg";
 import more from "./more.svg";
 import cancel from "./cancel.svg";
 import enter from "./enter.svg";
+import balance from "./balance.svg";
 
 export {
   ton,
@@ -18,4 +19,5 @@ export {
   more,
   cancel,
   enter,
+  balance,
 };

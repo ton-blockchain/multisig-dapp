@@ -61,8 +61,8 @@
     padding-left: 45px;
 }
 
-.fa2 + input {
-    padding-right: 6px;
+.homeInput {
+    padding-right: 50px;
 }
 
 @media (min-width: 768px) {
@@ -101,8 +101,8 @@
         padding-left: 60px;
     }
     
-    .fa2 + input {
-        padding-right: 60px;
+    .homeInput {
+        padding-right: 70px;
     }
 }
 
@@ -121,8 +121,6 @@
 }
 
 .input__file-icon-wrapper {
-    height: 60px;
-    width: 60px;
     margin-right: 15px;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -137,16 +135,13 @@
 
 .input__file-button-text {
     line-height: 1;
-    margin-top: 1px;
 }
 
 .input__file-button {
     width: 100%;
-    max-width: 290px;
-    height: 60px;
     color: #fff;
     font-size: 1.125rem;
-    font-weight: 550;
+    font-weight: 500;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;

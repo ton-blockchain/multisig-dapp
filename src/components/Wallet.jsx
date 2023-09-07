@@ -1,4 +1,4 @@
-import { ton, settings, download } from "../assets";
+import { ton, settings, download, balance } from "../assets";
 import { Toggle } from "./Toggle";
 
 const Wallet = () => {
@@ -8,13 +8,9 @@ const Wallet = () => {
     }
 
     function handleImageChange() {
-        let countFiles = '';
         let h = document.querySelector('.input__file').files;
-        if (h.length >= 1)
-            countFiles = h.length;
-
-        if (countFiles)
-            document.querySelector('.input__file-button-text').innerText = 'Selected files: ' + countFiles;
+        if (h.length == 1)
+            document.querySelector('.input__file-button-text').innerText = document.querySelector('.input__file').files[0].name;
         else
             document.querySelector('.input__file-button-text').innerText = "No file selected";
     }
@@ -33,7 +29,7 @@ const Wallet = () => {
                     <h1 className="font-usual font-[550] text-[1.5rem] lg:text-[2.5rem]">Balance</h1>
                     <div className="flex ml-auto mr-auto">
                         <p className="font-usual font-[550] text-[1.5rem] lg:text-[2.5rem]">0.00</p>
-                        <img src={ton} alt="" className="h-[30px] lg:h-[40px] ml-[5px] mt-auto mb-auto" />
+                        <img src={balance} alt="" className="h-[30px] lg:h-[40px] ml-[5px] mt-auto mb-auto" />
                     </div>
                 </div>
 
@@ -49,20 +45,20 @@ const Wallet = () => {
             </div>
             <div className="flex justify-around mt-[2rem] flex-wrap ml-[0.5rem] mr-[0.5rem]">
                 <div className="flex flex-col mt-[1rem]">
-                    <h1 className="font-mono font-[550] text-[1.3rem] lg:text-[2.3rem]">New order</h1>
-                    <div onClick={NewOrder} className="mr-auto ml-auto max-w-max text-[1.5rem] lg:text-[2.5rem] font-[550] flex flex-col justify-center h-[2.2rem] lg:h-[3rem] bg-button-blue text-center align-middle rounded-full mt-[2rem] pl-[1.3rem] pr-[1.3rem]">Create</div>
+                    <h1 className="font-mono font-[600] text-[1.3rem] lg:text-[2.3rem]">New order</h1>
+                    <div onClick={NewOrder} className="font-usual mr-auto ml-auto max-w-max text-[1.3rem] md:text-[1.5rem] lg:text-[2rem] font-[550] flex flex-col justify-center h-[1.5rem] md:h-[2.2rem] lg:h-[3rem] bg-button-blue text-center align-middle rounded-full mt-[2rem] pl-[1.3rem] pr-[1.3rem]">Create new order</div>
                 </div>
 
-                <div className="flex flex-col mt-[1rem] mb-[3rem]">
-                    <h1 className="font-mono font-[550] text-[1.3rem] lg:text-[2.3rem] ml-auto mr-auto">Send order</h1>
+                <div className="flex flex-col mt-[1rem] mb-[3rem] gap-3">
+                    <h1 className="font-mono font-[600] text-[1.3rem] lg:text-[2.3rem] ml-auto mr-auto">Send order</h1>
                     <div class="input__wrapper">
                         <input onChange={handleImageChange} name="file" type="file" id="input__file" class="input input__file" multiple />
-                        <label for="input__file" class="input__file-button">
-                        <span class="input__file-icon-wrapper"><img class="input__file-icon" src={download} alt="Выбрать файл" className="w-[40px]  lg:w-[100px]" /></span>
-                        <span class="input__file-button-text text-black lg:text-[2.3rem]">No file selected</span>
+                        <label for="input__file" className="h-auto input__file-button">
+                        <span className="input__file-icon-wrapper mt-auto mb-auto"><img class="input__file-icon" src={download} alt="Выбрать файл" className="mt-auto mb-auto w-[40px] md:w-[50px]" /></span>
+                        <span className="input__file-button-text text-black lg:text-[2.3rem] min-w-max mt-auto mb-auto">No file selected</span>
                     </label>
                     </div>
-                    <div onClick={SaveSmth} className="mr-auto ml-auto mt-auto mb-auto max-w-max text-[1.5rem] lg:text-[2.5rem] font-[550] flex flex-col justify-center h-[2.2rem] lg:h-[3rem] bg-button-blue text-center align-middle rounded-full pl-[1.3rem] pr-[1.3rem]">Save</div>
+                    <div onClick={SaveSmth} className="font-usual mr-auto ml-auto max-w-max text-[1.3rem] md:text-[1.5rem] lg:text-[2rem] font-[550] flex flex-col justify-center h-[1.5rem] md:h-[2.2rem] lg:h-[3rem] bg-button-blue text-center align-middle rounded-full mt-[1.5rem] pl-[1.3rem] pr-[1.3rem]">Save</div>
                 </div>
             </div>
         </div>

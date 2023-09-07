@@ -9,13 +9,12 @@ const NewWallet = () => {
         try {
             document.getElementById(`${e}`).remove();
         } catch {
-
         }
     } 
 
     const AddNew = () => {
         id++;
-        document.querySelector('.keys_list').insertAdjacentHTML('beforeend', `<div id='${id}' class="key flex gap-1"><input type="text" name="serach" class="keyinput pb-0 mb-auto mt-auto good-input sm:w-[13rem] md:w-[30rem] 2xl:w-[40rem] rounded-md font-usual font-semibold text-[100%] md:text-[2rem] lg:text-[2.5rem]" placeholder="Public key or address"/><img id='img${id}' src=${cancel} alt="" class="keyimg h-[1.4rem] mb-auto mt-auto"/></div>`)
+        document.querySelector('.keys_list').insertAdjacentHTML('beforeend', `<div id='${id}' class="key flex gap-2 md:gap-5"><input type="text" name="serach" class="pl-[1rem] keyinput pb-0 mb-auto mt-auto good-input sm:w-[13rem] md:w-[30rem] 2xl:w-[40rem] rounded-md font-usual font-semibold text-[100%] md:text-[2rem] lg:text-[2.5rem]" placeholder="Public key or address"/><img id='img${id}' src=${cancel} alt="" class="keyimg h-[1.4rem] md:h-[4rem] mb-auto mt-auto"/></div>`)
         let o = id;
         document.getElementById(`img${o}`).addEventListener("click", () => DeleteNew(o));
     }
@@ -31,21 +30,22 @@ const NewWallet = () => {
             <hr className="h-[1px] bg-black"/>
             <form>
                 <div className="flex justify-around text-center flex-wrap mt-[1.3rem]">
-                    <input type="text" name="serach" className="mb-[1.5rem] good-input w-[14rem] 2xl:w-[22rem] rounded-md font-usual font-semibold text-[100%] md:text-[2rem] 2xl:text-[3rem]" placeholder="Workchain ID"/>
-                    <input type="text" name="serach" className="mb-[1.5rem] good-input w-[14rem] 2xl:w-[22rem]rounded-md font-usual font-semibold text-[100%] md:text-[2rem] 2xl:text-[3rem]" placeholder="Wallet ID"/>
-                    <input type="text" name="serach" className="mb-[1.5rem] good-input w-[14rem] 2xl:w-[22rem] rounded-md font-usual font-semibold text-[100%] md:text-[2rem] 2xl:text-[3rem]" placeholder="K-value"/>
+                    <input type="text" name="serach" className="mb-[1.5rem] pl-[1rem] good-input w-[14rem] 2xl:w-[17rem] rounded-md font-usual font-semibold text-[100%] md:text-[2rem] 2xl:text-[2.4rem]" placeholder="Workchain ID"/>
+                    <input type="text" name="serach" className="mb-[1.5rem] pl-[1rem] good-input w-[14rem] 2xl:w-[17rem] rounded-md font-usual font-semibold text-[100%] md:text-[2rem] 2xl:text-[2.4rem]" placeholder="Wallet ID"/>
+                    <input type="text" name="serach" className="mb-[1.5rem] pl-[1rem] good-input w-[14rem] 2xl:w-[17rem] rounded-md font-usual font-semibold text-[100%] md:text-[2rem] 2xl:text-[2.4rem]" placeholder="K-value"/>
                 </div>
                 <div className="flex sm:ml-[1rem] md:ml-[4rem]">
                     <h1 className="font-semibold md:text-[1.3rem] lg:text-[2.5rem] font-mono mt-auto mb-auto">Public keys</h1>
-                    <img onClick={AddNew} src={more} alt="" className="h-[30px] ml-[1rem] mr-[0.4rem] mt-auto mb-auto"/>
+                    <img onClick={AddNew} src={more} alt="" className="h-[30px] md:h-[45px] ml-[1rem] mr-[0.4rem] mt-auto mb-auto"/>
                 </div>
                 <div className="keys_list flex flex-col gap-5 sm:ml-[1rem] md:ml-[4rem] mb-[2rem] mt-[1rem]">
-                    <div id='1' className="key flex gap-1">
-                        <input type="text" name="serach" className="keyinput pb-0 mb-auto mt-auto good-input sm:w-[13rem] md:w-[30rem] 2xl:w-[40rem] rounded-md font-usual font-semibold text-[100%] md:text-[2rem] lg:text-[2.5rem]" placeholder="Public key or address"/>
-                        <img id='img1' onClick={() => DeleteNew(1)} src={cancel} alt="" className="keyimg h-[1.4rem] mb-auto mt-auto"/>
+                    <div id='1' className="key flex gap-2 md:gap-5">
+                        <input type="text" name="serach" className="pl-[1rem] keyinput pb-0 mb-auto mt-auto good-input sm:w-[13rem] md:w-[30rem] 2xl:w-[40rem] rounded-md font-usual font-semibold text-[100%] md:text-[2rem] lg:text-[2.5rem]" placeholder="Public key or address"/>
+                        <img id='img1' onClick={() => DeleteNew(1)} src={cancel} alt="" className="keyimg h-[1.4rem] md:h-[4rem] mb-auto mt-auto"/>
                     </div>
                 </div>
-                <div onClick={CreateMultisig} className="sm:ml-[1rem] md:ml-[4rem] max-w-max text-[1.5rem] lg:text-[2.5rem] font-bold flex flex-col justify-center h-[2.2rem] lg:h-[3rem] bg-button-blue text-center align-middle rounded-full mt-[2rem] pl-[1.3rem] pr-[1.3rem]">Create</div>
+                {/* <div onClick={CreateMultisig} className="sm:ml-[1rem] md:ml-[4rem] max-w-max text-[1.3rem] md:text-[1.5rem] lg:text-[2.5rem] font-medium flex flex-col justify-center h-[1.5rem] md:h-[2.2rem] lg:h-[3rem] bg-button-blue text-center align-middle rounded-full mt-[2rem] pl-[1.3rem] pr-[1.3rem]">Create</div> */}
+                <div onClick={CreateMultisig} className="font-usual sm:ml-[1rem] md:ml-[4rem] max-w-max text-[1.3rem] md:text-[1.5rem] lg:text-[2rem] font-[600] flex flex-col justify-center h-[1.5rem] md:h-[2.2rem] lg:h-[3rem] bg-button-blue text-center align-middle rounded-full mt-[2rem] pl-[1.3rem] pr-[1.3rem]">Create</div>
             </form>
         </div>
       </div>
