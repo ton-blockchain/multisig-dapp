@@ -10,6 +10,7 @@ module.exports = {
         "white-mode2": "#F1F3F5",
         "grad-main": "linear-gradient(90deg, #08C 1%, #5EDDFF 98%)",
         "button-blue": "rgba(0, 136, 204, 0.80)",
+        "wallet": "rgba(0, 0, 0, 0.10)",
       },
       screens: {
         "sm": "320px",

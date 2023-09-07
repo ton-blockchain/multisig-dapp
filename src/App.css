@@ -638,6 +638,10 @@ video {
   margin-left: 1rem;
 }
 
+.ml-\[2rem\]{
+  margin-left: 2rem;
+}
+
 .ml-\[5px\]{
   margin-left: 5px;
 }
@@ -664,6 +668,10 @@ video {
 
 .mr-\[1rem\]{
   margin-right: 1rem;
+}
+
+.mr-\[2rem\]{
+  margin-right: 2rem;
 }
 
 .mr-auto{
@@ -696,6 +704,10 @@ video {
 
 .flex{
   display: flex;
+}
+
+.grid{
+  display: grid;
 }
 
 .hidden{
@@ -797,12 +809,20 @@ video {
   flex-grow: 1;
 }
 
+.grid-cols-2{
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .flex-col{
   flex-direction: column;
 }
 
 .flex-wrap{
   flex-wrap: wrap;
+}
+
+.justify-end{
+  justify-content: flex-end;
 }
 
 .justify-center{
@@ -837,6 +857,12 @@ video {
   gap: 1.25rem;
 }
 
+.truncate{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .rounded-full{
   border-radius: 9999px;
 }
@@ -847,6 +873,10 @@ video {
 
 .rounded-md{
   border-radius: 0.375rem;
+}
+
+.border-2{
+  border-width: 2px;
 }
 
 .bg-\[\#D5D7D8\]{
@@ -866,6 +896,10 @@ video {
 .bg-gray-400{
   --tw-bg-opacity: 1;
   background-color: rgb(156 163 175 / var(--tw-bg-opacity));
+}
+
+.bg-wallet{
+  background-color: rgba(0, 0, 0, 0.10);
 }
 
 .bg-white-mode1{
@@ -1204,6 +1238,10 @@ strong {
   cursor: pointer;
 }
 
+.border-2:active {
+  border-color: rgba(0, 136, 204, 0.80);
+}
+
 @media (min-width: 320px){
   .sm\:ml-\[1rem\]{
     margin-left: 1rem;
@@ -1292,15 +1330,19 @@ strong {
   .md\:text-\[2rem\]{
     font-size: 2rem;
   }
+
+  .md\:text-\[3rem\]{
+    font-size: 3rem;
+  }
 }
 
 @media (min-width: 1024px){
-  .lg\:h-\[3rem\]{
-    height: 3rem;
+  .lg\:h-\[36px\]{
+    height: 36px;
   }
 
-  .lg\:h-\[40px\]{
-    height: 40px;
+  .lg\:h-\[3rem\]{
+    height: 3rem;
   }
 
   .lg\:w-\[45rem\]{
@@ -1337,8 +1379,8 @@ strong {
     height: 70px;
   }
 
-  .\32xl\:w-\[18rem\]{
-    width: 18rem;
+  .\32xl\:w-\[17rem\]{
+    width: 17rem;
   }
 
   .\32xl\:w-\[40rem\]{
@@ -1349,16 +1391,8 @@ strong {
     width: 55rem;
   }
 
-  .\32xl\:w-\[17rem\]{
-    width: 17rem;
-  }
-
   .\32xl\:text-\[1\.7rem\]{
     font-size: 1.7rem;
-  }
-
-  .\32xl\:text-\[3rem\]{
-    font-size: 3rem;
   }
 
   .\32xl\:text-\[2\.4rem\]{

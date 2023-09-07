@@ -223,3 +223,7 @@ label {
     margin-left: 10px;
     cursor: pointer;
 }
+
+.border-2:active {
+    border-color: rgba(0, 136, 204, 0.80);
+}

@@ -29,7 +29,7 @@ const Wallet = () => {
                     <h1 className="font-usual font-[550] text-[1.5rem] lg:text-[2.5rem]">Balance</h1>
                     <div className="flex ml-auto mr-auto">
                         <p className="font-usual font-[550] text-[1.5rem] lg:text-[2.5rem]">0.00</p>
-                        <img src={balance} alt="" className="h-[30px] lg:h-[40px] ml-[5px] mt-auto mb-auto" />
+                        <img src={balance} alt="" className="h-[30px] lg:h-[36px] ml-[5px] mt-auto mb-auto" />
                     </div>
                 </div>
 
@@ -43,6 +43,7 @@ const Wallet = () => {
                     <p className="font-usual font-[550] text-[1.5rem] lg:text-[2.5rem]">1 second ago</p>
                 </div>
             </div>
+            <hr className="h-[1px] bg-wallet mt-[2rem]"/>
             <div className="flex justify-around mt-[2rem] flex-wrap ml-[0.5rem] mr-[0.5rem]">
                 <div className="flex flex-col mt-[1rem]">
                     <h1 className="font-mono font-[600] text-[1.3rem] lg:text-[2.3rem]">New order</h1>
@@ -58,7 +59,7 @@ const Wallet = () => {
                         <span className="input__file-button-text text-black lg:text-[2.3rem] min-w-max mt-auto mb-auto">No file selected</span>
                     </label>
                     </div>
-                    <div onClick={SaveSmth} className="font-usual mr-auto ml-auto max-w-max text-[1.3rem] md:text-[1.5rem] lg:text-[2rem] font-[550] flex flex-col justify-center h-[1.5rem] md:h-[2.2rem] lg:h-[3rem] bg-button-blue text-center align-middle rounded-full mt-[1.5rem] pl-[1.3rem] pr-[1.3rem]">Save</div>
+                    <div onClick={SaveSmth} className="font-usual mr-auto ml-auto max-w-max text-[1.3rem] md:text-[1.5rem] lg:text-[2rem] font-[550] flex flex-col justify-center h-[1.5rem] md:h-[2.2rem] lg:h-[3rem] bg-button-blue text-center align-middle rounded-full mt-[1.5rem] pl-[1.3rem] pr-[1.3rem]">Sign & Send</div>
                 </div>
             </div>
         </div>
