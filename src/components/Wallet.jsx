@@ -24,7 +24,8 @@ const Wallet = () => {
   return (
       <div className={`wallet grow flex flex-col ${window.location.pathname.slice(0,7) == '/wallet' ? "" : "hidden"}`}>
         <div className="w-[80%] lap:w-[62%] desktop:w-[54%] min-h-max mt-[4rem] bg-white-mode1 dark:bg-black-mode1 ml-auto mr-auto rounded-lg">
-            <h1 className="font-semibold text-[1.3rem] md:text-[1.9rem] pt-[0.3rem] pb-[0.3rem] font-usual">Overview</h1>
+            <h1 className="font-semibold text-[1.3rem] md:text-[1.9rem] pt-[0.3rem] font-usual">Overview</h1>
+            <h1 className="font-semibold text-[0.5rem] md:text-[1rem] pt-[0.3rem] pb-[0.3rem] font-usual">{window.location.pathname.slice(8)}</h1>
             <hr className="h-[1px] bg-wallet dark:bg-black-mode2 border-0"/>
             <div className="flex justify-around text-center flex-wrap">
                 <div className="pt-[1.3rem] flex flex-col text-center mt-auto mb-auto ml-[0.5rem] mr-[0.5rem] w-[8rem] lg:w-[15rem]">
