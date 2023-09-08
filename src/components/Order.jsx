@@ -47,7 +47,7 @@ const Order = () => {
     function SignSend() {
         // ОБРАБОТАТЬ
     }
-
+    
   return (
     <div id="modal" className="hidden modal flex flex-col justify-center w-screen h-screen">
         <div id="modal-content" className="dark:text-white flex flex-col gap-4 md:gap-8 bg-white-mode1 dark:bg-black-mode1 w-[90%] md:w-[45%] h-auto ml-auto mr-auto pb-[2rem] rounded-lg">
