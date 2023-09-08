@@ -34,11 +34,11 @@ const NewWallet = () => {
                     <input type="text" name="serach" className="mb-[1.5rem] pl-[1rem] good-input w-[14rem] 2xl:w-[17rem] rounded-md font-usual font-semibold text-[100%] md:text-[2rem] 2xl:text-[2.4rem]" placeholder="Wallet ID"/>
                     <input type="text" name="serach" className="mb-[1.5rem] pl-[1rem] good-input w-[14rem] 2xl:w-[17rem] rounded-md font-usual font-semibold text-[100%] md:text-[2rem] 2xl:text-[2.4rem]" placeholder="K-value"/>
                 </div>
-                <div className="flex sm:ml-[1rem] md:ml-[4rem]">
-                    <h1 className="font-semibold md:text-[1.3rem] lg:text-[2.5rem] font-mono mt-auto mb-auto">Public keys</h1>
+                <div className="flex sm:ml-[1rem] md:ml-[2rem] lg:ml-[4rem]">
+                    <h1 className="font-semibold md:text-[2rem] lg:text-[2.5rem] font-mono mt-auto mb-auto">Public keys</h1>
                     <img onClick={AddNew} src={more} alt="" className="cursor-pointer h-[30px] md:h-[45px] ml-[1rem] mr-[0.4rem] mt-auto mb-auto"/>
                 </div>
-                <div className="keys_list flex flex-col gap-5 sm:ml-[1rem] md:ml-[4rem] mb-[2rem] mt-[1rem]">
+                <div className="keys_list flex flex-col gap-5 sm:ml-[1rem] md:ml-[2rem] lg:ml-[4rem] mb-[2rem] mt-[1rem]">
                     <div id='1' className="key flex gap-2 md:gap-5">
                         <input type="text" name="serach" className="pl-[1rem] keyinput pb-0 mb-auto mt-auto good-input sm:w-[13rem] md:w-[30rem] 2xl:w-[40rem] rounded-md font-usual font-semibold text-[100%] md:text-[2rem] lg:text-[2.5rem]" placeholder="Public key or address"/>
                         <img id='img1' onClick={() => DeleteNew(1)} src={cancel} alt="" className="cursor-pointer keyimg h-[1.4rem] md:h-[4rem] mb-auto mt-auto"/>

@@ -1303,6 +1303,10 @@ strong {
     margin-left: 4rem;
   }
 
+  .md\:ml-\[2rem\]{
+    margin-left: 2rem;
+  }
+
   .md\:h-\[2\.2rem\]{
     height: 2.2rem;
   }
@@ -1385,6 +1389,10 @@ strong {
 }
 
 @media (min-width: 1024px){
+  .lg\:ml-\[4rem\]{
+    margin-left: 4rem;
+  }
+
   .lg\:h-\[36px\]{
     height: 36px;
   }
