@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{js,jsx}"],
+  darkMode: 'class',
   theme: {
     extend: {
       backgroundColor: {
@@ -31,6 +32,7 @@ module.exports = {
         "white-mode1": "#FFFFFF",
         "white-mode2": "#F1F3F5",
         "wallet": "rgba(0, 0, 0, 0.70)",
+        "darkwallet": "rgba(255, 255, 255, 0.70)",
       }
     },
   },

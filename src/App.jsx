@@ -1,5 +1,6 @@
 import './App.css';
 import {Home, Wallet, New, Order, Menu} from './components'
+import React from 'react'
 
 let testnet = false;
 
@@ -13,7 +14,6 @@ function ChangeTestnet(new_val) {
 
 
 function App() {
-  
   window.onclick = function (event) {
     console.log(document.getElementById('modal'));
     if (event.target == document.getElementById('modal')) {
@@ -24,7 +24,7 @@ function App() {
   return (
     <div className="App">
       <Order></Order>
-      <div className="bg-white-mode2 h-screen align-middle text-center flex flex-col">
+      <div className="bg-white-mode2 dark:bg-black-mode2 text-black dark:text-white h-screen align-middle text-center flex flex-col">
         <Menu></Menu>
         <Home></Home>
         <Wallet></Wallet>

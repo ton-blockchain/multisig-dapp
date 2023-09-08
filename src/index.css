@@ -139,7 +139,6 @@
 
 .input__file-button {
     width: 100%;
-    color: #fff;
     font-size: 1.125rem;
     font-weight: 500;
     display: -webkit-box;
@@ -226,4 +225,14 @@ label {
 
 .border-2:active {
     border-color: rgba(0, 136, 204, 0.80);
+}
+
+.dark {
+    background-color: var(--clr-bg-dark);
+    color: var(--clr-text-dark);
+}
+
+.light {
+    background-color: var(--clr-bg-light);
+    color: var(--clr-text-light);
 }

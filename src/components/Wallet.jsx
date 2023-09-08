@@ -21,15 +21,15 @@ const Wallet = () => {
 
   return (
       <div className="hidden wallet grow flex flex-col ">
-        <div className="w-[80%] lap:w-[62%] desktop:w-[54%] min-h-max mt-[4rem] bg-white-mode1 ml-auto mr-auto rounded-lg">
+        <div className="w-[80%] lap:w-[62%] desktop:w-[54%] min-h-max mt-[4rem] bg-white-mode1 dark:bg-black-mode1 ml-auto mr-auto rounded-lg">
             <h1 className="font-semibold text-[1.3rem] md:text-[1.9rem] pt-[0.3rem] pb-[0.3rem] font-usual">Overview</h1>
-            <hr className="h-[1px] bg-black"/>
+            <hr className="h-[1px] bg-wallet dark:bg-black-mode2 border-0"/>
             <div className="flex justify-around text-center flex-wrap">
                 <div className="pt-[1.3rem] flex flex-col text-center mt-auto mb-auto ml-[0.5rem] mr-[0.5rem] w-[8rem] lg:w-[15rem]">
                     <h1 className="font-usual font-[550] text-[1.5rem] lg:text-[1.8rem]">Balance</h1>
                     <div className="flex ml-auto mr-auto">
                         <p className="font-usual font-[550] text-[1.5rem] lg:text-[1.8rem]">0.00</p>
-                        <img src={balance} alt="" className="h-[30px] lg:h-[36px] ml-[5px] mt-auto mb-auto" />
+                        <img src={balance} alt="" className="balance h-[20px] lg:h-[26px] ml-[5px] mt-auto mb-auto" />
                     </div>
                 </div>
 
@@ -43,7 +43,7 @@ const Wallet = () => {
                     <p className="font-usual font-[550] text-[1.5rem] lg:text-[1.8rem]">1 second ago</p>
                 </div>
             </div>
-            <hr className="h-[1px] bg-wallet mt-[2rem]"/>
+            <hr className="h-[1px] bg-wallet mt-[2rem] dark:bg-black-mode2 border-0"/>
             <div className="flex justify-around mt-[2rem] flex-wrap ml-[0.5rem] mr-[0.5rem]">
                 <div className="flex flex-col mt-[1rem]">
                     <h1 className="font-mono font-[600] text-[1.3rem] lg:text-[1.8rem]">New order</h1>
@@ -55,8 +55,8 @@ const Wallet = () => {
                     <div class="input__wrapper">
                         <input onChange={handleImageChange} name="file" type="file" id="input__file" class="input input__file" multiple />
                         <label for="input__file" className="h-auto input__file-button">
-                        <span className="input__file-icon-wrapper mt-auto mb-auto"><img class="input__file-icon" src={download} alt="Выбрать файл" className="mt-auto mb-auto w-[40px] md:w-[50px]" /></span>
-                        <span className="input__file-button-text text-black lg:text-[1.9rem] min-w-max mt-auto mb-auto">No file selected</span>
+                        <span className="input__file-icon-wrapper mt-auto mb-auto"><img class="input__file-icon" src={download} alt="Выбрать файл" className="download mt-auto mb-auto w-[40px] md:w-[50px]" /></span>
+                        <span className="input__file-button-text text-black dark:text-white lg:text-[1.9rem] min-w-max mt-auto mb-auto">No file selected</span>
                     </label>
                     </div>
                     <div onClick={SaveSmth} className="cursor-pointer font-usual mr-auto ml-auto max-w-max text-[1.3rem] md:text-[1.5rem] lg:text-[1.7rem] font-[550] flex flex-col justify-center h-[1.5rem] md:h-[2.2rem] lg:h-[2.6rem] bg-button-blue text-center align-middle rounded-full mt-[1.5rem] pl-[1.3rem] pr-[1.3rem]">Sign & Send</div>
