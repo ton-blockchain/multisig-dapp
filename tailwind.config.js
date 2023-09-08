@@ -17,6 +17,8 @@ module.exports = {
         "mm": "375px",
         "laptop": "1440px",
         "bigger": "1441px",
+        "lap": "1600px",
+        "desktop": "1920px",
       },
       fontFamily: {
         "usual": "Roboto",

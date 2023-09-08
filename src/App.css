@@ -779,6 +779,10 @@ video {
   width: 80%;
 }
 
+.w-\[8rem\]{
+  width: 8rem;
+}
+
 .w-\[90\%\]{
   width: 90%;
 }
@@ -789,26 +793,6 @@ video {
 
 .w-screen{
   width: 100vw;
-}
-
-.w-\[4rem\]{
-  width: 4rem;
-}
-
-.w-\[12rem\]{
-  width: 12rem;
-}
-
-.w-\[8rem\]{
-  width: 8rem;
-}
-
-.w-\[10rem\]{
-  width: 10rem;
-}
-
-.w-\[7rem\]{
-  width: 7rem;
 }
 
 .min-w-max{
@@ -835,14 +819,6 @@ video {
 
 .grid-cols-2{
   grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.grid-cols-3{
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.grid-rows-3{
-  grid-template-rows: repeat(3, minmax(0, 1fr));
 }
 
 .flex-col{
@@ -887,6 +863,10 @@ video {
 
 .gap-5{
   gap: 1.25rem;
+}
+
+.gap-6{
+  gap: 1.5rem;
 }
 
 .truncate{
@@ -1299,16 +1279,20 @@ strong {
 }
 
 @media (min-width: 768px){
-  .md\:ml-\[4rem\]{
-    margin-left: 4rem;
-  }
-
   .md\:ml-\[2rem\]{
     margin-left: 2rem;
   }
 
+  .md\:ml-\[4rem\]{
+    margin-left: 4rem;
+  }
+
   .md\:h-\[2\.2rem\]{
     height: 2.2rem;
+  }
+
+  .md\:h-\[3\.1rem\]{
+    height: 3.1rem;
   }
 
   .md\:h-\[45px\]{
@@ -1343,14 +1327,6 @@ strong {
     width: 53vw;
   }
 
-  .md\:w-\[18rem\]{
-    width: 18rem;
-  }
-
-  .md\:w-\[15rem\]{
-    width: 15rem;
-  }
-
   .md\:gap-5{
     gap: 1.25rem;
   }
@@ -1365,10 +1341,6 @@ strong {
 
   .md\:pr-\[1\.3rem\]{
     padding-right: 1.3rem;
-  }
-
-  .md\:text-\[1\.3rem\]{
-    font-size: 1.3rem;
   }
 
   .md\:text-\[1\.5rem\]{
@@ -1386,6 +1358,10 @@ strong {
   .md\:text-\[3rem\]{
     font-size: 3rem;
   }
+
+  .md\:text-\[2\.2rem\]{
+    font-size: 2.2rem;
+  }
 }
 
 @media (min-width: 1024px){
@@ -1401,12 +1377,20 @@ strong {
     height: 3rem;
   }
 
+  .lg\:w-\[15rem\]{
+    width: 15rem;
+  }
+
   .lg\:w-\[45rem\]{
     width: 45rem;
   }
 
-  .lg\:w-\[15rem\]{
-    width: 15rem;
+  .lg\:text-\[1\.9rem\]{
+    font-size: 1.9rem;
+  }
+
+  .lg\:text-\[2\.15rem\]{
+    font-size: 2.15rem;
   }
 
   .lg\:text-\[2\.2rem\]{
@@ -1455,7 +1439,19 @@ strong {
     font-size: 1.7rem;
   }
 
-  .\32xl\:text-\[2\.4rem\]{
-    font-size: 2.4rem;
+  .\32xl\:text-\[2\.15rem\]{
+    font-size: 2.15rem;
+  }
+}
+
+@media (min-width: 1600px){
+  .lap\:w-\[68\%\]{
+    width: 68%;
+  }
+}
+
+@media (min-width: 1920px){
+  .desktop\:w-\[62\%\]{
+    width: 62%;
   }
 }

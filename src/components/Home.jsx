@@ -13,6 +13,11 @@ const Home = () => {
   };
 
   function handleSubmit2() {
+    document.getElementById('wallet').addEventListener('keydown', function (event) {
+      if (event.key === 'Enter') {
+        handleSubmit();
+      }
+    });
     if (document.getElementById('wallet').value !== '' ) {
       // console.log(document.getElementsByClassName("fa2"));
       document.getElementsByClassName("fa2")[0].classList.remove("hidden");
