@@ -6,6 +6,7 @@ const Home = () => {
     // ОБРАБОТКА
     let can = true; // НАДО ПРОВЕРИТЬ МОЖНО ИЛИ НЕТ
     if (can) {
+      window.history.pushState(null, null, `/wallet/${document.getElementById('wallet').value}`);
       document.getElementsByClassName("home")[0].classList.add("hidden");
       document.getElementsByClassName("new")[0].classList.add("hidden");
       document.getElementsByClassName("wallet")[0].classList.remove("hidden");
@@ -27,7 +28,7 @@ const Home = () => {
   };
 
   return (
-    <div className="home grow flex flex-col justify-center pb-[7rem]">
+    <div className={`home grow flex flex-col justify-center pb-[7rem] ${window.location.pathname != '/create' && window.location.pathname.slice(0,7) != '/wallet' ? "" : "hidden"}`}>
       <img src={multisigwallet} className="w-[17rem] md:w-[50vw] ml-auto mr-auto mb-[2.5rem]" alt="" />
       <img src={protection} className="protection w-[20rem] md:w-[53vw] ml-auto mr-auto mb-[3rem]" alt="" />
       <div className="inputWithIcon w-[90%] md:w-[35rem] lg:w-[45rem] 2xl:w-[55rem] ml-auto mr-auto">

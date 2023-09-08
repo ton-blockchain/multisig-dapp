@@ -32,12 +32,13 @@ const Menu = () => {
 
     function Buuton_new() {
         if (document.getElementsByClassName("new")[0].classList.contains('hidden')){ // wallet, home
-            console.log(1);
-            document.getElementsByClassName("home")[0].classList.add("hidden");
-            document.getElementsByClassName("new")[0].classList.remove("hidden");
-            document.getElementsByClassName("wallet")[0].classList.add("hidden");
-            document.getElementsByClassName('Buuton')[0].textContent = "Back to home page";
+          window.history.pushState(null, null, '/create');
+          document.getElementsByClassName("home")[0].classList.add("hidden");
+          document.getElementsByClassName("new")[0].classList.remove("hidden");
+          document.getElementsByClassName("wallet")[0].classList.add("hidden");
+          document.getElementsByClassName('Buuton')[0].textContent = "Back to home page";
         } else {
+            window.history.pushState(null, null, '/');
             document.getElementsByClassName("home")[0].classList.remove("hidden");
             document.getElementsByClassName("new")[0].classList.add("hidden");
             document.getElementsByClassName("wallet")[0].classList.add("hidden");

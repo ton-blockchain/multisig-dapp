@@ -28,7 +28,7 @@ const NewWallet = () => {
     }
 
   return (
-      <div className="hidden new grow flex flex-col">
+      <div className={`new grow flex flex-col ${window.location.pathname == '/create' ? "" : "hidden"}`}>
         <div className="w-[80%] lap:w-[62%] desktop:w-[54%] min-h-max mt-[4rem] bg-white-mode1 dark:bg-black-mode1 ml-auto mr-auto rounded-lg pb-[2rem]">
             <h1 className="font-semibold text-[1.3rem] md:text-[1.9rem] pl-[1.5rem] pt-[0.3rem] pb-[0.3rem] font-usual">Create new multisig wallet</h1>
             <hr className="h-[1px] bg-black"/>
