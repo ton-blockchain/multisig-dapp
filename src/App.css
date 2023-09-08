@@ -1442,6 +1442,10 @@ strong {
   .\32xl\:text-\[2\.15rem\]{
     font-size: 2.15rem;
   }
+
+  .\32xl\:text-\[2\.05rem\]{
+    font-size: 2.05rem;
+  }
 }
 
 @media (min-width: 1600px){

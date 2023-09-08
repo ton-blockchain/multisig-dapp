@@ -30,9 +30,9 @@ const NewWallet = () => {
             <hr className="h-[1px] bg-black"/>
             <form>
                 <div className="flex justify-around text-center flex-wrap mt-[1.3rem]">
-                    <input type="text" name="serach" className="mb-[1.5rem] pl-[1rem] good-input w-[14rem] 2xl:w-[17rem] rounded-md font-usual font-semibold text-[100%] md:text-[2rem] 2xl:text-[2.15rem]" placeholder="Workchain ID"/>
-                    <input type="text" name="serach" className="mb-[1.5rem] pl-[1rem] good-input w-[14rem] 2xl:w-[17rem] rounded-md font-usual font-semibold text-[100%] md:text-[2rem] 2xl:text-[2.15rem]" placeholder="Wallet ID"/>
-                    <input type="text" name="serach" className="mb-[1.5rem] pl-[1rem] good-input w-[14rem] 2xl:w-[17rem] rounded-md font-usual font-semibold text-[100%] md:text-[2rem] 2xl:text-[2.15rem]" placeholder="K-value"/>
+                    <input type="text" name="serach" className="mb-[1.5rem] pl-[1rem] good-input w-[14rem] 2xl:w-[17rem] rounded-md font-usual font-semibold text-[100%] md:text-[2rem] 2xl:text-[2.05rem]" placeholder="Workchain ID"/>
+                    <input type="text" name="serach" className="mb-[1.5rem] pl-[1rem] good-input w-[14rem] 2xl:w-[17rem] rounded-md font-usual font-semibold text-[100%] md:text-[2rem] 2xl:text-[2.05rem]" placeholder="Wallet ID"/>
+                    <input type="text" name="serach" className="mb-[1.5rem] pl-[1rem] good-input w-[14rem] 2xl:w-[17rem] rounded-md font-usual font-semibold text-[100%] md:text-[2rem] 2xl:text-[2.05rem]" placeholder="K-value"/>
                 </div>
                 <div className="flex sm:ml-[1rem] md:ml-[2rem] lg:ml-[4rem]">
                     <h1 className="font-semibold md:text-[2rem] lg:text-[2.2rem] font-mono mt-auto mb-auto">Public keys</h1>
