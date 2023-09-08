@@ -46,7 +46,7 @@ const Menu = () => {
         </div>
         <div className="hidden settings flex flex-col settings h-[5rem] bg-[#D5D7D8] fixed z-1 right-5 top-[5rem] pl-[1rem] pr-[1rem] rounded-lg">
           <div className="flex gap-4 mt-auto mb-auto">
-          <h1 className="font-mono font-[550] text-[1.5rem] lg:text-[2.2rem]">Testnet</h1>
+          <h1 className="font-mono font-[550] text-[1.5rem] lg:text-[1.9rem]">Testnet</h1>
             <Toggle
                 label="tesnet mode"
                 toggled={false}
