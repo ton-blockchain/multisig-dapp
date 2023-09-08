@@ -81,7 +81,7 @@ const Menu = () => {
         </div>
         <div className="flex align-middle mr-[1rem]">
           <h1 onClick={Buuton_new} className="cursor-pointer Buuton 2xl:text-[1.5rem] text-usual text-wallet dark:text-darkwallet font-semibold mt-auto mb-auto mr-[0.4rem] md:mr-[1.5rem] 2xl:mr-[2.5rem]">New wallet</h1>
-          <img onClick={Buuton_click} src={localStorage.getItem('darkmode') == 0 ? settings : settings2} alt="" className="icon_set cursor-pointer h-[40px] 2xl:h-[55px] mt-auto mb-auto" />
+          <img onClick={Buuton_click} src={localStorage.getItem('darkmode') == 1 ? settings2 : settings} alt="" className="icon_set cursor-pointer h-[40px] 2xl:h-[55px] mt-auto mb-auto" />
         </div>
         <div className="hidden settings flex flex-col settings h-[7rem] bg-[#D5D7D8] dark:bg-[rgb(56,58,58)] fixed z-1 right-5 top-[5rem] pl-[1rem] pr-[1rem] rounded-lg">
           <div className="flex justify-between mt-auto mb-auto">
