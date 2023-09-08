@@ -1,0 +1,254 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Readex+Pro&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.gradient-text {
+    background: linear-gradient(90deg, #08C 0.05%, #5EDDFF 97.8%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.good-input {
+    background: #F7FAFE;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.good-input:hover {
+    border-width: 0px;
+}
+
+.good-input:active {
+    border-width: 0px;
+}
+
+:is(.dark .dark\:fa){
+    background: url(assets/search4.svg) no-repeat;
+}
+
+.fa {
+    background: url(assets/search2.svg) no-repeat;
+}
+
+.fa2 {
+    background: url(assets/enter2.svg) no-repeat;
+}
+
+:is(.dark .dark\:fa2){
+    background: url(assets/enter4.svg) no-repeat;
+}
+
+.inputWithIcon {
+    position: relative;
+}
+
+.inputWithIcon .fa {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    padding: 20px 20px;
+    color: #aaa;
+    transition: 0.3s;
+}
+
+.inputWithIcon .fa2 {
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    padding: 15px 15px;
+    color: #aaa;
+    transition: 0.3s;
+}
+
+
+.fa + input {
+    padding-left: 45px;
+}
+
+.homeInput {
+    padding-right: 50px;
+}
+
+@media (min-width: 768px) {
+    .fa {
+        background: url(assets/search.svg) no-repeat;
+    }
+
+    :is(.dark .dark\:fa){
+        background: url(assets/search3.svg) no-repeat;
+    }
+    
+    .fa2 {
+        background: url(assets/enter.svg) no-repeat;
+    }
+
+    :is(.dark .dark\:fa2){
+        background: url(assets/enter3.svg) no-repeat;
+    }
+    
+    .inputWithIcon {
+        position: relative;
+    }
+    
+    .inputWithIcon .fa {
+        position: absolute;
+        left: 15px;
+        top: 15px;
+        padding: 30px 30px;
+        color: #aaa;
+        transition: 0.3s;
+    }
+    
+    .inputWithIcon .fa2 {
+        position: absolute;
+        right: 15px;
+        top: 0px;
+        padding: 30px 30px;
+        color: #aaa;
+        transition: 0.3s;
+    }
+    
+    
+    .fa + input {
+        padding-left: 60px;
+    }
+    
+    .homeInput {
+        padding-right: 70px;
+    }
+}
+
+
+.input__wrapper {
+    width: 100%;
+    position: relative;
+    margin: 15px 0;
+    text-align: center;
+}
+
+.input__file {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+}
+
+.input__file-icon-wrapper {
+    margin-right: 15px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+}
+
+.input__file-button-text {
+    line-height: 1;
+}
+
+.input__file-button {
+    width: 100%;
+    font-size: 1.125rem;
+    font-weight: 500;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    border-radius: 3px;
+    cursor: pointer;
+    margin: 0 auto;
+}
+
+body {
+    background-color: #F1F3F5;
+}
+
+.modal {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+label {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+}
+
+.dh {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.df {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #2c3e50;
+    transition: 0.3s;
+    border-radius: 30px;
+}
+
+.df:before {
+    position: absolute;
+    content: "";
+    height: 25px;
+    width: 25px;
+    left: 3px;
+    bottom: 2.6px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: 0.3s;
+  }
+  
+  input:checked + .df {
+    background-color: #00c853;
+  }
+  
+  input:checked + .df:before {
+    transform: translateX(29px);
+  }
+
+  
+  strong {
+    position: absolute;
+    left: 100%;
+    width: max-content;
+    line-height: 30px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.border-2:active {
+    border-color: rgba(0, 136, 204, 0.80);
+}
+
+.dark {
+    background-color: var(--clr-bg-dark);
+    color: var(--clr-text-dark);
+}
+
+.light {
+    background-color: var(--clr-bg-light);
+    color: var(--clr-text-light);
+}
