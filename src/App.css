@@ -1515,12 +1515,20 @@ strong {
     margin-right: 4.5rem;
   }
 
+  .\32xl\:mr-\[3rem\]{
+    margin-right: 3rem;
+  }
+
   .\32xl\:h-\[6rem\]{
     height: 6rem;
   }
 
   .\32xl\:h-\[70px\]{
     height: 70px;
+  }
+
+  .\32xl\:h-\[60px\]{
+    height: 60px;
   }
 
   .\32xl\:w-\[17rem\]{
@@ -1561,6 +1569,10 @@ strong {
 
   .\32xl\:text-\[1\.8rem\]{
     font-size: 1.8rem;
+  }
+
+  .\32xl\:text-\[1\.5rem\]{
+    font-size: 1.5rem;
   }
 }
 
