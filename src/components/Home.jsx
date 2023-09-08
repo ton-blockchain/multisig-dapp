@@ -30,7 +30,7 @@ const Home = () => {
   return (
     <div className={`home grow flex flex-col justify-center pb-[7rem] ${window.location.pathname != '/create' && window.location.pathname.slice(0,7) != '/wallet' ? "" : "hidden"}`}>
       <img src={multisigwallet} className="w-[17rem] md:w-[50vw] ml-auto mr-auto mb-[2.5rem]" alt="" />
-      <img src={protection} className="protection w-[20rem] md:w-[53vw] ml-auto mr-auto mb-[3rem]" alt="" />
+      <img src={localStorage.getItem('darkmode') == 0 ? protection : protection2} className="protection w-[20rem] md:w-[53vw] ml-auto mr-auto mb-[3rem]" alt="" />
       <div className="inputWithIcon w-[90%] md:w-[35rem] lg:w-[45rem] 2xl:w-[55rem] ml-auto mr-auto">
         <i className="fa dark:fa" aria-hidden="true"></i>
         <input id="wallet" onChange={handleSubmit2} type="text" name="serach" className="dark:text-white dark:bg-[rgb(30,31,34)] homeInput good-input w-full max-w-full h-[4rem] rounded-md font-usual font-semibold mm:text-[0.82rem] md:text-[1.9rem]" placeholder="Enter a multi-sig wallet address to start"/>

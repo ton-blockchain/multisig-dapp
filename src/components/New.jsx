@@ -1,4 +1,4 @@
-import { ton, settings, more, cancel, cancel2 } from "../assets";
+import { ton, settings, more, cancel, cancel2, more2 } from "../assets";
 import { Toggle } from "./Toggle";
 
 const NewWallet = () => {
@@ -40,12 +40,12 @@ const NewWallet = () => {
                 </div>
                 <div className="flex sm:ml-[1rem] md:ml-[2rem] lg:ml-[4rem]">
                     <h1 className="font-semibold md:text-[2rem] lg:text-[1.9rem] font-mono mt-auto mb-auto">Public keys</h1>
-                    <img onClick={AddNew} src={more} alt="" className="more cursor-pointer h-[24px] md:h-[38px] ml-[1rem] mr-[0.4rem] mt-auto mb-auto"/>
+                    <img onClick={AddNew} src={localStorage.getItem('darkmode') == 0 ? more : more2} alt="" className="more cursor-pointer h-[24px] md:h-[38px] ml-[1rem] mr-[0.4rem] mt-auto mb-auto"/>
                 </div>
                 <div className="keys_list flex flex-col gap-6 sm:ml-[1rem] md:ml-[2rem] lg:ml-[4rem] mb-[2rem] mt-[1rem]">
                     <div id='1' className="key flex gap-2 md:gap-5">
                         <input type="text" name="serach" className="dark:text-white dark:bg-[rgb(30,31,34)] pl-[1rem] keyinput pb-0 mb-auto mt-auto good-input sm:w-[13rem] md:w-[28rem] rounded-md font-usual font-semibold text-[100%] md:text-[2rem] lg:text-[1.9rem]" placeholder="Public key or address"/>
-                        <img id='img1' onClick={() => DeleteNew(1)} src={cancel} alt="" className="cancel cursor-pointer keyimg h-[1.4rem] md:h-[2.6rem] mb-auto mt-auto"/>
+                        <img id='img1' onClick={() => DeleteNew(1)} src={localStorage.getItem('darkmode') == 0 ? cancel : cancel2} alt="" className="cancel cursor-pointer keyimg h-[1.4rem] md:h-[2.6rem] mb-auto mt-auto"/>
                     </div>
                 </div>
                 {/* <div onClick={CreateMultisig} className="sm:ml-[1rem] md:ml-[4rem] max-w-max text-[1.3rem] md:text-[1.5rem] lg:text-[2.5rem] font-medium flex flex-col justify-center h-[1.5rem] md:h-[2.2rem] lg:h-[3rem] bg-button-blue text-center align-middle rounded-full mt-[2rem] pl-[1.3rem] pr-[1.3rem]">Create</div> */}

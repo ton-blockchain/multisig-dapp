@@ -1,4 +1,4 @@
-import { ton, settings, download, balance } from "../assets";
+import { ton, settings, download, balance, balance2, download2 } from "../assets";
 import { Toggle } from "./Toggle";
 
 const Wallet = () => {
@@ -32,7 +32,7 @@ const Wallet = () => {
                     <h1 className="font-usual font-[550] text-[1.5rem] lg:text-[1.8rem]">Balance</h1>
                     <div className="flex ml-auto mr-auto">
                         <p className="font-usual font-[550] text-[1.5rem] lg:text-[1.8rem]">0.00</p>
-                        <img src={balance} alt="" className="balance h-[20px] lg:h-[26px] ml-[5px] mt-auto mb-auto" />
+                        <img src={localStorage.getItem('darkmode') == 0 ? balance : balance2} alt="" className="balance h-[20px] lg:h-[26px] ml-[5px] mt-auto mb-auto" />
                     </div>
                 </div>
 
@@ -58,7 +58,7 @@ const Wallet = () => {
                     <div class="input__wrapper">
                         <input onChange={handleImageChange} name="file" type="file" id="input__file" class="input input__file" multiple />
                         <label for="input__file" className="h-auto input__file-button">
-                        <span className="input__file-icon-wrapper mt-auto mb-auto"><img class="input__file-icon" src={download} alt="Выбрать файл" className="download mt-auto mb-auto w-[40px] md:w-[50px]" /></span>
+                        <span className="input__file-icon-wrapper mt-auto mb-auto"><img class="input__file-icon" src={localStorage.getItem('darkmode') == 0 ? download : download2} alt="Выбрать файл" className="download mt-auto mb-auto w-[40px] md:w-[50px]" /></span>
                         <span className="input__file-button-text text-black dark:text-white lg:text-[1.9rem] min-w-max mt-auto mb-auto">No file selected</span>
                     </label>
                     </div>
