@@ -1,6 +1,9 @@
 import { download, balance, balance2, download2 } from '../assets';
+import useLocalStorage from 'react-use-localstorage';
 
-const Wallet = ({ getClient }) => {
+const Wallet = () => {
+    const [isDarkmode, setDarkmode] = useLocalStorage('isDarkmode', 'false');
+
     function NewOrder() {
         document.getElementById('modal').classList.remove('hidden');
     }
@@ -47,11 +50,7 @@ const Wallet = ({ getClient }) => {
                                 0.00
                             </p>
                             <img
-                                src={
-                                    localStorage.getItem('darkmode') == 1
-                                        ? balance2
-                                        : balance
-                                }
+                                src={isDarkmode == 'true' ? balance2 : balance}
                                 alt=""
                                 className="balance h-[20px] lg:h-[26px] ml-[5px] mt-auto mb-auto"
                             />
@@ -111,8 +110,7 @@ const Wallet = ({ getClient }) => {
                                     <img
                                         className="input__file-icon download mt-auto mb-auto w-[40px] md:w-[50px]"
                                         src={
-                                            localStorage.getItem('darkmode') ==
-                                            1
+                                            isDarkmode == 'true'
                                                 ? download2
                                                 : download
                                         }

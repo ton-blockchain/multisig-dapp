@@ -1,20 +1,35 @@
 import { multisigwallet, protection, protection2 } from '../assets';
+import { Address, TonClient } from '@ton/ton';
+import { useTonClient } from '../store/tonClient';
+import useLocalStorage from 'react-use-localstorage';
 
 const Home = () => {
-    function handleSubmit() {
-        let can = true;
-        if (can) {
-            window.history.pushState(
-                null,
-                null,
-                `/wallet/${document.getElementById('wallet').value}`
+    const tonClient = useTonClient();
+    const [isDarkmode, setDarkmode] = useLocalStorage('isDarkmode', 'false');
+
+    async function handleSubmit() {
+        try {
+            const address = Address.parse(
+                document.getElementById('wallet').value.trim()
             );
-            document.getElementsByClassName('home')[0].classList.add('hidden');
-            document.getElementsByClassName('new')[0].classList.add('hidden');
-            document
-                .getElementsByClassName('wallet')[0]
-                .classList.remove('hidden');
+            const result = await tonClient.value.runMethod(
+                address,
+                'get_n_k',
+                []
+            );
+        } catch (e) {
+            console.log(e);
+            return;
         }
+
+        window.history.pushState(
+            null,
+            null,
+            `/wallet/${document.getElementById('wallet').value}`
+        );
+        document.getElementsByClassName('home')[0].classList.add('hidden');
+        document.getElementsByClassName('new')[0].classList.add('hidden');
+        document.getElementsByClassName('wallet')[0].classList.remove('hidden');
     }
 
     function handleSubmit2() {
@@ -50,11 +65,7 @@ const Home = () => {
                 alt=""
             />
             <img
-                src={
-                    localStorage.getItem('darkmode') == 1
-                        ? protection2
-                        : protection
-                }
+                src={isDarkmode == 'true' ? protection2 : protection}
                 className="protection w-[20rem] md:w-[53vw] ml-auto mr-auto mb-[3rem]"
                 alt=""
             />

@@ -1,6 +1,6 @@
 import { cancel, cancel2 } from '../assets';
 
-const Order = ({ getClient }) => {
+const Order = () => {
     let id = 0;
 
     const DeleteNew = (e) => {

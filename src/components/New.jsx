@@ -1,6 +1,9 @@
 import { more, cancel, cancel2, more2 } from '../assets';
+import useLocalStorage from 'react-use-localstorage';
 
-const NewWallet = ({ getClient }) => {
+const NewWallet = () => {
+    const [isDarkmode, setDarkmode] = useLocalStorage('isDarkmode', 'false');
+
     let id = 1;
 
     const DeleteNew = (e) => {
@@ -69,11 +72,7 @@ const NewWallet = ({ getClient }) => {
                         </h1>
                         <img
                             onClick={AddNew}
-                            src={
-                                localStorage.getItem('darkmode') == 1
-                                    ? more2
-                                    : more
-                            }
+                            src={isDarkmode == 'true' ? more2 : more}
                             alt=""
                             className="more cursor-pointer h-[24px] md:h-[38px] ml-[1rem] mr-[0.4rem] mt-auto mb-auto"
                         />
@@ -89,11 +88,7 @@ const NewWallet = ({ getClient }) => {
                             <img
                                 id="img1"
                                 onClick={() => DeleteNew(1)}
-                                src={
-                                    localStorage.getItem('darkmode') == 1
-                                        ? cancel2
-                                        : cancel
-                                }
+                                src={isDarkmode == 'true' ? cancel2 : cancel}
                                 alt=""
                                 className="cancel cursor-pointer keyimg h-[1.4rem] md:h-[2.6rem] mb-auto mt-auto"
                             />
