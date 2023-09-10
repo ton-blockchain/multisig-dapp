@@ -1,6 +1,6 @@
-import { ton, settings, more, cancel, cancel2 } from '../assets';
+import { cancel, cancel2 } from '../assets';
 
-const Order = () => {
+const Order = ({ getClient }) => {
     let id = 0;
 
     const DeleteNew = (e) => {

@@ -1,70 +1,10 @@
-import { Toggle } from './Toggle';
-import {
-    ton,
-    settings,
-    settings2,
-    protection,
-    protection2,
-    more,
-    more2,
-    cancel,
-    cancel2,
-    balance,
-    balance2,
-    download,
-    download2,
-} from '../assets';
+import { ToggleTestnet, ToggleDarkmode } from './Toggles';
+import { ton, settings, settings2 } from '../assets';
+import useLocalStorage from 'react-use-localstorage';
 
 const Menu = () => {
-    function Testnet() {
-        // ОБРАБОТЧИК
-        if (
-            document
-                .getElementsByClassName('testnet')[0]
-                .classList.contains('hidden')
-        ) {
-            localStorage.setItem('testnet', 1);
-        } else {
-            localStorage.setItem('testnet', 0);
-        }
-        document
-            .getElementsByClassName('testnet')[0]
-            .classList.toggle('hidden');
-    }
-
-    function DarkMode() {
-        if (!document.documentElement.classList.contains('dark')) {
-            console.log(1);
-            localStorage.setItem('darkmode', 1);
-            document.getElementsByClassName('protection')[0].src = protection2;
-            document.getElementsByClassName('icon_set')[0].src = settings2;
-            document.getElementsByClassName('more')[0].src = more2;
-            for (
-                let i = 0;
-                i < document.getElementsByClassName('cancel').length;
-                i++
-            ) {
-                document.getElementsByClassName('cancel')[i].src = cancel2;
-            }
-            document.getElementsByClassName('balance')[0].src = balance2;
-            document.getElementsByClassName('download')[0].src = download2;
-        } else {
-            localStorage.setItem('darkmode', 0);
-            document.getElementsByClassName('protection')[0].src = protection;
-            document.getElementsByClassName('icon_set')[0].src = settings;
-            document.getElementsByClassName('more')[0].src = more;
-            for (
-                let i = 0;
-                i < document.getElementsByClassName('cancel').length;
-                i++
-            ) {
-                document.getElementsByClassName('cancel')[i].src = cancel;
-            }
-            document.getElementsByClassName('balance')[0].src = balance;
-            document.getElementsByClassName('download')[0].src = download;
-        }
-        document.documentElement.classList.toggle('dark');
-    }
+    const [isTestnet, setTestnet] = useLocalStorage('isTestnet', 'false');
+    const [isDarkmode, setDarkmode] = useLocalStorage('isDarkmode', 'false');
 
     function Buuton_new() {
         if (
@@ -112,10 +52,6 @@ const Menu = () => {
             .classList.toggle('hidden');
     }
 
-    if (localStorage.getItem('darkmode') == 1) {
-        document.documentElement.classList.add('dark');
-    }
-
     return (
         <header className="static bg-white-mode1 dark:bg-black-mode1  flex justify-between h-[5rem] 2xl:h-[6rem] align-middle">
             <div className="flex align-middle gap-1">
@@ -126,9 +62,9 @@ const Menu = () => {
                     className="cursor-pointer h-[40px] 2xl:h-[55px] mt-auto mb-auto ml-[1rem]"
                 />
                 <div
-                    className={`${
-                        localStorage.getItem('testnet') != 1 ? 'hidden' : ''
-                    } testnet mt-auto mb-auto sm:ml-[0.2rem] md:ml-[2rem] max-w-max md:text-[1.2rem] font-[550] flex flex-col justify-center h-[1.5rem] md:h-[2.2rem] bg-button-blue text-center align-middle rounded-full text-white pl-[0.8rem] pr-[0.8rem] md:pl-[1.2rem] md:pr-[1.2rem]`}
+                    className={
+                        'testnet mt-auto mb-auto sm:ml-[0.2rem] md:ml-[2rem] max-w-max md:text-[1.2rem] font-[550] flex flex-col justify-center h-[1.5rem] md:h-[2.2rem] bg-button-blue text-center align-middle rounded-full text-white pl-[0.8rem] pr-[0.8rem] md:pl-[1.2rem] md:pr-[1.2rem]'
+                    }
                 >
                     Testnet
                 </div>
@@ -142,11 +78,7 @@ const Menu = () => {
                 </h1>
                 <img
                     onClick={Buuton_click}
-                    src={
-                        localStorage.getItem('darkmode') == 1
-                            ? settings2
-                            : settings
-                    }
+                    src={isDarkmode ? settings2 : settings}
                     alt=""
                     className="icon_set cursor-pointer h-[40px] 2xl:h-[55px] mt-auto mb-auto"
                 />
@@ -156,25 +88,13 @@ const Menu = () => {
                     <h1 className="font-mono font-[550] text-[1.5rem] lg:text-[1.9rem] mr-[0.8rem]">
                         Testnet
                     </h1>
-                    <Toggle
-                        label="tesnet mode"
-                        toggled={
-                            localStorage.getItem('testnet') == 1 ? true : false
-                        }
-                        onClick={Testnet}
-                    />
+                    <ToggleTestnet />
                 </div>
                 <div className="flex justify-between mt-auto mb-auto">
                     <h1 className="font-mono font-[550] text-[1.5rem] lg:text-[1.7rem] mr-[0.8rem]">
                         Dark mode
                     </h1>
-                    <Toggle
-                        label="tesnet mode"
-                        toggled={
-                            localStorage.getItem('darkmode') == 1 ? true : false
-                        }
-                        onClick={DarkMode}
-                    />
+                    <ToggleDarkmode />
                 </div>
             </div>
         </header>

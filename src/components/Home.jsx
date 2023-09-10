@@ -1,10 +1,4 @@
-import {
-    ton,
-    settings,
-    multisigwallet,
-    protection,
-    protection2,
-} from '../assets';
+import { multisigwallet, protection, protection2 } from '../assets';
 
 const Home = () => {
     function handleSubmit() {

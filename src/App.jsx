@@ -1,16 +1,6 @@
 import './App.css';
 import { Home, Wallet, New, Order, Menu } from './components';
-import React from 'react';
-
-let testnet = false;
-
-function getTestnet() {
-    return testnet;
-}
-
-function ChangeTestnet(new_val) {
-    testnet = new_val;
-}
+import { React } from 'react';
 
 function App() {
     window.onclick = function (event) {

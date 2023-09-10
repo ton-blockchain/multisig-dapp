@@ -1,7 +1,6 @@
-import { ton, settings, more, cancel, cancel2, more2 } from '../assets';
-import { Toggle } from './Toggle';
+import { more, cancel, cancel2, more2 } from '../assets';
 
-const NewWallet = () => {
+const NewWallet = ({ getClient }) => {
     let id = 1;
 
     const DeleteNew = (e) => {
