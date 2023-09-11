@@ -85,7 +85,7 @@ const Menu = () => {
             </div>
             <div className="hidden settings flex flex-col settings h-[7rem] bg-[#D5D7D8] dark:bg-[rgb(56,58,58)] fixed z-1 right-5 top-[5rem] pl-[1rem] pr-[1rem] rounded-lg">
                 <div className="flex justify-between mt-auto mb-auto">
-                    <h1 className="font-mono font-[550] text-[1.5rem] lg:text-[1.9rem] mr-[0.8rem]">
+                    <h1 className="font-mono font-[550] text-[1.5rem] lg:text-[1.9rem] mr-[2rem]">
                         Testnet
                     </h1>
                     <ToggleTestnet />
