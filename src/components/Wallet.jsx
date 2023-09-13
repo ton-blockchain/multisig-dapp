@@ -1,8 +1,19 @@
 import { download, balance, balance2, download2 } from '../assets';
 import useLocalStorage from 'react-use-localstorage';
+import { useMultisigWallet } from '../store/multisigWallet';
+import { useTonClient } from '../store/tonClient';
+import * as dayjs from 'dayjs';
+import * as relativeTime from 'dayjs/plugin/relativeTime';
+import { Address } from '@ton/core';
+import { useEffect } from 'react';
+import { MultisigWallet } from '@ton/ton';
+
+dayjs.extend(relativeTime);
 
 const Wallet = () => {
+    const tonClient = useTonClient();
     const [isDarkmode, setDarkmode] = useLocalStorage('isDarkmode', 'false');
+    const wallet = useMultisigWallet();
 
     function NewOrder() {
         document.getElementById('modal').classList.remove('hidden');
@@ -22,7 +33,34 @@ const Wallet = () => {
         // ОБРАБОТАТЬ
     }
 
-    // window.location.pathname.slice(8) - адрес кошелька
+    useEffect(() => {
+        async function fetchData() {
+            if (wallet.value.lastActive == 0) {
+                try {
+                    const address = Address.parse(
+                        window.location.pathname.slice(-48)
+                    );
+                    console.log([address, tonClient.value]);
+                    const multisigWallet = await MultisigWallet.fromAddress(
+                        address,
+                        {
+                            client: tonClient.value,
+                        }
+                    );
+                    console.log(multisigWallet);
+                    wallet.set({
+                        wallet: multisigWallet,
+                        lastActive: 123,
+                        balance: await tonClient.value.getBalance(address),
+                    });
+                } catch (e) {
+                    console.log(e);
+                    return;
+                }
+            }
+        }
+        fetchData();
+    });
 
     return (
         <div
@@ -47,7 +85,9 @@ const Wallet = () => {
                         </h1>
                         <div className="flex ml-auto mr-auto">
                             <p className="font-usual font-[550] text-[1.5rem] lg:text-[1.8rem]">
-                                0.00
+                                {(parseInt(wallet.value.balance) / 1e9).toFixed(
+                                    2
+                                )}
                             </p>
                             <img
                                 src={isDarkmode == 'true' ? balance2 : balance}
@@ -62,7 +102,8 @@ const Wallet = () => {
                             Owners
                         </h1>
                         <p className="font-usual font-[550] text-[1.5rem] lg:text-[1.8rem]">
-                            4 / 5
+                            {wallet.value.wallet.k} /{' '}
+                            {wallet.value.wallet.owners.size}
                         </p>
                     </div>
 
@@ -71,7 +112,7 @@ const Wallet = () => {
                             Last active
                         </h1>
                         <p className="font-usual font-[550] text-[1.5rem] lg:text-[1.8rem]">
-                            1 second ago
+                            {dayjs(wallet.value.lastActive).fromNow()}
                         </p>
                     </div>
                 </div>

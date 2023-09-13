@@ -1,10 +1,12 @@
 import { multisigwallet, protection, protection2 } from '../assets';
-import { Address, TonClient } from '@ton/ton';
+import { Address, MultisigWallet } from '@ton/ton';
 import { useTonClient } from '../store/tonClient';
+import { useMultisigWallet } from '../store/multisigWallet';
 import useLocalStorage from 'react-use-localstorage';
 
 const Home = () => {
     const tonClient = useTonClient();
+    const wallet = useMultisigWallet();
     const [isDarkmode, setDarkmode] = useLocalStorage('isDarkmode', 'false');
 
     async function handleSubmit() {
@@ -12,11 +14,16 @@ const Home = () => {
             const address = Address.parse(
                 document.getElementById('wallet').value.trim()
             );
-            const result = await tonClient.value.runMethod(
-                address,
-                'get_n_k',
-                []
-            );
+            console.log([address, tonClient.value]);
+            const multisigWallet = await MultisigWallet.fromAddress(address, {
+                client: tonClient.value,
+            });
+            console.log(multisigWallet);
+            wallet.set({
+                wallet: multisigWallet,
+                lastActive: 123,
+                balance: await tonClient.value.getBalance(address),
+            });
         } catch (e) {
             console.log(e);
             return;
