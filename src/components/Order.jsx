@@ -1,6 +1,10 @@
 import { cancel, cancel2 } from '../assets';
+import { MultisigOrderBuilder, Address, Cell, beginCell } from '@ton/ton';
+import { useMultisigWallet } from '../store/multisigWallet';
 
 const Order = () => {
+    const wallet = useMultisigWallet();
+
     let id = 0;
 
     const DeleteNew = (e) => {
@@ -16,6 +20,9 @@ const Order = () => {
     }
 
     function AddSmth() {
+        if (document.querySelector('.list-orders').children.length >= 4) {
+            return;
+        }
         id++;
         let g1 = document.querySelector('.elem1').value;
         let g2 = document.querySelector('.elem2').value;
@@ -47,8 +54,74 @@ const Order = () => {
             .addEventListener('click', () => WriteNeed(g1, g2, g3));
     }
 
+    function getAllAddedMessages() {
+        const orderListContainer = document.querySelector('.list-orders');
+        const orders = orderListContainer.children;
+        const orderObjects = [];
+
+        for (let order of orders) {
+            const destinationElem = order.querySelector('.el1.hidden');
+            const amountElem = order.querySelector('.el2');
+            const bodyElem = order.querySelector('.el3.hidden');
+
+            if (destinationElem && amountElem && bodyElem) {
+                const orderObject = {
+                    destination: Address.parse(
+                        destinationElem.textContent.trim()
+                    ),
+                    amount: BigInt(amountElem.textContent.trim()),
+                    body: bodyElem.textContent.trim(),
+                };
+                orderObjects.push(orderObject);
+            }
+        }
+        return orderObjects;
+    }
+
+    function assembleOrder() {
+        const messages = getAllAddedMessages();
+        let orderBuilder = new MultisigOrderBuilder(
+            wallet.value.wallet.walletId
+        );
+        for (const msg of messages) {
+            let body;
+            try {
+                body = Cell.fromBase64(msg.body);
+            } catch (e) {
+                body = beginCell().storeStringTail(msg.body).endCell();
+            }
+            orderBuilder.addMessage(
+                {
+                    info: {
+                        bounce: false,
+                        bounced: false,
+                        createdAt: 0,
+                        createdLt: 0n,
+                        dest: msg.destination,
+                        forwardFee: 0n,
+                        ihrDisabled: true,
+                        ihrFee: 0n,
+                        type: 'internal',
+                        value: {
+                            coins: BigInt(msg.amount),
+                        },
+                    },
+                    body,
+                },
+                3
+            );
+        }
+        return orderBuilder.build();
+    }
+
     function SaveDisk() {
-        // ОБРАБОТАТЬ
+        const order = assembleOrder();
+        const blob = new Blob([order.toCell(wallet.value.ownerId).toBoc()]);
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'order.boc';
+        a.click();
     }
 
     function SignSend() {
