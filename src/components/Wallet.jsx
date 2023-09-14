@@ -7,6 +7,7 @@ import * as relativeTime from 'dayjs/plugin/relativeTime';
 import { Address } from '@ton/core';
 import { useEffect } from 'react';
 import { MultisigWallet } from '@ton/ton';
+import { updateWallet } from '../helpers/updateWallet';
 
 dayjs.extend(relativeTime);
 
@@ -61,6 +62,10 @@ const Wallet = () => {
         }
         fetchData();
     });
+
+    useEffect(() => {
+        updateWallet(wallet, tonClient, wallet.value.wallet.address);
+    }, [tonClient, wallet]);
 
     return (
         <div
