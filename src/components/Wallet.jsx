@@ -65,7 +65,13 @@ const Wallet = () => {
 
     useEffect(() => {
         updateWallet(wallet, tonClient, wallet.value.wallet.address);
-    }, [tonClient, wallet]);
+
+        const intervalId = setInterval(() => {
+            updateWallet(wallet, tonClient, wallet.value.wallet.address);
+        }, 10000);
+
+        return () => clearInterval(intervalId);
+    }, [wallet, tonClient]);
 
     return (
         <div
