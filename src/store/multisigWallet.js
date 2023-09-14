@@ -7,6 +7,7 @@ const MultisigWallet = hookstate({
     },
     balance: 0n,
     lastActive: 0,
+    ownerId: -1,
 });
 
 export function useMultisigWallet() {

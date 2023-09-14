@@ -8,6 +8,8 @@ import { Address } from '@ton/core';
 import { useEffect } from 'react';
 import { MultisigWallet } from '@ton/ton';
 import { updateWallet } from '../helpers/updateWallet';
+import { updateUserWallet } from '../helpers/updateUserWallet';
+import { useUserWallet } from '../store/userWallet';
 
 dayjs.extend(relativeTime);
 
@@ -15,6 +17,7 @@ const Wallet = () => {
     const tonClient = useTonClient();
     const [isDarkmode, setDarkmode] = useLocalStorage('isDarkmode', 'false');
     const wallet = useMultisigWallet();
+    const userWallet = useUserWallet();
 
     function NewOrder() {
         document.getElementById('modal').classList.remove('hidden');
@@ -36,38 +39,38 @@ const Wallet = () => {
 
     useEffect(() => {
         async function fetchData() {
-            if (wallet.value.lastActive == 0) {
-                try {
-                    const address = Address.parse(
-                        window.location.pathname.slice(-48)
-                    );
-                    console.log([address, tonClient.value]);
-                    const multisigWallet = await MultisigWallet.fromAddress(
-                        address,
-                        {
-                            client: tonClient.value,
-                        }
-                    );
-                    console.log(multisigWallet);
-                    wallet.set({
-                        wallet: multisigWallet,
-                        lastActive: 123,
-                        balance: await tonClient.value.getBalance(address),
-                    });
-                } catch (e) {
-                    console.log(e);
-                    return;
-                }
+            if (typeof ton === 'undefined') {
+                alert('Install any TON wallet extension');
+                return;
             }
+
+            await updateUserWallet(userWallet, tonClient);
+
+            await updateWallet(
+                wallet,
+                tonClient,
+                Address.parse(window.location.pathname.slice(-48)),
+                userWallet
+            );
         }
         fetchData();
-    });
+    }, []);
 
     useEffect(() => {
-        updateWallet(wallet, tonClient, wallet.value.wallet.address);
+        updateWallet(
+            wallet,
+            tonClient,
+            wallet.value.wallet.address,
+            userWallet
+        );
 
         const intervalId = setInterval(() => {
-            updateWallet(wallet, tonClient, wallet.value.wallet.address);
+            updateWallet(
+                wallet,
+                tonClient,
+                wallet.value.wallet.address,
+                userWallet
+            );
         }, 10000);
 
         return () => clearInterval(intervalId);

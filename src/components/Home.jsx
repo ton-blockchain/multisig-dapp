@@ -4,17 +4,19 @@ import { useTonClient } from '../store/tonClient';
 import { useMultisigWallet } from '../store/multisigWallet';
 import useLocalStorage from 'react-use-localstorage';
 import { updateWallet } from '../helpers/updateWallet';
+import { useUserWallet } from '../store/userWallet';
 
 const Home = () => {
     const tonClient = useTonClient();
     const wallet = useMultisigWallet();
     const [isDarkmode, setDarkmode] = useLocalStorage('isDarkmode', 'false');
+    const userWallet = useUserWallet();
 
     async function handleSubmit() {
         const address = Address.parse(
             document.getElementById('wallet').value.trim()
         );
-        await updateWallet(wallet, tonClient, address);
+        await updateWallet(wallet, tonClient, address, userWallet);
 
         window.history.pushState(
             null,
