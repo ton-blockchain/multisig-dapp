@@ -2,7 +2,7 @@
 
 This repository is hosted on Github pages:
 
-https://gusarich.github.io/multisig-dapp
+[https://ton-blockchain.github.io/multisig-dapp/](https://ton-blockchain.github.io/multisig-dapp/)
 
 # Donations
 
