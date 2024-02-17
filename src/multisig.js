@@ -85,7 +85,7 @@ const newMultisig = async (pubkeys, wc, wallet_id, k) => {
 }
 
 const getQueryId = () => {
-    const time = new tonweb.utils.BN(Math.floor(Date.now() / 1000 + 43200))
+    const time = new tonweb.utils.BN(Math.floor(Date.now() / 1000 + 86400))
     return time.mul(BITSHIFT32)
 }
 
