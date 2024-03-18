@@ -250,7 +250,7 @@ const showInfo = (File) => {
         boc.bits.readCursor = 0
         const query_id = boc.bits.readBits(64).array
 
-        if (await isOrderSignedAlready(query_id)) {
+        if (window.multisig_owner_id !== undefined && await isOrderSignedAlready(query_id)) {
             alert('order is already signed by you. you do not need to send it again')
         }
 
